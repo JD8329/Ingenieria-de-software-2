@@ -1,0 +1,28 @@
+{
+  "name": "ingenieria-de-software-2",
+  "version": "1.0.0",
+  "description": "Para los pequeños y medianos agricultores del Valle del Cauca que necesitan\r vender su producción directamente sin intermediarios, AgroValle Connect es\r una aplicación web que conecta productores agrícolas con compradores locales.\r A diferencia de los canales tradicionales de venta, nuestro producto ofrece\r trazabilidad, negociación directa de precios y visibilidad de oferta en\r tiempo real.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JD8329/Ingenieria-de-software-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JD8329/Ingenieria-de-software-2/issues"
+  },
+  "homepage": "https://github.com/JD8329/Ingenieria-de-software-2#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+### Node/Husky ###
+node_modules/
+package-lock.json

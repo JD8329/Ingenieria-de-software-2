@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+echo "Ejecutando Checkstyle antes del commit..."
+./mvnw checkstyle:check
+
+echo "Ejecutando tests antes del commit..."
+./mvnw test
