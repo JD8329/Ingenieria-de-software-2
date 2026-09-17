@@ -1,0 +1,2 @@
+echo "Pre-commit: recuerda correr './mvnw checkstyle:check' y './mvnw test' antes de hacer push."
+echo "(Automatizacion completa pendiente de resolver entorno Java 17 - ver docs/dod.md)"
