@@ -1,8 +1,13 @@
 package co.uniajc.agrovalle.agrovalleconnect.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "agricultores")
@@ -12,32 +17,34 @@ public class Agricultor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre completo es obligatorio")
     @Column(nullable = false)
     private String nombreCompleto;
 
-    @NotBlank(message = "La cedula es obligatoria")
     @Column(nullable = false, unique = true)
     private String cedula;
 
-    @Email(message = "El correo debe tener un formato valido")
-    @NotBlank(message = "El correo es obligatorio")
     @Column(nullable = false, unique = true)
     private String correo;
 
-    @NotBlank(message = "La contrasena es obligatoria")
     @Column(nullable = false)
     private String contrasena;
 
     private String telefono;
 
-    private String ubicacionFinca;
+    @Column(nullable = false)
+    private String nombreFinca;
 
-    // Constructor vacio (requerido por JPA)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Municipio municipio;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Rol rol = Rol.AGRICULTOR;
+
     public Agricultor() {
     }
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -86,11 +93,27 @@ public class Agricultor {
         this.telefono = telefono;
     }
 
-    public String getUbicacionFinca() {
-        return ubicacionFinca;
+    public String getNombreFinca() {
+        return nombreFinca;
     }
 
-    public void setUbicacionFinca(String ubicacionFinca) {
-        this.ubicacionFinca = ubicacionFinca;
+    public void setNombreFinca(String nombreFinca) {
+        this.nombreFinca = nombreFinca;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }
