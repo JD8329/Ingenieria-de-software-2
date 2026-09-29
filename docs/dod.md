@@ -31,7 +31,7 @@ revisión por pares ni la integración del Pull Request.
 | Historia | Estado de integración | Verificación automatizada | Revisión por pares | Evaluación DoD |
 |---|---|---|---|---|
 | HU-01 | Integrada en `main` mediante PR #20 | CI aprobado: pruebas, Checkstyle y cobertura | No hay aprobación formal registrada en GitHub | Pendiente de confirmar revisión por pares |
-| HU-02 | PR #21 abierto hacia `main` | CI aprobado: 12 pruebas, cero fallos, Checkstyle sin violaciones y umbral JaCoCo cumplido | No hay aprobación formal registrada en GitHub | No terminada hasta revisión e integración |
+| HU-02 | Integrada en `main` mediante PR #21 (fusionado el 29/09/2026) | CI aprobado: 12 pruebas, cero fallos, Checkstyle sin violaciones y umbral JaCoCo cumplido | No hay aprobación formal registrada en GitHub | Pendiente de confirmar revisión por pares |
 | HU-11 | Implementación integrada en `main` como soporte de HU-02 mediante PR #20 | CI aprobado en PR #20 | No hay aprobación formal registrada en GitHub | Pendiente de confirmar revisión por pares |
 
 Evidencia más reciente de HU-02: [ejecución de CI del PR #21](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210).
