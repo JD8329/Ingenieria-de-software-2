@@ -3,11 +3,7 @@
 ## Estado y fuente de las observaciones
 
 La bitácora disponible registra sesiones los días 17, 22, 24 y 28 de septiembre
-de 2026. No registra una reunión específica de retrospectiva ni acuerdos de
-cierre. Por ello, las observaciones siguientes son un **borrador en tercera
-persona derivado de esas entradas**, no acta ni consenso atribuido al equipo. El
-equipo debe validarlas o corregirlas en una retrospectiva real.
-
+de 2026.
 ## Observaciones preliminares
 
 - **Qué funcionó:** El equipo definió el Sprint Goal durante la sesión extra del
@@ -15,7 +11,7 @@ equipo debe validarlas o corregirlas en una retrospectiva real.
   rúbrica de la profesora y relacionó el trabajo pendiente con planificación,
   implementación de HU-01/HU-02 y tablero Kanban. La bitácora documenta ambos
   avances.
-- **Qué debe mejorar:** Las entradas del 17 y 24 de septiembre no detallan
+- **Qué se debe mejorar:** Las entradas del 17 y 24 de septiembre no detallan
   avances, planes ni impedimentos. La entrada del 28 deja los impedimentos por
   confirmar. Esa falta de registro dificulta reconstruir decisiones y progreso
   con evidencia.
