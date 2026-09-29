@@ -18,7 +18,7 @@ queda pendiente de completar después de la demo del equipo.
 
 ## Evidencia técnica disponible
 
-El check de GitHub Actions del [PR #21](https://github.com/JD8329/Ingenieria-de-software-2/pull/21)
+El check más reciente de GitHub Actions del [PR #21](https://github.com/JD8329/Ingenieria-de-software-2/pull/21)
 ejecutó `clean verify` y finalizó con éxito el 29 de septiembre de 2026. El log
 registra:
 
@@ -27,10 +27,14 @@ registra:
 - Umbral de cobertura JaCoCo cumplido.
 - `BUILD SUCCESS`.
 
-[Ver ejecución de CI](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36585079861).
+[Ver ejecución de CI](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210).
 Esta evidencia acredita la verificación automatizada de la rama del PR; no
 sustituye una demo ante la docente ni acredita aceptación funcional por parte de
 los interesados.
+
+Al momento de actualizar este documento, el PR #21 continúa abierto y no tiene
+aprobaciones de revisión registradas. La integración y la aprobación de HU-02
+siguen pendientes.
 
 ## Guion propuesto para la demo
 

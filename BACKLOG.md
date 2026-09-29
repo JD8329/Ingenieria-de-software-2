@@ -6,7 +6,7 @@ Priorización: **MoSCoW** (Must have, Should have, Could have, Won't have)
 ---
 
 ## HU-01: Registro e Identificación de Agricultores
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Integrada en `develop` (PR #5)
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Integrada en `main` (PR #20; CI aprobado; revisión formal no registrada)
 
 Como Agricultor, quiero registrarme en la plataforma ingresando mi cédula, nombre y finca por municipio, para ofrecer mis cosechas directamente a comercios urbanos.
 
@@ -17,7 +17,7 @@ Como Agricultor, quiero registrarme en la plataforma ingresando mi cédula, nomb
 ---
 
 ## HU-02: Publicación de Lotes de Cosecha
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** 🟡 En implementación; pendiente de revisión e integración
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** 🟡 Implementada en la rama del PR #21; CI aprobado; pendiente de revisión e integración en `main`
 
 Como Agricultor autenticado, quiero publicar lotes de cosechas disponibles detallando cantidad, precio y fecha de recolección, para que los comerciantes puedan visualizarlos y comprarlos.
 
@@ -116,7 +116,7 @@ Como Administrador/Productor, quiero consultar un panel con métricas de ventas 
 ---
 
 ## HU-11: Inicio de Sesión con JWT
-**Prioridad:** Must have | **Story Points:** 5
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Implementación integrada en `main` como soporte de HU-02 (PR #20; CI aprobado; revisión formal no registrada)
 
 Como Usuario registrado, quiero iniciar sesión con correo y contraseña, para acceder de forma segura a las funciones protegidas.
 
