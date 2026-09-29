@@ -1,52 +1,64 @@
 # Revisión y demo del Sprint 1 — AgroValle Connect
 
-**Estado:** plantilla pendiente de completar durante la demo del Sprint Review.
+## Estado de la revisión
 
-Este documento no afirma que la demo ya se haya realizado. El equipo debe completar
-la fecha, asistentes, resultado observado y enlaces a evidencias después de ejecutar
-la presentación.
+La bitácora registra sesiones de clase y trabajo los días 17, 22, 24 y 28 de
+septiembre de 2026, pero no registra una sesión de Sprint Review ni una demo. Por
+esa razón, no se presentan como realizadas la demostración funcional, la
+aceptación de historias ni la retroalimentación de la docente. Esta revisión
+queda pendiente de completar después de la demo del equipo.
 
-## Datos de la revisión
-
-| Campo | Registro |
+| Campo | Registro disponible |
 |---|---|
-| Fecha y hora | Pendiente de diligenciar |
-| Participantes | Pendiente de confirmar |
-| URL de la demo o evidencia | Pendiente de adjuntar |
-| Historias demostradas | Pendiente de confirmar |
+| Fecha y hora de la demo | No registrada en la bitácora |
+| Participantes de la demo | No registrados. La asistencia a otras sesiones no se asume como asistencia a la demo. |
+| Historias demostradas | No hay demo registrada. El Sprint Goal planificado cubre HU-01 y HU-02 (10 SP). |
+| Evidencia de demo (captura, video o enlace) | Pendiente de generar durante la demo |
+| Aceptación de la docente/Product Owner | Pendiente de confirmar |
 
-## Evidencia técnica automática previa a la demo
+## Evidencia técnica disponible
 
-En la rama de trabajo, `./mvnw --batch-mode --no-transfer-progress clean verify`
-finalizó correctamente: 12 pruebas pasan, Checkstyle reporta cero violaciones y
-JaCoCo mide 90,48% de cobertura de líneas (171/189). Esta verificación local no
-reemplaza la demo, la aceptación de historias ni la ejecución de GitHub Actions
-después de publicar la rama.
+El check de GitHub Actions del [PR #21](https://github.com/JD8329/Ingenieria-de-software-2/pull/21)
+ejecutó `clean verify` y finalizó con éxito el 29 de septiembre de 2026. El log
+registra:
 
-## Guion de demostración
+- 12 pruebas aprobadas, sin fallos ni errores.
+- Cero violaciones de Checkstyle.
+- Umbral de cobertura JaCoCo cumplido.
+- `BUILD SUCCESS`.
 
-1. Registrar un agricultor válido y mostrar la respuesta HTTP `201 Created`.
-2. Iniciar sesión con las credenciales del agricultor y obtener un token JWT.
-3. Intentar un registro duplicado y mostrar el rechazo esperado.
-4. Publicar un lote válido con el token y mostrar su ID.
-5. Intentar publicar sin token y con un token inválido; mostrar `401 Unauthorized`.
-6. Intentar publicar un lote con datos inválidos o fecha anterior a hoy y mostrar
-   el rechazo esperado.
-7. Mostrar el resultado de las pruebas JUnit 5, Checkstyle y cobertura de JaCoCo.
+[Ver ejecución de CI](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36585079861).
+Esta evidencia acredita la verificación automatizada de la rama del PR; no
+sustituye una demo ante la docente ni acredita aceptación funcional por parte de
+los interesados.
 
-## Resultados observados y retroalimentación
+## Guion propuesto para la demo
 
-| Escenario | Resultado observado | Evidencia (captura, URL, log o PR) | Comentarios de interesados |
+1. Registrar un agricultor válido y mostrar la respuesta `201 Created`.
+2. Verificar que la contraseña no aparece en la respuesta y que queda cifrada al
+   persistir.
+3. Iniciar sesión con credenciales válidas y obtener un token JWT.
+4. Intentar publicar un lote sin token o con token inválido y comprobar `401`.
+5. Publicar un lote válido con el token y mostrar el identificador devuelto.
+6. Probar datos inválidos, fecha pasada y cantidades/precios no positivos.
+7. Consultar los lotes y comprobar que las respuestas no exponen el objeto
+   agricultor, su cédula, correo ni contraseña cifrada.
+8. Mostrar la ejecución de CI enlazada arriba.
+
+## Resultados de la demo y retroalimentación
+
+Completar esta tabla durante o inmediatamente después de una demo real:
+
+| Escenario | Resultado observado en la demo | Evidencia | Comentarios de interesados |
 |---|---|---|---|
-| Registro válido de agricultor | Pendiente de demo | Pendiente | Pendiente |
-| Validación de registro duplicado | Pendiente de demo | Pendiente | Pendiente |
+| Registro de agricultor | Pendiente de demo | Pendiente | Pendiente |
 | Login y autorización JWT | Pendiente de demo | Pendiente | Pendiente |
-| Publicación de lote válido | Pendiente de demo | Pendiente | Pendiente |
-| Validaciones de publicación | Pendiente de demo | Pendiente | Pendiente |
-| Pruebas y controles de calidad | Pendiente de demo | Pendiente | Pendiente |
+| Publicación y consulta de lotes | Pendiente de demo | Pendiente | Pendiente |
+| Validaciones y protección de datos | Pendiente de demo | Pendiente | Pendiente |
 
-## Aceptación y acciones
+## A completar al cierre de la revisión
 
-- Historias aceptadas por la docente/Product Owner: pendiente de confirmar.
-- Hallazgos o cambios solicitados: pendiente de registrar.
-- Acciones para el siguiente sprint: pendiente de acordar.
+- Fecha, hora y asistentes reales.
+- Evidencia de la presentación (capturas, grabación o enlace autorizado).
+- Historias aceptadas o cambios solicitados por la docente/Product Owner.
+- Acciones acordadas para el siguiente sprint.
