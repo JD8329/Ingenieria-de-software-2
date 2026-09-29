@@ -32,9 +32,9 @@ Esta evidencia acredita la verificación automatizada de la rama del PR; no
 sustituye una demo ante la docente ni acredita aceptación funcional por parte de
 los interesados.
 
-Al momento de actualizar este documento, el PR #21 continúa abierto y no tiene
-aprobaciones de revisión registradas. La integración y la aprobación de HU-02
-siguen pendientes.
+El PR #21 ya fue fusionado en `main` el 29 de septiembre de 2026, sin
+aprobaciones de revisión formales registradas en GitHub. La demo funcional y la
+aceptación por parte de la docente/Product Owner siguen pendientes.
 
 ## Guion propuesto para la demo
 
