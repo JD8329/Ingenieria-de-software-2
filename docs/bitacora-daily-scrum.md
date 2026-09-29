@@ -20,7 +20,7 @@ asistencia ni duración exacta sin confirmarlos con el equipo.
 
 | Fecha | Tipo de sesión | Duración | Asistentes | Avance desde la sesión anterior | Plan hasta la siguiente sesión | Impedimentos / acciones |
 |---|---|---|---|---|---|---|
-| Pendiente de diligenciar | Martes | Aproximadamente 1 hora | Pendiente de confirmar | Pendiente de diligenciar | Pendiente de diligenciar | Pendiente de diligenciar |
+| 22 de sept | Martes | Aproximadamente 1 hora | Todo el equipo | Sprint Goal | Implementar las historias de usuario | el equipo tenía dudas con el proyecto |
 | Pendiente de diligenciar | Fin de semana | Aproximadamente 1 hora | Pendiente de confirmar | Pendiente de diligenciar | Pendiente de diligenciar | Pendiente de diligenciar |
 
 > Esta bitácora se inicia con la cadencia y los roles informados por el equipo.
