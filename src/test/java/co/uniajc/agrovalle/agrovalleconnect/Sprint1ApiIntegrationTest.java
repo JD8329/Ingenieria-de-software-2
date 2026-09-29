@@ -127,7 +127,12 @@ class Sprint1ApiIntegrationTest {
                         .content(loteJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
-                .andExpect(jsonPath("$.fechaCosecha").value(fechaCosecha.toString()));
+                .andExpect(jsonPath("$.fechaCosecha").value(fechaCosecha.toString()))
+                .andExpect(jsonPath("$.agricultorId").value(agricultor.getId()))
+                .andExpect(jsonPath("$.agricultor").doesNotExist())
+                .andExpect(jsonPath("$.contrasena").doesNotExist())
+                .andExpect(jsonPath("$.correo").doesNotExist())
+                .andExpect(jsonPath("$.cedula").doesNotExist());
 
         assertEquals(1, loteCosechaRepository.count());
     }
@@ -215,11 +220,19 @@ class Sprint1ApiIntegrationTest {
 
         mockMvc.perform(get("/api/v1/productos"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].tipoProducto").value("Cafe"));
+                .andExpect(jsonPath("$[0].tipoProducto").value("Cafe"))
+                .andExpect(jsonPath("$[0].agricultor").doesNotExist())
+                .andExpect(jsonPath("$[0].contrasena").doesNotExist())
+                .andExpect(jsonPath("$[0].correo").doesNotExist())
+                .andExpect(jsonPath("$[0].cedula").doesNotExist());
 
         mockMvc.perform(get("/api/v1/productos/agricultor/{id}", agricultor.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id", notNullValue()));
+                .andExpect(jsonPath("$[0].id", notNullValue()))
+                .andExpect(jsonPath("$[0].agricultor").doesNotExist())
+                .andExpect(jsonPath("$[0].contrasena").doesNotExist())
+                .andExpect(jsonPath("$[0].correo").doesNotExist())
+                .andExpect(jsonPath("$[0].cedula").doesNotExist());
     }
 
     private Agricultor guardarAgricultor(String cedula, String correo) {
