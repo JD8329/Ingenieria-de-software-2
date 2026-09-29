@@ -14,15 +14,14 @@ Una Historia de Usuario se considera **Terminada (Done)** cuando cumple TODOS lo
 
 ## Firmas del equipo
 
-Las firmas confirman la aceptación del equipo y deben ser diligenciadas por sus
-integrantes; no se completan sin su aprobación.
+Firmas registradas por el equipo el 29/09/2026.
 
 | Integrante | Firma / Nombre | Fecha |
 |---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
+| Juan David Gonzalez | Juan | 29/09/2026 |
+| Néstor Javier Hernández Vallecilla | Néstor | 29/09/2026 |
+| Steven Andrés Guachetá Veles | Steven | 29/09/2026 |
+| Andrés Felipe Lopez Murillo | Andrés | 29/09/2026 |
 
 ## Estado verificable del Sprint 1
 
