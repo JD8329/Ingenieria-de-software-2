@@ -17,7 +17,7 @@ Como Agricultor, quiero registrarme en la plataforma ingresando mi cédula, nomb
 ---
 
 ## HU-02: Publicación de Lotes de Cosecha
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** 🟡 Implementada en la rama del PR #21; CI aprobado; pendiente de revisión e integración en `main`
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Integrada en `main` mediante PR #21 (fusionado el 29/09/2026); CI aprobado; sin aprobación formal de revisión registrada en GitHub
 
 Como Agricultor autenticado, quiero publicar lotes de cosechas disponibles detallando cantidad, precio y fecha de recolección, para que los comerciantes puedan visualizarlos y comprarlos.
 
