@@ -3,6 +3,7 @@ package co.uniajc.agrovalle.agrovalleconnect.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "agricultores")
@@ -32,6 +33,14 @@ public class Agricultor {
     private String telefono;
 
     private String ubicacionFinca;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "El municipio es obligatorio")
+    private Municipio municipio;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Rol rol;
 
     // Constructor vacio (requerido por JPA)
     public Agricultor() {
@@ -92,5 +101,21 @@ public class Agricultor {
 
     public void setUbicacionFinca(String ubicacionFinca) {
         this.ubicacionFinca = ubicacionFinca;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }

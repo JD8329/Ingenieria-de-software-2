@@ -6,24 +6,24 @@ Priorización: **MoSCoW** (Must have, Should have, Could have, Won't have)
 ---
 
 ## HU-01: Registro e Identificación de Agricultores
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Completada
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Integrada en `develop` (PR #5)
 
 Como Agricultor, quiero registrarme en la plataforma ingresando mi cédula, nombre y finca por municipio, para ofrecer mis cosechas directamente a comercios urbanos.
 
-- **Given** que un agricultor no registrado accede al endpoint `/api/v1/auth/register`
+- **Given** que un agricultor no registrado accede al endpoint `/api/v1/agricultores/registro`
   **When** envía un JSON con su nombre completo, cédula válida y ubicación geográfica dentro del Valle del Cauca
   **Then** el sistema retorna 201 Created, persiste la información en PostgreSQL y asigna el rol PRODUCCIÓN
 
 ---
 
 ## HU-02: Publicación de Lotes de Cosecha
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Completada
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** 🟡 En implementación; pendiente de revisión e integración
 
 Como Agricultor autenticado, quiero publicar lotes de cosechas disponibles detallando cantidad, precio y fecha de recolección, para que los comerciantes puedan visualizarlos y comprarlos.
 
-- **Given** un agricultor autenticado con token JWT válido
-  **When** envía POST a `/api/v1/productos` con tipo, cantidad (kg), precio unitario y fecha_cosecha futura
-  **Then** el sistema valida que la fecha no sea anterior a hoy y retorna 201 Created con el ID único del lote
+- **Given** un agricultor registrado con credenciales válidas
+  **When** inicia sesión en `/api/v1/auth/login` y publica en `/api/v1/productos` con su token JWT, tipo, cantidad (kg), precio unitario y fecha_cosecha no anterior a hoy
+  **Then** el sistema verifica el token, asocia el lote al agricultor autenticado y retorna 201 Created con el ID único del lote
 
 ---
 

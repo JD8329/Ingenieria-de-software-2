@@ -1,2 +1,9 @@
-echo "Pre-commit: recuerda correr './mvnw checkstyle:check' y './mvnw test' antes de hacer push."
-echo "(Automatizacion completa pendiente de resolver entorno Java 17 - ver docs/dod.md)"
+#!/usr/bin/env sh
+set -eu
+
+if [ ! -x ./mvnw ]; then
+    echo "Error: no se encuentra el Maven Wrapper ejecutable (./mvnw)." >&2
+    exit 1
+fi
+
+./mvnw --batch-mode --no-transfer-progress verify

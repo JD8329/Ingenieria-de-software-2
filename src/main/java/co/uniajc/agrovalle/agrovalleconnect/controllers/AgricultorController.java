@@ -1,5 +1,7 @@
 package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
+import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
+import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorResponse;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.services.AgricultorService;
 import jakarta.validation.Valid;
@@ -16,11 +18,11 @@ public class AgricultorController {
     private AgricultorService agricultorService;
 
     @PostMapping("/registro")
-    public ResponseEntity<?> registrar(@Valid @RequestBody Agricultor agricultor) {
+    public ResponseEntity<?> registrar(@Valid @RequestBody AgricultorRegistroRequest request) {
         try {
-            Agricultor nuevoAgricultor = agricultorService.registrarAgricultor(agricultor);
-            nuevoAgricultor.setContrasena(null); // nunca devolver la contrasena en la respuesta
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAgricultor);
+            Agricultor nuevoAgricultor = agricultorService.registrarAgricultor(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(AgricultorResponse.desde(nuevoAgricultor));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
