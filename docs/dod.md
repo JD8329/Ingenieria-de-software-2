@@ -30,8 +30,8 @@ revisión por pares ni la integración del Pull Request.
 
 | Historia | Estado de integración | Verificación automatizada | Revisión por pares | Evaluación DoD |
 |---|---|---|---|---|
-| HU-01 | Integrada en `main` mediante PR #20 | CI aprobado: pruebas, Checkstyle y cobertura | No hay aprobación formal registrada en GitHub | Pendiente de confirmar revisión por pares |
-| HU-02 | Integrada en `main` mediante PR #21 (fusionado el 29/09/2026) | CI aprobado: 12 pruebas, cero fallos, Checkstyle sin violaciones y umbral JaCoCo cumplido | No hay aprobación formal registrada en GitHub | Pendiente de confirmar revisión por pares |
-| HU-11 | Implementación integrada en `main` como soporte de HU-02 mediante PR #20 | CI aprobado en PR #20 | No hay aprobación formal registrada en GitHub | Pendiente de confirmar revisión por pares |
+| HU-01 | Integrada en `main`; cambios de Sprint 1 incluidos en PR #20 | CI del PR #20 aprobado | El PR inicial #1 fue aprobado por Steven-Velez. El PR #20, con cambios posteriores, no tiene aprobación formal registrada | Parcialmente verificada: hay implementación, CI exitoso y aprobación del PR inicial; confirmar revisión de los cambios posteriores y los criterios específicos antes de marcarla Done |
+| HU-02 | Integrada en `main` mediante PR #21 el 29/09/2026 | CI aprobado: 12 pruebas, cero fallos, Checkstyle sin violaciones y cobertura JaCoCo sobre el umbral | El PR #21 no tiene aprobación formal registrada | Parcialmente verificada: implementación y pruebas integradas; falta revisión formal visible por un compañero. La demo funcional no está registrada |
+| HU-11 (soporte de HU-02) | Login JWT integrado en `main` mediante PR #20 | CI del PR #20 aprobado | El PR #20 no tiene aprobación formal registrada | Parcialmente verificada: login JWT incluido como soporte de HU-02; falta revisión formal visible por un compañero |
 
 Evidencia más reciente de HU-02: [ejecución de CI del PR #21](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210).
