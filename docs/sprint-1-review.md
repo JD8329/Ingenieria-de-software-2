@@ -2,67 +2,44 @@
 
 ## Estado de la revisión
 
-La bitácora registra sesiones de clase y trabajo los días 17, 22, 24 y 28 de
-septiembre de 2026, pero no registra una sesión de Sprint Review ni una demo. Por
-esa razón, no se presentan como realizadas la demostración funcional, la
-aceptación de historias ni la retroalimentación de la docente. Esta revisión
-queda pendiente de completar después de la demo del equipo.
+El 30 de septiembre de 2026 se realizó una demo técnica individual, ejecutada por Néstor Javier Hernández Vallecilla. No fue una Sprint Review del equipo ni se registró aceptación de la docente/Product Owner.
 
-| Campo | Registro disponible |
+| Campo | Registro |
 |---|---|
-| Fecha y hora de la demo | No registrada en la bitácora |
-| Participantes de la demo | No registrados. La asistencia a otras sesiones no se asume como asistencia a la demo. |
-| Historias demostradas | No hay demo registrada. El Sprint Goal planificado cubre HU-01 y HU-02 (10 SP). |
-| Evidencia de demo (captura, video o enlace) | Pendiente de generar durante la demo |
-| Aceptación de la docente/Product Owner | Pendiente de confirmar |
+| Fecha de la demo | 30/09/2026 |
+| Participante y presentador | Néstor Javier Hernández Vallecilla |
+| Tipo | Demo técnica individual |
+| Historias comprobadas | HU-01 (cuenta registrada e inicio de sesión) y HU-02 (publicación y consulta de lote) |
+| Evidencia | Salida de PowerShell; adjuntar captura o grabación si se guardó |
+| Aceptación de la docente/Product Owner | No registrada |
 
-## Evidencia técnica disponible
+## Evidencia técnica automatizada
 
-El check más reciente de GitHub Actions del [PR #21](https://github.com/JD8329/Ingenieria-de-software-2/pull/21)
-ejecutó `clean verify` y finalizó con éxito el 29 de septiembre de 2026. El log
-registra:
+La ejecución de GitHub Actions del PR #21 ejecutó `clean verify` y finalizó con éxito. El log registra:
 
 - 12 pruebas aprobadas, sin fallos ni errores.
 - Cero violaciones de Checkstyle.
 - Umbral de cobertura JaCoCo cumplido.
 - `BUILD SUCCESS`.
 
-[Ver ejecución de CI](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210).
-Esta evidencia acredita la verificación automatizada de la rama del PR; no
-sustituye una demo ante la docente ni acredita aceptación funcional por parte de
-los interesados.
+[Ver ejecución de CI](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210). Esta evidencia corresponde a pruebas automatizadas; no sustituye la demo manual ni acredita aceptación de la docente/Product Owner.
 
-El PR #21 ya fue fusionado en `main` el 29 de septiembre de 2026, sin
-aprobaciones de revisión formales registradas en GitHub. La demo funcional y la
-aceptación por parte de la docente/Product Owner siguen pendientes.
+El PR #21 fue fusionado en `main` el 29 de septiembre de 2026. GitHub no registra aprobaciones formales de revisión para ese PR.
 
-## Guion propuesto para la demo
+## Resultados observados en la demo técnica individual
 
-1. Registrar un agricultor válido y mostrar la respuesta `201 Created`.
-2. Verificar que la contraseña no aparece en la respuesta y que queda cifrada al
-   persistir.
-3. Iniciar sesión con credenciales válidas y obtener un token JWT.
-4. Intentar publicar un lote sin token o con token inválido y comprobar `401`.
-5. Publicar un lote válido con el token y mostrar el identificador devuelto.
-6. Probar datos inválidos, fecha pasada y cantidades/precios no positivos.
-7. Consultar los lotes y comprobar que las respuestas no exponen el objeto
-   agricultor, su cédula, correo ni contraseña cifrada.
-8. Mostrar la ejecución de CI enlazada arriba.
-
-## Resultados de la demo y retroalimentación
-
-Completar esta tabla durante o inmediatamente después de una demo real:
-
-| Escenario | Resultado observado en la demo | Evidencia | Comentarios de interesados |
+| Escenario | Resultado observado | Evidencia | Comentarios de interesados |
 |---|---|---|---|
-| Registro de agricultor | Pendiente de demo | Pendiente | Pendiente |
-| Login y autorización JWT | Pendiente de demo | Pendiente | Pendiente |
-| Publicación y consulta de lotes | Pendiente de demo | Pendiente | Pendiente |
-| Validaciones y protección de datos | Pendiente de demo | Pendiente | Pendiente |
+| Registro de agricultor | El reintento informó que ya existía un agricultor con ese correo. El código HTTP del primer intento no quedó registrado. | Salida de PowerShell | No registrados |
+| Login JWT | HTTP 200; tipo de token `Bearer` | Salida de PowerShell | No registrados |
+| Publicación autenticada | HTTP 201; lote creado con ID 1 | Salida de PowerShell | No registrados |
+| Consulta de lotes | HTTP 200; se recuperó el lote creado | Salida de PowerShell | No registrados |
+| Protección de datos de la respuesta del lote | La respuesta mostró los campos del lote y `agricultorId`, sin correo, cédula ni contraseña | Salida de PowerShell | No registrados |
 
-## A completar al cierre de la revisión
+No se registran aquí resultados de publicación sin token ni de validaciones con datos inválidos: esos escenarios constan en las pruebas automatizadas, pero no se ejecutaron durante esta demo manual.
 
-- Fecha, hora y asistentes reales.
-- Evidencia de la presentación (capturas, grabación o enlace autorizado).
-- Historias aceptadas o cambios solicitados por la docente/Product Owner.
-- Acciones acordadas para el siguiente sprint.
+## Pendiente de completar
+
+- Adjuntar una captura o grabación de la demo, si se guardó.
+- Registrar comentarios o aceptación de la docente/Product Owner únicamente si se reciben.
+- Registrar acciones de seguimiento cuando sean acordadas.
