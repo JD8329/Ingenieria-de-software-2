@@ -50,6 +50,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Integración continua: GitHub Actions (`.github/workflows/ci.yml`)
 - JWT: definir `JWT_SECRET` con al menos 32 bytes antes de iniciar la aplicación; usar un secreto aleatorio fuera de pruebas y no guardarlo en el repositorio
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
+- Documentación integral: normalización, prototipos y arquitectura: [`docs/documentacion-integral-agrovalle.md`](docs/documentacion-integral-agrovalle.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Planificación del Sprint 1: [`docs/sprint-1-planning.md`](docs/sprint-1-planning.md)
 - Bitácora de Daily Scrums: [`docs/bitacora-daily-scrum.md`](docs/bitacora-daily-scrum.md)
