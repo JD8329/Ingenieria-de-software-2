@@ -61,7 +61,16 @@ un agricultor eliminado después de emitir su token.
 - Las pruebas JUnit 5 de los escenarios acordados pasan.
 - Checkstyle pasa como parte de `./mvnw verify`.
 - La cobertura de líneas JaCoCo del proyecto es al menos 60%.
-- La integración se realiza mediante Pull Request con revisión visible de un par.
 - El DoD y el Backlog reflejan el estado real de las historias.
 - La autenticación JWT queda implementada y probada; HU-02 no se marca como
-  terminada hasta que el PR correspondiente reciba revisión e integración.
+  terminada hasta que la integración correspondiente se complete.
+
+## Cierre técnico documentado
+
+La planificación y la implementación del Sprint 1 en este repositorio abarcan
+HU-01 y HU-02, con login JWT como soporte de HU-02. Las pruebas verifican el
+registro, la publicación autenticada y los casos de rechazo descritos en este
+documento. La guía de diseño enumera HU-01, HU-07 y HU-04; este cierre no añade
+HU-04 ni HU-07 ni afirma que estén implementadas. La diferencia de alcance
+queda registrada para no atribuir historias que no hicieron parte del trabajo
+ejecutado.

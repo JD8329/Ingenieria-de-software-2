@@ -26,6 +26,17 @@ La ejecución de GitHub Actions del PR #21 ejecutó `clean verify` y finalizó c
 
 [Ver ejecución de CI](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210). Esta evidencia corresponde a pruebas automatizadas; no sustituye la demo manual ni acredita aceptación de la docente/Product Owner.
 
+### Verificación local de cierre documental
+
+El 12 de octubre de 2026 se amplió la suite de integración de HU-01 para
+verificar por separado correo duplicado, cédula duplicada, correo inválido,
+cédula fuera de rango, contraseña corta y municipio inválido. La ejecución de
+`./mvnw clean verify` en el worktree finalizó con `BUILD SUCCESS`: 19 pruebas
+aprobadas (18 de integración de Sprint 1 y 1 de contexto), cero fallos, cero
+errores, cero violaciones de Checkstyle y cobertura JaCoCo por encima del
+umbral del 60 %. La cifra histórica de 12 pruebas corresponde al CI del PR #21
+y no se modifica retroactivamente.
+
 El PR #21 fue fusionado en `main` el 29 de septiembre de 2026. GitHub no registra aprobaciones formales de revisión para ese PR.
 
 ## Resultados observados en la demo técnica individual

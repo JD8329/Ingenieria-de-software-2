@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -81,22 +83,47 @@ class Sprint1ApiIntegrationTest {
     }
 
     @Test
-    void registrarAgricultorDuplicado_Retorna409() throws Exception {
+    void registrarAgricultorConCorreoDuplicado_Retorna409() throws Exception {
         guardarAgricultor("1234567890", "ana@example.com");
 
         mockMvc.perform(post("/api/v1/agricultores/registro")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "nombreCompleto": "Ana Productora",
-                                  "cedula": "1234567890",
-                                  "correo": "ana@example.com",
-                                  "contrasena": "clave-segura",
-                                  "ubicacionFinca": "Finca El Valle",
-                                  "municipio": "PALMIRA"
-                                }
-                                """))
+                        .content(registroJson("0987654321", "ana@example.com",
+                                "clave-segura", "PALMIRA")))
                 .andExpect(status().isConflict());
+
+        assertEquals(1, agricultorRepository.count());
+    }
+
+    @Test
+    void registrarAgricultorConCedulaDuplicada_Retorna409() throws Exception {
+        guardarAgricultor("1234567890", "ana@example.com");
+
+        mockMvc.perform(post("/api/v1/agricultores/registro")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registroJson("1234567890", "otra@example.com",
+                                "clave-segura", "PALMIRA")))
+                .andExpect(status().isConflict());
+
+        assertEquals(1, agricultorRepository.count());
+    }
+
+    @Test
+    void persistenciaRechazaCorreoDuplicadoAunqueSeOmitaValidacionDelServicio() {
+        guardarAgricultor("1234567890", "ana@example.com");
+
+        assertThrows(DataIntegrityViolationException.class,
+                () -> agricultorRepository.saveAndFlush(crearAgricultor(
+                        "0987654321", "ana@example.com")));
+    }
+
+    @Test
+    void persistenciaRechazaCedulaDuplicadaAunqueSeOmitaValidacionDelServicio() {
+        guardarAgricultor("1234567890", "ana@example.com");
+
+        assertThrows(DataIntegrityViolationException.class,
+                () -> agricultorRepository.saveAndFlush(crearAgricultor(
+                        "1234567890", "otra@example.com")));
     }
 
     @Test
@@ -106,6 +133,50 @@ class Sprint1ApiIntegrationTest {
                         .content("{}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.detalles").exists());
+    }
+
+    @Test
+    void registrarAgricultorConCorreoInvalido_Retorna400() throws Exception {
+        mockMvc.perform(post("/api/v1/agricultores/registro")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registroJson("1234567890", "correo-invalido",
+                                "clave-segura", "PALMIRA")))
+                .andExpect(status().isBadRequest());
+
+        assertEquals(0, agricultorRepository.count());
+    }
+
+    @Test
+    void registrarAgricultorConCedulaFueraDeRango_Retorna400() throws Exception {
+        mockMvc.perform(post("/api/v1/agricultores/registro")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registroJson("12345", "ana@example.com",
+                                "clave-segura", "PALMIRA")))
+                .andExpect(status().isBadRequest());
+
+        assertEquals(0, agricultorRepository.count());
+    }
+
+    @Test
+    void registrarAgricultorConContrasenaCorta_Retorna400() throws Exception {
+        mockMvc.perform(post("/api/v1/agricultores/registro")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registroJson("1234567890", "ana@example.com",
+                                "corta", "PALMIRA")))
+                .andExpect(status().isBadRequest());
+
+        assertEquals(0, agricultorRepository.count());
+    }
+
+    @Test
+    void registrarAgricultorConMunicipioInvalido_Retorna400() throws Exception {
+        mockMvc.perform(post("/api/v1/agricultores/registro")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registroJson("1234567890", "ana@example.com",
+                                "clave-segura", "MUNICIPIO_INEXISTENTE")))
+                .andExpect(status().isBadRequest());
+
+        assertEquals(0, agricultorRepository.count());
     }
 
     @Test
@@ -236,6 +307,10 @@ class Sprint1ApiIntegrationTest {
     }
 
     private Agricultor guardarAgricultor(String cedula, String correo) {
+        return agricultorRepository.save(crearAgricultor(cedula, correo));
+    }
+
+    private Agricultor crearAgricultor(String cedula, String correo) {
         Agricultor agricultor = new Agricultor();
         agricultor.setNombreCompleto("Ana Productora");
         agricultor.setCedula(cedula);
@@ -244,7 +319,20 @@ class Sprint1ApiIntegrationTest {
         agricultor.setUbicacionFinca("Finca El Valle");
         agricultor.setMunicipio(Municipio.PALMIRA);
         agricultor.setRol(Rol.PRODUCCION);
-        return agricultorRepository.save(agricultor);
+        return agricultor;
+    }
+
+    private String registroJson(String cedula, String correo, String contrasena, String municipio) {
+        return """
+                {
+                  "nombreCompleto": "Ana Productora",
+                  "cedula": "%s",
+                  "correo": "%s",
+                  "contrasena": "%s",
+                  "ubicacionFinca": "Finca El Valle",
+                  "municipio": "%s"
+                }
+                """.formatted(cedula, correo, contrasena, municipio);
     }
 
     private String bearerToken(Agricultor agricultor) throws Exception {

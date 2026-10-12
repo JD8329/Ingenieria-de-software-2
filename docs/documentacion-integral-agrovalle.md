@@ -22,6 +22,11 @@
 5. [Alineación y decisiones pendientes](#5-alineación-y-decisiones-pendientes)
 6. [Conclusiones](#6-conclusiones)
 
+> **Artefactos organizados según la guía:** consulte el índice
+> [`docs/diseno/README.md`](diseno/README.md), la especificación formal de
+> [`HU-01 / IEEE 29148 vs. BDD`](ieee29148-req01.md) y la matriz de
+> [correspondencia del modelo 3FN con JPA](diseno/modelo-datos-der.md).
+
 ## 1. Objetivo y visión del producto
 
 AgroValle Connect busca conectar a productores agrícolas del Valle del Cauca
@@ -763,6 +768,11 @@ utiliza inyección por constructor en `AuthService`, `AuthController` y
 `AgricultorService` y `LoteCosechaService`. Unificar la inyección por constructor
 es una mejora recomendada.
 
+**Factory Method y Builder.** Los métodos estáticos `desde(...)` de los records
+de respuesta actúan como métodos fábrica sencillos para construir DTO desde
+entidades; no hay una Factory abstracta. No existe un Builder propio para el
+dominio o sus DTO, por lo que Builder no se declara como patrón implementado.
+
 **Manejo de errores.** `GlobalExceptionHandler`, con `@RestControllerAdvice`,
 centraliza errores de validación, JSON, dominio e integridad. Los conflictos del
 registro de agricultores se manejan localmente en el controlador.
@@ -888,6 +898,10 @@ descripción del sistema disponible como referencia para la evolución del
 producto. Las decisiones sobre cosecha/oferta, usuarios, catálogos, fechas,
 stock y exposición de datos deben confirmarse antes de considerar el modelo
 conceptual como esquema definitivo.
+
+Para localizar los entregables en la estructura solicitada por la guía, usar
+[`docs/diseno/README.md`](diseno/README.md). La especificación formal de HU-01 y
+su comparación con BDD está en [`docs/ieee29148-req01.md`](ieee29148-req01.md).
 
 ## Referencias del proyecto
 

@@ -51,6 +51,8 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - JWT: definir `JWT_SECRET` con al menos 32 bytes antes de iniciar la aplicación; usar un secreto aleatorio fuera de pruebas y no guardarlo en el repositorio
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
 - Documentación integral: normalización, prototipos y arquitectura: [`docs/documentacion-integral-agrovalle.md`](docs/documentacion-integral-agrovalle.md)
+- Artefactos del Sprint de Diseño: [`docs/diseno/README.md`](docs/diseno/README.md)
+- Especificación HU-01: IEEE 29148 vs. BDD: [`docs/ieee29148-req01.md`](docs/ieee29148-req01.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Planificación del Sprint 1: [`docs/sprint-1-planning.md`](docs/sprint-1-planning.md)
 - Bitácora de Daily Scrums: [`docs/bitacora-daily-scrum.md`](docs/bitacora-daily-scrum.md)
