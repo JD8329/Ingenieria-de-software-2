@@ -209,6 +209,21 @@ class Sprint1ApiIntegrationTest {
     }
 
     @Test
+    void publicarLoteDuplicadoParaMismoAgricultorProductoYFecha_Retorna409() throws Exception {
+        Agricultor agricultor = guardarAgricultor("1234567890", "ana@example.com");
+        LocalDate fechaCosecha = LocalDate.now().plusDays(1);
+        loteCosechaRepository.save(crearLote(agricultor, fechaCosecha));
+
+        mockMvc.perform(post("/api/v1/productos")
+                        .header(HttpHeaders.AUTHORIZATION, bearerToken(agricultor))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(loteJson(fechaCosecha)))
+                .andExpect(status().isConflict());
+
+        assertEquals(1, loteCosechaRepository.count());
+    }
+
+    @Test
     void publicarLoteConFechaPasada_Retorna400() throws Exception {
         Agricultor agricultor = guardarAgricultor("1234567890", "ana@example.com");
 
