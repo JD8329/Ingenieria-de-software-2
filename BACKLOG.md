@@ -28,7 +28,7 @@ Como Agricultor autenticado, quiero publicar lotes de cosechas disponibles detal
 ---
 
 ## HU-03: Visualización y Cálculo de Precios Promedio Regionales
-**Prioridad:** Should have | **Story Points:** 3
+**Prioridad:** Should have | **Story Points:** 3 | **Estado:** ✅ Implementada en `feature/sprint2-hu03-precios-promedio`; pendiente de revisión y merge mediante PR
 
 Como Usuario de la plataforma, quiero consultar el precio promedio regional por producto, para negociar a precios justos y transparentes.
 
