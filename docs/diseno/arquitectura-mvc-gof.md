@@ -47,20 +47,20 @@ flowchart TB
 | 3. Repositorio / acceso a datos | `repositories` | Abstraer consultas y operaciones CRUD mediante `JpaRepository`. | Implementada para agricultor y lote. |
 | 4. Persistencia / PostgreSQL | PostgreSQL, Hibernate / JPA | Guardar los datos y hacer cumplir las restricciones declaradas por las entidades y la base. | Configurada; pruebas usan H2. |
 
-La capa 2 no define actualmente `@Transactional` en los servicios. Los métodos
-de repositorio proporcionan transacciones para operaciones individuales; una
-operación de negocio que coordine varias escrituras deberá delimitar su
-transacción explícitamente.
+Los servicios delimitan sus operaciones con `@Transactional`; las consultas
+usan transacciones de solo lectura y las escrituras tienen transacción de
+lectura/escritura.
 
 ## 3. Componentes y UML
 
-Los diagramas de componentes, secuencia y despliegue se encuentran como
-imágenes junto a este documento:
+Los diagramas de componentes, secuencia y despliegue se encuentran junto a
+este documento. El diagrama de componentes vigente incluye el observer de
+eventos de dominio:
 
-- `diagrama-componentes.png`
+- `diagrama-componentes.svg`
 - `diagrama-secuencia-hu01.png`
 - `diagrama-secuencia.png`
-- `diagrama-despliegue.png`
+- `diagrama-despliegue.svg`
 
 El diagrama `diagrama-secuencia-hu01.png` documenta el registro. El diagrama
 `diagrama-secuencia.png` documenta el login y la publicación autenticada del
@@ -73,12 +73,16 @@ también en la
 | Patrón | Aplicación | Precisión sobre el estado actual |
 |---|---|---|
 | Repository | `AgricultorRepository` y `LoteCosechaRepository` extienden `JpaRepository`. | Implementado; Spring Data crea las implementaciones concretas. |
-| Inyección de dependencias / IoC | Spring administra controladores, servicios y configuración. | Implementada con inyección por constructor en algunas clases y por campo en otras. Se recomienda uniformar por constructor. |
+| Inyección de dependencias / IoC | Spring administra controladores, servicios y configuración. | Implementada mediante inyección por constructor. |
 | Singleton (scope de Spring) | Los beans de Spring usan scope singleton por defecto. | El contenedor administra una instancia compartida por contexto; no se implementa manualmente el patrón GoF Singleton. |
 | DTO | Records como `AgricultorRegistroRequest`, `LoginRequest`, `TokenResponse` y `LoteCosechaResponse`. | Implementado para delimitar contratos JSON. `AgricultorResponse` no devuelve contraseña, pero actualmente contiene cédula y correo. |
 | Método fábrica estático | `AgricultorResponse.desde(...)` y `LoteCosechaResponse.desde(...)` construyen respuestas desde entidades. | Se usa un método fábrica estático como técnica de creación. No se considera el patrón GoF Factory Method: no hay creador abstracto ni jerarquía de fábricas. |
 | Data Mapper | Conversión de entidad a DTO mediante `desde(...)`. | La conversión reside en el record de respuesta; no existe un Data Mapper independiente. |
 | Builder | No existe un builder propio para entidades o DTO del dominio. | No está implementado ni se requiere para la construcción actual: los DTO son records y los objetos tienen pocos datos. No se incorpora solo para afirmar uso de un patrón. |
+| Observer (GoF) / eventos de dominio | `LoteCosechaService` publica `LoteCosechaPublicadoEvent` mediante `ApplicationEventPublisher`; `LoteCosechaPublicadoListener` observa el evento después del commit y registra la publicación. | Implementado en producción. El servicio no conoce sus observadores y no notifica un lote cuya transacción no se confirmó. |
+
+El proceso de implementación y su flujo están detallados en
+[Implementación del patrón Observer](implementacion-observer.md).
 
 Ejemplo de Repository:
 
@@ -115,7 +119,21 @@ public record LoteCosechaResponse(
 }
 ```
 
-## 5. Seguridad y configuración transversal
+## 5. Evidencia de principios SOLID
+
+| Principio | Aplicación verificable |
+|---|---|
+| Responsabilidad única (SRP) | Los controladores traducen HTTP, los servicios aplican reglas, los repositorios acceden a datos y los DTO forman el contrato JSON. El listener atiende el evento sin incorporar esa tarea al servicio. |
+| Abierto/cerrado (OCP) | Se pueden agregar observadores de `LoteCosechaPublicadoEvent` sin cambiar `LoteCosechaService`; Spring administra la suscripción. |
+| Sustitución de Liskov (LSP) | Los servicios dependen de contratos de repositorio; las implementaciones de Spring Data y los dobles Mockito se sustituyen respetando esos contratos. |
+| Segregación de interfaces (ISP) | Los componentes reciben dependencias orientadas a la capacidad que usan (`AgricultorRepository`, `LoteCosechaRepository`, `PasswordEncoder` y `ApplicationEventPublisher`), no un servicio global. |
+| Inversión de dependencias (DIP) | Los servicios se construyen por constructor con interfaces de repositorio y APIs de Spring; no instancian persistencia ni observadores concretos. |
+
+Las pruebas unitarias aisladas de `AgricultorService` y
+`LoteCosechaService` usan `@Mock`, `@InjectMocks` y el patrón
+Arrange-Act-Assert (AAA), sin levantar la aplicación.
+
+## 6. Seguridad y configuración transversal
 
 - `SeguridadConfig` define rutas públicas de login y registro, publicación de
   productos autenticada y acceso sin sesión de servidor.

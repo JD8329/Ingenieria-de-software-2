@@ -5,7 +5,7 @@ Una Historia de Usuario se considera **Terminada (Done)** cuando cumple TODOS lo
 - [ ] El código compila sin errores (`mvn clean install`)
 - [ ] Checkstyle pasa sin violaciones (`mvn checkstyle:check`)
 - [ ] 100% de las pruebas unitarias e integradas pasan (`mvn test`)
-- [ ] Cobertura de líneas mínima del 60% (JaCoCo, verificada en `mvn verify`)
+- [ ] Cobertura mínima del 60% en instrucciones, ramas y líneas (JaCoCo, verificada en `mvn verify`)
 - [ ] Código revisado y aprobado por al menos un compañero (Pull Request)
 - [ ] Commits bajo el estándar Conventional Commits
 - [ ] README.md y /docs actualizados si el cambio lo requiere

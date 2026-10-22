@@ -4,19 +4,26 @@ import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class AgricultorService {
 
-    @Autowired
-    private AgricultorRepository agricultorRepository;
+    private final AgricultorRepository agricultorRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
+    public AgricultorService(
+            AgricultorRepository agricultorRepository,
+            PasswordEncoder passwordEncoder) {
+        this.agricultorRepository = agricultorRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Transactional
     public Agricultor registrarAgricultor(AgricultorRegistroRequest request) {
         if (agricultorRepository.existsByCorreo(request.correo())) {
             throw new IllegalArgumentException("Ya existe un agricultor registrado con ese correo");
