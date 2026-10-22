@@ -23,3 +23,14 @@ Completar una fila después de cada reunión real. No registrar acuerdos, bloque
 | 28 de septiembre | Sesión extra | Aproximadamente 1 hora | Todo el equipo | Revisión conjunta de los requisitos de la Sesión 4 para identificar el estado del Sprint 1 frente a la rúbrica de la profesora | Documentar el Sprint Goal y el desglose técnico; comenzar la implementación de HU-01 (registro de agricultores) y HU-02 (publicación de lotes de cosecha) con entidad, controlador, repositorio, servicio y pruebas unitarias en JUnit 5; continuar la configuración del tablero Kanban (columnas y límites WIP) a cargo de un integrante del equipo | Pendiente de confirmar con el equipo | Commits de configuración inicial del repositorio (`.gitignore`, `README.md`) |
 
 *Esta bitácora se inicia con la cadencia y los roles informados por el equipo. Las fechas y resultados de sesiones anteriores deben ser completados por sus participantes a partir de sus registros; no se han inventado actas ni acuerdos no confirmados.*
+
+## Registro del Sprint 2
+
+No se han añadido reuniones del Sprint 2 porque no hay fechas ni resultados
+confirmados por sus participantes en el repositorio. Registrar cada sesión real
+en tercera persona y completar todos los campos; no reutilizar las entradas del
+Sprint 1 como evidencia de este sprint.
+
+| Fecha | Tipo de sesión | Duración | Asistentes | Avance desde la sesión anterior | Plan hasta la siguiente sesión | Impedimentos / acciones | Referencia técnica |
+|---|---|---|---|---|---|---|---|
+| Pendiente de registrar | — | — | — | — | — | — | — |
