@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
+import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
@@ -17,7 +18,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -40,29 +40,28 @@ class LoteCosechaServiceTest {
 
     @Test
     void publicaLoteYEmiteEventoDeDominio() {
+        Long agricultorId = 7L;
         Agricultor agricultor = new Agricultor();
-        agricultor.setId(7L);
-        LoteCosecha lote = new LoteCosecha();
-        lote.setTipoProducto("Cafe");
-        lote.setFechaCosecha(LocalDate.now());
-        when(agricultorRepository.findById(7L)).thenReturn(Optional.of(agricultor));
+        agricultor.setId(agricultorId);
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now());
+        when(agricultorRepository.findById(agricultorId)).thenReturn(Optional.of(agricultor));
         when(loteCosechaRepository.save(lote)).thenAnswer(invocation -> {
             lote.setId(11L);
             return lote;
         });
 
-        LoteCosecha resultado = loteCosechaService.publicarLote(7L, lote);
+        LoteCosecha resultado = loteCosechaService.publicarLote(agricultorId, lote);
 
         assertEquals(lote, resultado);
         assertEquals(agricultor, resultado.getAgricultor());
         assertTrue(resultado.getActivo());
         verify(eventPublisher).publishEvent(
-                new LoteCosechaPublicadoEvent(11L, 7L, "Cafe"));
+                new LoteCosechaPublicadoEvent(11L, agricultorId, "Cafe"));
     }
 
     @Test
     void rechazaAgricultorInexistenteSinGuardarNiEmitirEvento() {
-        LoteCosecha lote = new LoteCosecha();
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now());
         when(agricultorRepository.findById(7L)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class,
@@ -75,8 +74,7 @@ class LoteCosechaServiceTest {
     @Test
     void rechazaFechaPasadaSinGuardarNiEmitirEvento() {
         Agricultor agricultor = new Agricultor();
-        LoteCosecha lote = new LoteCosecha();
-        lote.setFechaCosecha(LocalDate.now().minusDays(1));
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now().minusDays(1));
         when(agricultorRepository.findById(7L)).thenReturn(Optional.of(agricultor));
 
         assertThrows(IllegalArgumentException.class,
@@ -84,6 +82,55 @@ class LoteCosechaServiceTest {
 
         verify(loteCosechaRepository, never()).save(any(LoteCosecha.class));
         verify(eventPublisher, never()).publishEvent(any());
+    }
+
+    @Test
+    void publicarLoteDuplicadoDelMismoAgricultorProductoYFecha_LanzaConflicto() {
+        Long agricultorId = 1L;
+        LocalDate fechaCosecha = LocalDate.now().plusDays(1);
+        Agricultor agricultor = new Agricultor();
+        LoteCosecha loteNuevo = crearLote("cafe", fechaCosecha);
+
+        when(agricultorRepository.findById(agricultorId)).thenReturn(Optional.of(agricultor));
+        when(loteCosechaRepository
+                .existsByAgricultorIdAndTipoProductoIgnoreCaseAndFechaCosechaAndActivoTrue(
+                        agricultorId, loteNuevo.getTipoProducto(), fechaCosecha))
+                .thenReturn(true);
+
+        assertThrows(ConflictoException.class,
+                () -> loteCosechaService.publicarLote(agricultorId, loteNuevo));
+
+        verify(loteCosechaRepository, never()).save(any(LoteCosecha.class));
+        verify(eventPublisher, never()).publishEvent(any());
+    }
+
+    @Test
+    void publicarMismoProductoEnFechaDiferente_PermiteGuardar() {
+        Long agricultorId = 1L;
+        LocalDate fechaExistente = LocalDate.now().plusDays(1);
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(agricultorId);
+        LoteCosecha loteNuevo = crearLote("Cafe", fechaExistente.plusDays(1));
+
+        when(agricultorRepository.findById(agricultorId)).thenReturn(Optional.of(agricultor));
+        when(loteCosechaRepository
+                .existsByAgricultorIdAndTipoProductoIgnoreCaseAndFechaCosechaAndActivoTrue(
+                        agricultorId, loteNuevo.getTipoProducto(), loteNuevo.getFechaCosecha()))
+                .thenReturn(false);
+        when(loteCosechaRepository.save(loteNuevo)).thenAnswer(invocation -> {
+            loteNuevo.setId(11L);
+            return loteNuevo;
+        });
+
+        LoteCosecha resultado = loteCosechaService.publicarLote(agricultorId, loteNuevo);
+
+        assertEquals(loteNuevo, resultado);
+        verify(loteCosechaRepository)
+                .existsByAgricultorIdAndTipoProductoIgnoreCaseAndFechaCosechaAndActivoTrue(
+                        agricultorId, loteNuevo.getTipoProducto(), loteNuevo.getFechaCosecha());
+        verify(loteCosechaRepository).save(loteNuevo);
+        verify(eventPublisher).publishEvent(
+                new LoteCosechaPublicadoEvent(11L, agricultorId, "Cafe"));
     }
 
     @Test
@@ -98,5 +145,12 @@ class LoteCosechaServiceTest {
         loteCosechaService.listarLotesPorAgricultor(7L);
 
         verify(loteCosechaRepository).findByAgricultorIdAndActivoTrue(7L);
+    }
+
+    private LoteCosecha crearLote(String tipoProducto, LocalDate fechaCosecha) {
+        LoteCosecha lote = new LoteCosecha();
+        lote.setTipoProducto(tipoProducto);
+        lote.setFechaCosecha(fechaCosecha);
+        return lote;
     }
 }
