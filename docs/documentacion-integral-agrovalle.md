@@ -822,8 +822,13 @@ El Product Backlog contiene 15 historias, estimadas en 69 Story Points.
 |---|---|---|
 | HU-01 | Registro e identificación de agricultores | Implementada: registro, validación, unicidad y persistencia. |
 | HU-02 | Publicación de lotes de cosecha | Implementada: publicación autenticada y consulta de lotes activos. |
+ feature/sprint2-hu03-precios-promedio
 | HU-03 | Precios promedio regionales | Implementada en el Sprint 2: registro autenticado de transacciones de precio y promedio aritmético de las últimas 24 horas, con mínimo de 50 registros. Véase [`sprint-2-hu03.md`](sprint-2-hu03.md). |
 | HU-04 | Filtros por municipio y categoría | Pendiente: no hay endpoint de búsqueda ni categoría en el modelo actual. |
+
+| HU-03 | Precios promedio regionales | Pendiente: no hay transacciones ni endpoint de promedios. |
+| HU-04 | Filtros por municipio y categoría | Implementada en el Sprint 2: búsqueda pública de lotes activos por municipio, categoría o ambos. La categoría es opcional para conservar compatibilidad con HU-02. Véase [`sprint-2-hu04.md`](sprint-2-hu04.md). |
+main
 | HU-05 | Contacto comprador-productor | Pendiente: no hay comerciantes ni mensajería. |
 | HU-06 | Carrito y reserva de pedidos | Pendiente: no hay carrito, pedido ni reserva de inventario por compra. |
 | HU-07 | Despacho y trazabilidad de ruta | Pendiente: no hay módulo logístico. |
@@ -850,7 +855,7 @@ señalan las diferencias frente al código actual.
 | Entidades | Modelo normalizado con municipio, agricultor, producto, cosecha y oferta; el ER del prototipo amplía a 17 tablas y dos vistas. | Entidades JPA `Agricultor` y `LoteCosecha`. | Definir si el modelo de cinco entidades es una etapa intermedia o si el modelo de 17 tablas será el objetivo consolidado. |
 | Cosecha y oferta | Normalización separa ambas entidades; el formulario de prototipo las reúne en `lotes`. | `LoteCosecha` almacena cosecha y publicación en una entidad. | Acordar si se mantendrá la relación cosecha-oferta 1:N o el modelo combinado. |
 | Usuario y agricultor | El prototipo usa `usuarios`, `roles` y `agricultores`. | El backend almacena credenciales y datos del agricultor juntos en `Agricultor`; no hay entidad `Usuario`. | Definir si se requiere una entidad de cuenta común antes de implementar comerciantes y roles. |
-| Producto y categoría | El prototipo propone catálogos `productos` y `categorias`. | `tipoProducto` es texto libre; no hay entidad producto/categoría. | Definir catálogos y migración antes de implementar filtros por categoría. |
+| Producto y categoría | El prototipo propone catálogos `productos` y `categorias`. | El lote conserva `tipoProducto` como texto libre y agrega una categoría textual opcional para filtrar sin romper HU-02; aún no existen catálogos normalizados. | Evaluar catálogos de productos y categorías si se requieren reglas y valores controlados. |
 | Campos de finca | El prototipo separa `nombre_finca` y municipio. | El backend registra `ubicacionFinca` y municipio. | Confirmar si se necesita nombre y ubicación como campos distintos. |
 | Cédula | El prototipo permite hasta 15 dígitos. | El DTO actual valida entre 6 y 10 dígitos. | Confirmar el rango requerido por el negocio. |
 | Fecha de cosecha | El prototipo indica que la fecha no puede ser futura. | El backend acepta hoy o una fecha futura y rechaza fechas pasadas. | Confirmar si la fecha representa cosecha ya ocurrida o cosecha esperada. |

@@ -39,7 +39,7 @@ Como Usuario de la plataforma, quiero consultar el precio promedio regional por 
 ---
 
 ## HU-04: Filtro de Productos por Municipio de Origen y Categoría
-**Prioridad:** Must have | **Story Points:** 5
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Implementada en `feature/sprint2-hu04-filtro-productos`; pendiente de revisión y merge mediante PR
 
 Como Comerciante urbano, quiero filtrar el catálogo por municipio (ej. Dagua, Buga, Palmira) y categoría, para abastecerme eficientemente.
 
