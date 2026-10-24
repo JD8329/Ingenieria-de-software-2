@@ -37,6 +37,11 @@ public class GlobalExceptionHandler {
         return respuesta(HttpStatus.NOT_FOUND, ex.getMessage(), null);
     }
 
+    @ExceptionHandler(DatosInsuficientesException.class)
+    public ResponseEntity<Map<String, Object>> datosInsuficientes(DatosInsuficientesException ex) {
+        return respuesta(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage(), null);
+    }
+
     @ExceptionHandler(ConflictoException.class)
     public ResponseEntity<Map<String, Object>> conflicto(ConflictoException ex) {
         return respuesta(HttpStatus.CONFLICT, ex.getMessage(), null);
