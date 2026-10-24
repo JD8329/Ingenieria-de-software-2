@@ -7,8 +7,9 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 
 import jakarta.validation.constraints.NotNull;
-
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -27,8 +28,12 @@ public class LoteCosecha {
     @NotBlank(message = "El tipo de producto es obligatorio")
 
     @Column(nullable = false)
-
     private String tipoProducto;
+
+    @Size(max = 50, message = "La categoría no puede superar 50 caracteres")
+    @Pattern(regexp = ".*\\S.*", message = "La categoría no puede estar vacía")
+    @Column(length = 50)
+    private String categoria;
 
     @NotNull(message = "La cantidad es obligatoria")
 
@@ -90,6 +95,18 @@ this.id = id;
     public void setTipoProducto(String tipoProducto) {
 
         this.tipoProducto = tipoProducto;
+
+    }
+
+    public String getCategoria() {
+
+        return categoria;
+
+    }
+
+    public void setCategoria(String categoria) {
+
+        this.categoria = categoria;
 
     }
 

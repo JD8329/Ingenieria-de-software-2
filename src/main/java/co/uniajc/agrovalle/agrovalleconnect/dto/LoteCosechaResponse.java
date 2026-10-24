@@ -6,6 +6,8 @@ import java.time.LocalDate;
 public record LoteCosechaResponse(
         Long id,
         String tipoProducto,
+        String categoria,
+        String municipio,
         Double cantidadKg,
         Double precioUnitario,
         LocalDate fechaCosecha,
@@ -16,6 +18,8 @@ public record LoteCosechaResponse(
         return new LoteCosechaResponse(
                 lote.getId(),
                 lote.getTipoProducto(),
+                lote.getCategoria(),
+                lote.getAgricultor().getMunicipio().name(),
                 lote.getCantidadKg(),
                 lote.getPrecioUnitario(),
                 lote.getFechaCosecha(),
