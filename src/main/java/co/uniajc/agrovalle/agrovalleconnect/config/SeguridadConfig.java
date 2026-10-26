@@ -45,7 +45,9 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/auth/login",
                                 "/api/v1/agricultores/registro").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/productos").authenticated()
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/productos",
+                                "/api/v1/precios/transacciones").authenticated()
                         .anyRequest().permitAll())
                 .oauth2ResourceServer(resourceServer ->
                         resourceServer.jwt(Customizer.withDefaults()))

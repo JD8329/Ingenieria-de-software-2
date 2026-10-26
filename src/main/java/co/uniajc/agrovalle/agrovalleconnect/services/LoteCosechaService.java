@@ -4,6 +4,7 @@ import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
+import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
 import java.time.LocalDate;
@@ -51,6 +52,15 @@ public class LoteCosechaService {
         }
 
         lote.setAgricultor(agricultor);
+
+        if (lote.getCategoria() != null) {
+            String categoria = lote.getCategoria().trim();
+            if (categoria.isEmpty()) {
+                throw new IllegalArgumentException("La categoría no puede estar vacía");
+            }
+            lote.setCategoria(categoria);
+        }
+
         lote.setActivo(true);
 
         LoteCosecha loteGuardado = loteCosechaRepository.save(lote);
@@ -66,4 +76,16 @@ public class LoteCosechaService {
     public List<LoteCosecha> listarLotesPorAgricultor(Long agricultorId) {
         return loteCosechaRepository.findByAgricultorIdAndActivoTrue(agricultorId);
     }
+
+    public List<LoteCosecha> buscarLotes(Municipio municipio, String categoria) {
+        String categoriaNormalizada = categoria == null ? null : categoria.trim();
+        if (municipio == null && categoriaNormalizada == null) {
+            throw new IllegalArgumentException("Debe indicar el municipio, la categoría o ambos");
+        }
+        if (categoriaNormalizada != null && categoriaNormalizada.isEmpty()) {
+            throw new IllegalArgumentException("La categoría no puede estar vacía");
+        }
+        return loteCosechaRepository.buscarActivos(municipio, categoriaNormalizada);
+    }
+
 }
