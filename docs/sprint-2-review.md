@@ -31,7 +31,7 @@ localmente sobre `09885244d334d93ddd1eeb190799ac78766b208a`, el mismo commit de
 | Compilación y pruebas JUnit 5 | `BUILD SUCCESS`; 41 pruebas aprobadas, 0 fallos y 0 errores |
 | Pruebas REST con MockMvc | Integración para los flujos de registro, autenticación, publicación, HU-03 y HU-04 |
 | Pruebas unitarias aisladas con Mockito | 10 pruebas en `AgricultorServiceTest` y `LoteCosechaServiceTest` |
-| TDD para publicación duplicada | La descripción de [PR #23](https://github.com/JD8329/Ingenieria-de-software-2/pull/23) reporta el ciclo Red-Green-Refactor; la rama se integró en un solo commit, por lo que el historial no conserva una secuencia verificable de commits por fase |
+| Evidencia TDD para publicación duplicada | [Pruebas, reproducción RED aislada y GREEN verificado](evidencias/tdd-sesion-8.md); [PR #23](https://github.com/JD8329/Ingenieria-de-software-2/pull/23) y [su CI exitosa](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/39514340093) |
 | Checkstyle | 0 violaciones |
 | JaCoCo — instrucciones | 95,4% |
 | JaCoCo — ramas | 80,6% |
@@ -53,8 +53,10 @@ La salida local no sustituye las capturas requeridas en el PDF institucional.
 - El tablero público contiene 22 elementos; HU-03 y HU-04 aparecen como
   `Done`. Los límites aparecen en los nombres de las opciones de estado; no se
   presenta como evidencia de un bloqueo automático al excederlos.
-- La descripción de PR #23 declara el ciclo TDD para lotes duplicados, pero no
-  hay commits separados que permitan reproducir históricamente cada fase.
+- La evidencia TDD de lotes duplicados incluye una reproducción RED hecha
+  ahora sobre el servicio previo y pruebas GREEN actuales. PR #23 se integró en
+  un solo commit, por lo que no se afirma que exista evidencia histórica de las
+  fases separadas.
 - La fecha, participantes, historias aceptadas, comentarios de la docente y
   evidencia de una reunión real siguen pendientes de confirmar por el equipo.
 - La protección de `main` requiere que un administrador aplique las opciones
