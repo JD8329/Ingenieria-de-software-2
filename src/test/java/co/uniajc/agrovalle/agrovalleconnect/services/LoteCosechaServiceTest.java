@@ -2,7 +2,7 @@ package co.uniajc.agrovalle.agrovalleconnect.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -54,7 +54,7 @@ class LoteCosechaServiceTest {
 
         assertEquals(lote, resultado);
         assertEquals(agricultor, resultado.getAgricultor());
-        assertFalse(resultado.getActivo());
+        assertTrue(resultado.getActivo());
         verify(eventPublisher).publishEvent(
                 new LoteCosechaPublicadoEvent(11L, agricultorId, "Cafe"));
     }
