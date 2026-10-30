@@ -49,6 +49,7 @@ persiste dos entidades y no se presenta como implementación de los dos modelos.
 
 - [Requisito HU-01: IEEE 29148 y comparación con BDD](../ieee29148-req01.md)
 - [Planificación del Sprint 1](../sprint-1-planning.md)
+- [Planificación del Sprint 2](../sprint-2-planning.md)
 - [Revisión y evidencia técnica](../sprint-1-review.md)
 - [Revisión del Sprint 2](../sprint-2-review.md)
 - [Retrospectiva del Sprint 2](../sprint-2-retrospective.md)

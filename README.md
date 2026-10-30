@@ -59,6 +59,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Especificación HU-01: IEEE 29148 vs. BDD: [`docs/ieee29148-req01.md`](docs/ieee29148-req01.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Planificación del Sprint 1: [`docs/sprint-1-planning.md`](docs/sprint-1-planning.md)
+- Planificación del Sprint 2: [`docs/sprint-2-planning.md`](docs/sprint-2-planning.md)
 - Bitácora de Daily Scrums: [`docs/bitacora-daily-scrum.md`](docs/bitacora-daily-scrum.md)
 - Revisión y demo del Sprint: [`docs/sprint-1-review.md`](docs/sprint-1-review.md)
 - Retrospectiva del Sprint: [`docs/sprint-1-retrospective.md`](docs/sprint-1-retrospective.md)
