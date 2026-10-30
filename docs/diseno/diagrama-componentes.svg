@@ -20,14 +20,16 @@
   <rect class="group" x="35" y="115" width="1050" height="125" rx="8"/>
   <text class="title" x="55" y="143">Presentacion / API REST</text>
   <rect class="node" x="85" y="160" width="280" height="55" rx="8"/>
-  <text class="label" x="225" y="193" text-anchor="middle">AgricultorController / AuthController</text>
+  <text class="label" x="225" y="184" text-anchor="middle">AgricultorController / AuthController</text>
+  <text class="small" x="225" y="205" text-anchor="middle">PrecioController</text>
   <rect class="node" x="745" y="160" width="280" height="55" rx="8"/>
   <text class="label" x="885" y="193" text-anchor="middle">LoteCosechaController</text>
 
   <rect class="group" x="35" y="275" width="690" height="135" rx="8"/>
   <text class="title" x="55" y="303">Servicio / Dominio</text>
   <rect class="node" x="75" y="325" width="260" height="55" rx="8"/>
-  <text class="label" x="205" y="358" text-anchor="middle">AgricultorService / AuthService</text>
+  <text class="label" x="205" y="350" text-anchor="middle">AgricultorService / AuthService</text>
+  <text class="small" x="205" y="370" text-anchor="middle">PrecioService</text>
   <rect class="node" x="385" y="325" width="285" height="55" rx="8"/>
   <text class="label" x="527" y="358" text-anchor="middle">LoteCosechaService</text>
 
@@ -42,7 +44,8 @@
   <rect class="node" x="245" y="505" width="280" height="50" rx="8"/>
   <text class="label" x="385" y="536" text-anchor="middle">AgricultorRepository</text>
   <rect class="node" x="595" y="505" width="280" height="50" rx="8"/>
-  <text class="label" x="735" y="536" text-anchor="middle">LoteCosechaRepository</text>
+  <text class="label" x="735" y="526" text-anchor="middle">LoteCosechaRepository</text>
+  <text class="small" x="735" y="546" text-anchor="middle">TransaccionPrecioRepository</text>
 
   <rect class="node" x="390" y="635" width="340" height="75" rx="12"/>
   <text class="label" x="560" y="668" text-anchor="middle">PostgreSQL</text>

@@ -13,15 +13,15 @@ una vista web MVC: el cliente consume endpoints HTTP y envía o recibe JSON.
 flowchart TB
     client["Cliente REST<br/>HTTP / JSON"]
     subgraph presentation["Capa 1 · Presentación y API REST"]
-        controllers["AgricultorController<br/>AuthController<br/>LoteCosechaController"]
+        controllers["AgricultorController<br/>AuthController<br/>PrecioController<br/>LoteCosechaController"]
         dto["DTO de solicitud y respuesta"]
     end
     subgraph domain["Capa 2 · Servicio y dominio"]
-        services["AgricultorService<br/>AuthService<br/>LoteCosechaService"]
-        models["Agricultor<br/>LoteCosecha<br/>Municipio · Rol"]
+        services["AgricultorService<br/>AuthService · PrecioService<br/>LoteCosechaService"]
+        models["Agricultor · TransaccionPrecio<br/>LoteCosecha · Municipio · Rol"]
     end
     subgraph access["Capa 3 · Acceso a datos"]
-        repos["AgricultorRepository<br/>LoteCosechaRepository"]
+        repos["AgricultorRepository<br/>TransaccionPrecioRepository<br/>LoteCosechaRepository"]
         jpa["Spring Data JPA / Hibernate"]
     end
     subgraph persistence["Capa 4 · Persistencia"]
@@ -43,8 +43,8 @@ flowchart TB
 | Capa | Paquetes y componentes | Responsabilidad | Estado |
 |---|---|---|---|
 | 1. Presentación / REST | `controllers`, `dto` | Recibir solicitudes, ejecutar validación de entrada, delegar al servicio y producir respuestas/códigos HTTP. | Implementada. |
-| 2. Servicio / dominio | `services`, `models`, `exceptions` | Aplicar las reglas de registro, autenticación y publicación; representar entidades y errores de dominio. | Implementada para HU-01, login de soporte y HU-02. |
-| 3. Repositorio / acceso a datos | `repositories` | Abstraer consultas y operaciones CRUD mediante `JpaRepository`. | Implementada para agricultor y lote. |
+| 2. Servicio / dominio | `services`, `models`, `exceptions` | Aplicar las reglas de registro, autenticación, publicación, precios promedio y búsqueda; representar entidades y errores de dominio. | Implementada para HU-01 a HU-04 y login JWT. |
+| 3. Repositorio / acceso a datos | `repositories` | Abstraer consultas y operaciones CRUD mediante `JpaRepository`. | Implementada para agricultor, lote y transacción de precio. |
 | 4. Persistencia / PostgreSQL | PostgreSQL, Hibernate / JPA | Guardar los datos y hacer cumplir las restricciones declaradas por las entidades y la base. | Configurada; pruebas usan H2. |
 
 Los servicios delimitan sus operaciones con `@Transactional`; las consultas
@@ -60,6 +60,7 @@ eventos de dominio:
 - `diagrama-componentes.svg`
 - `diagrama-secuencia-hu01.png`
 - `diagrama-secuencia.png`
+- `diagrama-secuencia-hu02-publicacion.md` (Mermaid editable con activaciones y flujos alternos)
 - `diagrama-despliegue.svg`
 
 El diagrama `diagrama-secuencia-hu01.png` documenta el registro. El diagrama
@@ -75,7 +76,7 @@ también en la
 | Repository | `AgricultorRepository` y `LoteCosechaRepository` extienden `JpaRepository`. | Implementado; Spring Data crea las implementaciones concretas. |
 | Inyección de dependencias / IoC | Spring administra controladores, servicios y configuración. | Implementada mediante inyección por constructor. |
 | Singleton (scope de Spring) | Los beans de Spring usan scope singleton por defecto. | El contenedor administra una instancia compartida por contexto; no se implementa manualmente el patrón GoF Singleton. |
-| DTO | Records como `AgricultorRegistroRequest`, `LoginRequest`, `TokenResponse` y `LoteCosechaResponse`. | Implementado para delimitar contratos JSON. `AgricultorResponse` no devuelve contraseña, pero actualmente contiene cédula y correo. |
+| DTO | Records como `AgricultorRegistroRequest`, `LoginRequest`, `TokenResponse` y `LoteCosechaResponse`. | Implementado para delimitar contratos JSON; las respuestas no serializan la contraseña ni los datos personales del agricultor. |
 | Método fábrica estático | `AgricultorResponse.desde(...)` y `LoteCosechaResponse.desde(...)` construyen respuestas desde entidades. | Se usa un método fábrica estático como técnica de creación. No se considera el patrón GoF Factory Method: no hay creador abstracto ni jerarquía de fábricas. |
 | Data Mapper | Conversión de entidad a DTO mediante `desde(...)`. | La conversión reside en el record de respuesta; no existe un Data Mapper independiente. |
 | Builder | No existe un builder propio para entidades o DTO del dominio. | No está implementado ni se requiere para la construcción actual: los DTO son records y los objetos tienen pocos datos. No se incorpora solo para afirmar uso de un patrón. |
