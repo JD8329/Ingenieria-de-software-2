@@ -56,6 +56,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Evidencias y pendientes de la entrega del Segundo Corte: [`docs/entrega-segundo-corte.md`](docs/entrega-segundo-corte.md)
 - Retrospectiva de Sprint 2: [`docs/sprint-2-retrospective.md`](docs/sprint-2-retrospective.md)
 - Tablero Scrumban y configuración de GitHub: [`docs/scrumban.md`](docs/scrumban.md)
+- Taller de integración continua de la Sesión 10: [`docs/sesion-10-integracion-continua.md`](docs/sesion-10-integracion-continua.md)
 - Especificación HU-01: IEEE 29148 vs. BDD: [`docs/ieee29148-req01.md`](docs/ieee29148-req01.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Planificación del Sprint 1: [`docs/sprint-1-planning.md`](docs/sprint-1-planning.md)
