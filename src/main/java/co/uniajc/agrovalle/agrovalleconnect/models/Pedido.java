@@ -36,6 +36,33 @@ public class Pedido {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
+    @Column(length = 255)
+    private String transportadora;
+
+    @Column(length = 255)
+    private String conductor;
+
+    @Column(length = 255)
+    private String vehiculo;
+
+    @Column
+    private LocalDateTime fechaEstimadaEntrega;
+
+    @Column(length = 500)
+    private String ruta;
+
+    @Column(length = 500)
+    private String observaciones;
+
+    @Column
+    private Integer calificacion;
+
+    @Column(length = 500)
+    private String comentarioCalificacion;
+
+    @Column
+    private LocalDateTime fechaEntrega;
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePedido> detalles = new ArrayList<>();
 
@@ -80,6 +107,78 @@ public class Pedido {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getTransportadora() {
+        return transportadora;
+    }
+
+    public void setTransportadora(String transportadora) {
+        this.transportadora = transportadora;
+    }
+
+    public String getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(String conductor) {
+        this.conductor = conductor;
+    }
+
+    public String getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(String vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public LocalDateTime getFechaEstimadaEntrega() {
+        return fechaEstimadaEntrega;
+    }
+
+    public void setFechaEstimadaEntrega(LocalDateTime fechaEstimadaEntrega) {
+        this.fechaEstimadaEntrega = fechaEstimadaEntrega;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Integer getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public String getComentarioCalificacion() {
+        return comentarioCalificacion;
+    }
+
+    public void setComentarioCalificacion(String comentarioCalificacion) {
+        this.comentarioCalificacion = comentarioCalificacion;
+    }
+
+    public LocalDateTime getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(LocalDateTime fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public List<DetallePedido> getDetalles() {

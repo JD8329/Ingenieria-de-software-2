@@ -12,10 +12,12 @@ import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoItemRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoRequest;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
+import co.uniajc.agrovalle.agrovalleconnect.models.DetallePedido;
 import co.uniajc.agrovalle.agrovalleconnect.models.EstadoPedido;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.models.Notificacion;
 import co.uniajc.agrovalle.agrovalleconnect.models.Pedido;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.NotificacionRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.PedidoRepository;
@@ -39,6 +41,9 @@ class PedidoServiceTest {
 
     @Mock
     private NotificacionRepository notificacionRepository;
+
+    @Mock
+    private AgricultorRepository agricultorRepository;
 
     @InjectMocks
     private PedidoService pedidoService;
@@ -85,6 +90,61 @@ class PedidoServiceTest {
         assertThrows(IllegalArgumentException.class, () -> pedidoService.reservar(solicitud));
         verify(loteCosechaRepository, never()).findByIdForUpdate(any());
         verify(pedidoRepository, never()).save(any(Pedido.class));
+    }
+
+    @Test
+    void programarDespachoActualizaPedidoAEnTransito() {
+        Pedido pedido = new Pedido();
+        pedido.setId(40L);
+        pedido.setComercianteId(3L);
+        pedido.setEstado(EstadoPedido.RESERVADO);
+        pedido.setTotal(new BigDecimal("50000.00"));
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(7L);
+        LoteCosecha lote = lote("100", "2500", "1");
+        lote.setAgricultor(agricultor);
+        DetallePedido detalle = new DetallePedido();
+        detalle.setLote(lote);
+        pedido.setDetalles(List.of(detalle));
+        when(pedidoRepository.findById(40L)).thenReturn(Optional.of(pedido));
+        when(pedidoRepository.save(any(Pedido.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Pedido actualizado = pedidoService.programarDespacho(40L, new co.uniajc.agrovalle.agrovalleconnect.dto.DespachoRequest(
+                "Transportes Valle",
+                "Luis Perez",
+                "XYZ-123",
+                java.time.LocalDateTime.now().plusDays(2),
+                List.of("Palmira", "Cali"),
+                "Salida programada"), 7L);
+
+        assertEquals(EstadoPedido.EN_TRANSITO, actualizado.getEstado());
+        assertEquals("Transportes Valle", actualizado.getTransportadora());
+        assertEquals("Palmira -> Cali", actualizado.getRuta());
+    }
+
+    @Test
+    void calificarPedidoFinalizaLaOperacionYActualizaRating() {
+        Pedido pedido = new Pedido();
+        pedido.setId(40L);
+        pedido.setComercianteId(3L);
+        pedido.setEstado(EstadoPedido.EN_TRANSITO);
+        pedido.setTotal(new BigDecimal("50000.00"));
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(7L);
+        LoteCosecha lote = lote("100", "2500", "1");
+        lote.setAgricultor(agricultor);
+        DetallePedido detalle = new DetallePedido();
+        detalle.setLote(lote);
+        pedido.setDetalles(List.of(detalle));
+        when(pedidoRepository.findById(40L)).thenReturn(Optional.of(pedido));
+        when(pedidoRepository.save(any(Pedido.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Pedido calificado = pedidoService.calificarPedido(40L, new co.uniajc.agrovalle.agrovalleconnect.dto.CalificacionRequest(
+                3L, 5, "Excelente entrega"));
+
+        assertEquals(EstadoPedido.FINALIZADO, calificado.getEstado());
+        assertEquals(5, calificado.getCalificacion());
+        assertEquals("Excelente entrega", calificado.getComentarioCalificacion());
     }
 
     private LoteCosecha lote(String cantidad, String precio, String id) {

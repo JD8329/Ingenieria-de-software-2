@@ -11,6 +11,7 @@ import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.services.AgricultorService;
+import co.uniajc.agrovalle.agrovalleconnect.services.PedidoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -38,6 +39,9 @@ class AgricultorControllerTest {
 
     @MockitoBean
     private AgricultorService agricultorService;
+
+    @MockitoBean
+    private PedidoService pedidoService;
 
     @Test
     void registroValidoRetorna201SinContrasena() throws Exception {

@@ -46,3 +46,4 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Implementación de HU-05 y HU-06: [`docs/sprint-3-historias-5-y-6.md`](docs/sprint-3-historias-5-y-6.md)
+- Documentación de HU-07 y HU-08: [`docs/sprint-4-historias-7-y-8.md`](docs/sprint-4-historias-7-y-8.md)
