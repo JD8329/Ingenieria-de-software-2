@@ -45,3 +45,4 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Pre-commit hooks: Husky (`.husky/pre-commit`)
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
+- Implementación de HU-05 y HU-06: [`docs/sprint-3-historias-5-y-6.md`](docs/sprint-3-historias-5-y-6.md)
