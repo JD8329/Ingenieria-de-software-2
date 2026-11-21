@@ -116,7 +116,7 @@ Como Administrador/Productor, quiero consultar un panel con métricas de ventas 
 ---
 
 ## HU-11: Inicio de Sesión con JWT
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Implementación integrada en `main` como soporte de HU-02 (PR #20; CI aprobado; revisión formal no registrada)
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Login JWT integrado en `main` como soporte de HU-02 (PR #20); Sprint 6 amplía el token con rol y autorización por rol en `feature/sprint6-hu11-login-jwt`
 
 Como Usuario registrado, quiero iniciar sesión con correo y contraseña, para acceder de forma segura a las funciones protegidas.
 
