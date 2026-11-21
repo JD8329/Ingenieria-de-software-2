@@ -36,6 +36,7 @@ class LoteCosechaControllerTest {
         Jwt jwt = Jwt.withTokenValue("test-token")
                 .header("alg", "none")
                 .subject("1")
+                .claim("rol", "PRODUCCION")
                 .issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusSeconds(60))
                 .build();

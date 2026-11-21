@@ -9,13 +9,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -37,6 +38,13 @@ public class SeguridadConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        JwtGrantedAuthoritiesConverter authoritiesConverter =
+                new JwtGrantedAuthoritiesConverter();
+        authoritiesConverter.setAuthoritiesClaimName("rol");
+        authoritiesConverter.setAuthorityPrefix("ROLE_");
+        JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
+        authenticationConverter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
+
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
@@ -47,10 +55,11 @@ public class SeguridadConfig {
                                 "/api/v1/agricultores/registro").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/productos",
-                                "/api/v1/precios/transacciones").authenticated()
+                                "/api/v1/precios/transacciones").hasAuthority("ROLE_PRODUCCION")
                         .anyRequest().permitAll())
                 .oauth2ResourceServer(resourceServer ->
-                        resourceServer.jwt(Customizer.withDefaults()))
+                        resourceServer.jwt(jwt ->
+                                jwt.jwtAuthenticationConverter(authenticationConverter)))
                 .build();
     }
 

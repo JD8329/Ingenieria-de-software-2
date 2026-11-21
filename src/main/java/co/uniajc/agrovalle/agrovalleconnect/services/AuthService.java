@@ -57,6 +57,7 @@ public class AuthService {
                 .issuedAt(ahora)
                 .expiresAt(expiracion)
                 .subject(agricultor.getId().toString())
+                .claim("rol", agricultor.getRol().name())
                 .build();
         String token = jwtEncoder.encode(JwtEncoderParameters.from(
                 JwsHeader.with(MacAlgorithm.HS256).build(), claims)).getTokenValue();

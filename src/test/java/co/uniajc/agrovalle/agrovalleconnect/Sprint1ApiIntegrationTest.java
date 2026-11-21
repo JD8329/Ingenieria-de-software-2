@@ -28,6 +28,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import tools.jackson.databind.JsonNode;
@@ -51,6 +52,9 @@ class Sprint1ApiIntegrationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private JwtDecoder jwtDecoder;
 
     @BeforeEach
     void limpiarDatos() {
@@ -298,6 +302,15 @@ class Sprint1ApiIntegrationTest {
                                 }
                                 """))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void loginValidoIncluyeRolProduccionEnJwt() throws Exception {
+        Agricultor agricultor = guardarAgricultor("1234567890", "ana@example.com");
+        String bearer = bearerToken(agricultor);
+
+        assertEquals("PRODUCCION", jwtDecoder.decode(bearer.substring(7))
+                .getClaimAsString("rol"));
     }
 
     @Test
