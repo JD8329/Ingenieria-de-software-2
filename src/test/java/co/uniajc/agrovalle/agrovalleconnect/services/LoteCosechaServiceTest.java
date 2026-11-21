@@ -11,9 +11,13 @@ import static org.mockito.Mockito.when;
 import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
+import co.uniajc.agrovalle.agrovalleconnect.models.EstadoPedido;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.PedidoRepository;
+import co.uniajc.agrovalle.agrovalleconnect.dto.ActualizacionLoteRequest;
+import co.uniajc.agrovalle.agrovalleconnect.exceptions.AccesoDenegadoException;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -31,6 +35,9 @@ class LoteCosechaServiceTest {
 
     @Mock
     private AgricultorRepository agricultorRepository;
+
+    @Mock
+    private PedidoRepository pedidoRepository;
 
     @Mock
     private ApplicationEventPublisher eventPublisher;
@@ -160,6 +167,81 @@ class LoteCosechaServiceTest {
         loteCosechaService.listarLotesPorAgricultor(7L);
 
         verify(loteCosechaRepository).findByAgricultorIdAndActivoTrue(7L);
+    }
+
+    @Test
+    void actualizaSoloLosCamposInformadosCuandoNoHayPedidosActivos() {
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now());
+        lote.setId(11L);
+        lote.setCantidadKg(new java.math.BigDecimal("100.00"));
+        lote.setPrecioUnitario(new java.math.BigDecimal("5000.00"));
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(7L);
+        lote.setAgricultor(agricultor);
+        when(loteCosechaRepository.findByIdForUpdate(11L)).thenReturn(Optional.of(lote));
+        when(pedidoRepository.existePedidoActivoParaLote(11L, EstadoPedido.FINALIZADO))
+                .thenReturn(false);
+        when(loteCosechaRepository.save(lote)).thenReturn(lote);
+
+        LoteCosecha resultado = loteCosechaService.actualizarLote(
+                11L, 7L, new ActualizacionLoteRequest(new java.math.BigDecimal("80.00"), null));
+
+        assertEquals(new java.math.BigDecimal("80.00"), resultado.getCantidadKg());
+        assertEquals(new java.math.BigDecimal("5000.00"), resultado.getPrecioUnitario());
+        verify(loteCosechaRepository).save(lote);
+    }
+
+    @Test
+    void rechazaLoteDeOtroAgricultorSinConsultarPedidosNiGuardar() {
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now());
+        lote.setId(11L);
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(8L);
+        lote.setAgricultor(agricultor);
+        when(loteCosechaRepository.findByIdForUpdate(11L)).thenReturn(Optional.of(lote));
+
+        assertThrows(AccesoDenegadoException.class,
+                () -> loteCosechaService.actualizarLote(
+                        11L, 7L, new ActualizacionLoteRequest(null,
+                                new java.math.BigDecimal("6000.00"))));
+
+        verify(pedidoRepository, never()).existePedidoActivoParaLote(any(), any());
+        verify(loteCosechaRepository, never()).save(any(LoteCosecha.class));
+    }
+
+    @Test
+    void rechazaCambiosCuandoElLoteTienePedidosActivos() {
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now());
+        lote.setId(11L);
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(7L);
+        lote.setAgricultor(agricultor);
+        when(loteCosechaRepository.findByIdForUpdate(11L)).thenReturn(Optional.of(lote));
+        when(pedidoRepository.existePedidoActivoParaLote(11L, EstadoPedido.FINALIZADO))
+                .thenReturn(true);
+
+        assertThrows(ConflictoException.class,
+                () -> loteCosechaService.desactivarLote(11L, 7L));
+
+        verify(loteCosechaRepository, never()).save(any(LoteCosecha.class));
+    }
+
+    @Test
+    void desactivaLotePropioSinPedidosActivos() {
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now());
+        lote.setId(11L);
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(7L);
+        lote.setAgricultor(agricultor);
+        when(loteCosechaRepository.findByIdForUpdate(11L)).thenReturn(Optional.of(lote));
+        when(pedidoRepository.existePedidoActivoParaLote(11L, EstadoPedido.FINALIZADO))
+                .thenReturn(false);
+        when(loteCosechaRepository.save(lote)).thenReturn(lote);
+
+        LoteCosecha resultado = loteCosechaService.desactivarLote(11L, 7L);
+
+        assertEquals(false, resultado.getActivo());
+        verify(loteCosechaRepository).save(lote);
     }
 
     private LoteCosecha crearLote(String tipoProducto, LocalDate fechaCosecha) {

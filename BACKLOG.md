@@ -141,7 +141,7 @@ Como Comerciante urbano, quiero registrarme con mis datos de negocio, para explo
 ---
 
 ## HU-13: Edición y Baja de Lotes Publicados
-**Prioridad:** Should have | **Story Points:** 3
+**Prioridad:** Should have | **Story Points:** 3 | **Estado:** 🟡 Implementada y verificada en `feature/sprint7-hu13-edicion-lotes`; pendiente de Pull Request
 
 Como Agricultor, quiero editar o dar de baja un lote publicado, para mantener actualizado mi inventario.
 

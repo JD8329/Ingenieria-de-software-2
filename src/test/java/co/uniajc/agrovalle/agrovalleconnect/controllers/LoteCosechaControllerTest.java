@@ -2,6 +2,7 @@ package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +59,17 @@ class LoteCosechaControllerTest {
                                 }
                                 """.formatted(LocalDate.now().minusDays(1))))
                 .andExpect(status().isBadRequest());
+        verifyNoInteractions(loteCosechaService);
+    }
+
+    @Test
+    void edicionSinCamposRetorna400SinInvocarServicio() throws Exception {
+        mockMvc.perform(patch("/api/v1/productos/11")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer test-token")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+
         verifyNoInteractions(loteCosechaService);
     }
 }

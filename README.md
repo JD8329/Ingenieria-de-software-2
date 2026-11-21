@@ -55,6 +55,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Revisión de Sprint 2: [`docs/sprint-2-review.md`](docs/sprint-2-review.md)
 - Sprint 6 — Inicio de sesión con JWT (HU-11): [`docs/sprint-6-hu11-login-jwt.md`](docs/sprint-6-hu11-login-jwt.md)
 - Sprint 6 — Registro de comerciantes (HU-12): [`docs/sprint-6-hu12-registro-comerciantes.md`](docs/sprint-6-hu12-registro-comerciantes.md)
+- Sprint 7 — Edición y baja de lotes (HU-13): [`docs/sprint-7-hu13-edicion-lotes.md`](docs/sprint-7-hu13-edicion-lotes.md)
 - Evidencias y pendientes de la entrega del Segundo Corte: [`docs/entrega-segundo-corte.md`](docs/entrega-segundo-corte.md)
 - Retrospectiva de Sprint 2: [`docs/sprint-2-retrospective.md`](docs/sprint-2-retrospective.md)
 - Tablero Scrumban y configuración de GitHub: [`docs/scrumban.md`](docs/scrumban.md)

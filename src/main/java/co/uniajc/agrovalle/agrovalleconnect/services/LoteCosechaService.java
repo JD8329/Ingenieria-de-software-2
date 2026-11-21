@@ -1,13 +1,18 @@
 package co.uniajc.agrovalle.agrovalleconnect.services;
 
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
+import co.uniajc.agrovalle.agrovalleconnect.dto.ActualizacionLoteRequest;
 import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
+import co.uniajc.agrovalle.agrovalleconnect.exceptions.AccesoDenegadoException;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
+import co.uniajc.agrovalle.agrovalleconnect.exceptions.RecursoNoEncontradoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
+import co.uniajc.agrovalle.agrovalleconnect.models.EstadoPedido;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.PedidoRepository;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,14 +27,18 @@ public class LoteCosechaService {
 
     private final AgricultorRepository agricultorRepository;
 
+    private final PedidoRepository pedidoRepository;
+
     private final ApplicationEventPublisher eventPublisher;
 
     public LoteCosechaService(
             LoteCosechaRepository loteCosechaRepository,
             AgricultorRepository agricultorRepository,
+            PedidoRepository pedidoRepository,
             ApplicationEventPublisher eventPublisher) {
         this.loteCosechaRepository = loteCosechaRepository;
         this.agricultorRepository = agricultorRepository;
+        this.pedidoRepository = pedidoRepository;
         this.eventPublisher = eventPublisher;
     }
 
@@ -98,6 +107,54 @@ public class LoteCosechaService {
             throw new IllegalArgumentException("La categoría no puede estar vacía");
         }
         return loteCosechaRepository.buscarActivos(municipio, categoriaNormalizada);
+    }
+
+    @Transactional
+    public LoteCosecha actualizarLote(
+            Long loteId,
+            Long agricultorId,
+            ActualizacionLoteRequest datos) {
+        if (datos.cantidadKg() == null && datos.precioUnitario() == null) {
+            throw new IllegalArgumentException(
+                    "Debe indicar cantidadKg o precioUnitario para actualizar el lote");
+        }
+
+        LoteCosecha lote = obtenerLotePropio(loteId, agricultorId);
+        validarSinPedidosActivos(loteId);
+
+        if (datos.cantidadKg() != null) {
+            lote.setCantidadKg(datos.cantidadKg());
+        }
+        if (datos.precioUnitario() != null) {
+            lote.setPrecioUnitario(datos.precioUnitario());
+        }
+        return loteCosechaRepository.save(lote);
+    }
+
+    @Transactional
+    public LoteCosecha desactivarLote(Long loteId, Long agricultorId) {
+        LoteCosecha lote = obtenerLotePropio(loteId, agricultorId);
+        validarSinPedidosActivos(loteId);
+        lote.setActivo(false);
+        return loteCosechaRepository.save(lote);
+    }
+
+    private LoteCosecha obtenerLotePropio(Long loteId, Long agricultorId) {
+        LoteCosecha lote = loteCosechaRepository.findByIdForUpdate(loteId)
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "Lote no encontrado con id " + loteId));
+        if (!agricultorId.equals(lote.getAgricultor().getId())) {
+            throw new AccesoDenegadoException(
+                    "El lote no pertenece al agricultor autenticado");
+        }
+        return lote;
+    }
+
+    private void validarSinPedidosActivos(Long loteId) {
+        if (pedidoRepository.existePedidoActivoParaLote(loteId, EstadoPedido.FINALIZADO)) {
+            throw new ConflictoException(
+                    "No se puede modificar un lote con pedidos activos asociados");
+        }
     }
 
 }
