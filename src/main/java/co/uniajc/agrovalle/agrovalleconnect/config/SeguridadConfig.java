@@ -57,6 +57,10 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/productos",
                                 "/api/v1/precios/transacciones").hasAuthority("ROLE_PRODUCCION")
+                        .requestMatchers(HttpMethod.PATCH,
+                                "/api/v1/productos/*").hasAuthority("ROLE_PRODUCCION")
+                        .requestMatchers(HttpMethod.DELETE,
+                                "/api/v1/productos/*").hasAuthority("ROLE_PRODUCCION")
                         .anyRequest().permitAll())
                 .oauth2ResourceServer(resourceServer ->
                         resourceServer.jwt(jwt ->

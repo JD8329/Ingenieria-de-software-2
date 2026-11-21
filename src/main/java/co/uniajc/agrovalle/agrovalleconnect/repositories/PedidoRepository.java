@@ -1,7 +1,10 @@
 package co.uniajc.agrovalle.agrovalleconnect.repositories;
 
 import co.uniajc.agrovalle.agrovalleconnect.models.Pedido;
+ feature/sprint7-hu14-perfil-agricultor
 import java.util.List;
+import co.uniajc.agrovalle.agrovalleconnect.models.EstadoPedido;
+ main
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("""
+           feature/sprint7-hu14-perfil-agricultor
             select p.calificacion from Pedido p
             where p.calificacion is not null
               and exists (
@@ -18,4 +22,12 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             """)
     List<Integer> findCalificacionesByAgricultorId(
             @Param("agricultorId") Long agricultorId);
+            select case when count(p) > 0 then true else false end
+            from Pedido p join p.detalles d
+            where d.lote.id = :loteId and p.estado <> :estadoFinalizado
+            """)
+    boolean existePedidoActivoParaLote(
+            @Param("loteId") Long loteId,
+            @Param("estadoFinalizado") EstadoPedido estadoFinalizado);
+main
 }
