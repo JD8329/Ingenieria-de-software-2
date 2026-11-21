@@ -166,13 +166,16 @@ Como Comerciante, quiero ver el perfil público de un agricultor con su califica
 ---
 
 ## HU-15: Recuperación de Contraseña
-**Prioridad:** Should have | **Story Points:** 5
+**Prioridad:** Should have | **Story Points:** 5 | **Estado:** 🟡 Implementada y verificada; PR #41 abierto, pendiente de aprobación e integración
 
 Como Usuario registrado, quiero recuperar mi contraseña vía correo, para no perder acceso a mi cuenta.
 
 - **Given** un usuario registrado que olvidó su contraseña
   **When** solicita recuperación vía `/api/v1/auth/recuperar-password`
-  **Then** el sistema envía un enlace de restablecimiento válido por tiempo limitado
+  **Then** el sistema responde sin revelar si el correo existe y envía un enlace de restablecimiento válido por 30 minutos
+- **Given** un enlace de recuperación vigente
+  **When** el usuario envía el token y una contraseña nueva a `/api/v1/auth/restablecer-password`
+  **Then** el sistema actualiza la contraseña y el enlace queda invalidado
 
 ---
 

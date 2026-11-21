@@ -53,6 +53,8 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/register",
+                                "/api/v1/auth/recuperar-password",
+                                "/api/v1/auth/restablecer-password",
                                 "/api/v1/agricultores/registro").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/productos",
