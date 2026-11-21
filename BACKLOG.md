@@ -166,7 +166,7 @@ Como Comerciante, quiero ver el perfil público de un agricultor con su califica
 ---
 
 ## HU-15: Recuperación de Contraseña
-**Prioridad:** Should have | **Story Points:** 5 | **Estado:** 🟡 Implementada y verificada en `feature/sprint8-hu15-recuperacion-password`; pendiente de Pull Request y revisión
+**Prioridad:** Should have | **Story Points:** 5 | **Estado:** 🟡 Implementada y verificada; PR #41 abierto, pendiente de aprobación e integración
 
 Como Usuario registrado, quiero recuperar mi contraseña vía correo, para no perder acceso a mi cuenta.
 

@@ -76,9 +76,9 @@ HU-15 se implementó en una rama independiente creada desde `origin/main`.
 La verificación automatizada pasó con `clean install`; los endpoints también
 se comprobaron en ejecución local con H2. El envío del mensaje se prueba con un
 remitente SMTP simulado; la entrega real requiere configurar el servidor SMTP
-del entorno. La revisión por pares y la integración mediante Pull Request siguen
-pendientes. Husky continúa sin activarse en este clon.
+del entorno. El PR #41 está abierto y quedan pendientes la aprobación y la
+integración. Husky continúa sin activarse en este clon.
 
 | Historia | Rama de trabajo | Build, pruebas, Checkstyle y cobertura | BDD y documentación | Revisión por pares | Husky local |
 |---|---|---|---|---|---|
-| HU-15 | `feature/sprint8-hu15-recuperacion-password` | `clean install`: 88 pruebas aprobadas; Checkstyle sin violaciones; umbrales JaCoCo satisfechos. | Solicitud no enumerable, token de un solo uso y vigencia de 30 minutos, correo SMTP y cambio BCrypt para agricultores y comerciantes verificados. Documentación en español. | Pendiente de Pull Request y aprobación. | Pendiente de activar el hook en este clon. |
+| HU-15 | `feature/sprint8-hu15-recuperacion-password` | `clean install`: 88 pruebas aprobadas; Checkstyle sin violaciones; umbrales JaCoCo satisfechos. | Solicitud no enumerable, token de un solo uso y vigencia de 30 minutos, correo SMTP y cambio BCrypt para agricultores y comerciantes verificados. Documentación en español. | PR #41 abierto; pendiente de aprobación. | Pendiente de activar el hook en este clon. |
