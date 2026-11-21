@@ -62,6 +62,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Taller de integración continua de la Sesión 10: [`docs/sesion-10-integracion-continua.md`](docs/sesion-10-integracion-continua.md)
 - Especificación HU-01: IEEE 29148 vs. BDD: [`docs/ieee29148-req01.md`](docs/ieee29148-req01.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
+- Sprint 7 — Perfil público del agricultor (HU-14): [`docs/sprint-7-hu14-perfil-agricultor.md`](docs/sprint-7-hu14-perfil-agricultor.md)
 - Planificación del Sprint 1: [`docs/sprint-1-planning.md`](docs/sprint-1-planning.md)
 - Planificación del Sprint 2: [`docs/sprint-2-planning.md`](docs/sprint-2-planning.md)
 - Bitácora de Daily Scrums: [`docs/bitacora-daily-scrum.md`](docs/bitacora-daily-scrum.md)

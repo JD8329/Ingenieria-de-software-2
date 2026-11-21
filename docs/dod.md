@@ -52,3 +52,20 @@ configurado); los mismos controles automatizados se ejecutaron manualmente.
 
 El DoD completo queda sujeto a la revisión formal por Pull Request y a la
 activación local de Husky; no se marcan esos criterios como terminados.
+
+## Estado verificable del Sprint 7
+
+HU-13 y HU-14 se implementaron en ramas independientes creadas desde
+`origin/main` (`49d4581`). En cada rama se ejecutó `mvnw clean install`; las
+pruebas, Checkstyle y umbrales de cobertura JaCoCo finalizaron correctamente.
+La revisión por pares y la integración mediante Pull Request siguen pendientes.
+Husky continúa sin activarse en este clon, por lo que las validaciones se
+ejecutaron manualmente.
+
+| Historia | Rama de trabajo | Build, pruebas, Checkstyle y cobertura | Revisión por pares | Husky local |
+|---|---|---|---|---|
+| HU-13 | `feature/sprint7-hu13-edicion-lotes` | `clean install`: 80 pruebas aprobadas; Checkstyle sin violaciones; JaCoCo aprobó los umbrales. | Pendiente de Pull Request y aprobación. | Pendiente de activar el hook en este clon. |
+| HU-14 | `feature/sprint7-hu14-perfil-agricultor` | `clean install`: 74 pruebas aprobadas; Checkstyle sin violaciones; JaCoCo aprobó los umbrales. | Pendiente de Pull Request y aprobación. | Pendiente de activar el hook en este clon. |
+
+El checklist general no se marca como terminado hasta completar la revisión
+formal y la integración de ambas ramas.
