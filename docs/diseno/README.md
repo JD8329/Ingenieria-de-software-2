@@ -35,7 +35,7 @@ persiste dos entidades y no se presenta como implementación de los dos modelos.
 |---|---|---|
 | Modelo relacional y DER en 3FN | Modelo de referencia de cinco tablas documentado en [`modelo-datos-der.md`](modelo-datos-der.md), con [`schema.sql`](schema.sql), DER relacional y diagrama Chen coherentes. | El mapeo a JPA identifica las entidades ejecutables y las diferencias con el esquema relacional; no afirma que las cinco tablas estén desplegadas. |
 | Arquitectura de cuatro capas, SOLID y GoF | [`arquitectura-mvc-gof.md`](arquitectura-mvc-gof.md) documenta responsabilidades y SOLID; [`implementacion-observer.md`](implementacion-observer.md) detalla el patrón Observer. | El evento se registra después del commit; otros observadores pueden suscribirse sin modificar el servicio. |
-| Diagramas y wireframes | UML exportado a PNG y cinco mockups en [`mockups-ui.md`](mockups-ui.md). | La matriz de mockups identifica HU, API/DTO y si el elemento está implementado o es solo prototipo. |
+| Diagramas, wireframes e interfaz web | UML exportado a PNG, cinco mockups en [`mockups-ui.md`](mockups-ui.md) e interfaz funcional en [`front-end.md`](front-end.md). | La interfaz de agricultor consume la API del backend; el catálogo filtra y pagina los lotes activos en el navegador. |
 | IEEE 29148 frente a BDD | [`ieee29148-req01.md`](../ieee29148-req01.md) formaliza HU-01 y compara ambas técnicas. | Los casos de validación y duplicidad de HU-01 tienen pruebas de integración automatizadas. |
 | Pruebas, CI y Scrumban | Suite JUnit 5 con pruebas MockMvc y Mockito; CI en `.github/workflows/ci.yml`; tablero público y límites WIP en [`scrumban.md`](../scrumban.md). | La protección de ramas requiere un administrador; las capturas de Actions/cobertura y los datos de reuniones deben incluirse o confirmarse para el PDF. |
 | Cierre de sprint | [`sprint-1-review.md`](../sprint-1-review.md), [`sprint-2-review.md`](../sprint-2-review.md), [`sprint-2-retrospective.md`](../sprint-2-retrospective.md) y [`dod.md`](../dod.md). | La revisión técnica enlaza CI; los datos de reuniones y la retrospectiva se completan con el equipo y evidencia real. |
@@ -44,6 +44,8 @@ persiste dos entidades y no se presenta como implementación de los dos modelos.
 
 - [Flujo de pantallas](../figuras/prototipado/flujo-pantallas.png)
 - [Wireframes de las cinco pantallas](mockups-ui.md)
+- [Implementación del frontend, API y límites actuales](front-end.md)
+- [Guía práctica para iniciar el proyecto](../inicio-facil.md)
 
 ## Requisitos y ejecución del sprint
 

@@ -45,6 +45,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 
 ## Calidad
 
+- Guía rápida para iniciar la base de datos, el backend y la interfaz web: [`docs/inicio-facil.md`](docs/inicio-facil.md)
 - Linter: Checkstyle (`checkstyle.xml`)
 - Pre-commit hook: Husky (`.husky/pre-commit`), que ejecuta `./mvnw verify`; ejecutar `npm install` para activar el hook localmente
 - Integración continua: GitHub Actions (`.github/workflows/ci.yml`)
@@ -53,6 +54,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
 - Documentación integral: normalización, prototipos y arquitectura: [`docs/documentacion-integral-agrovalle.md`](docs/documentacion-integral-agrovalle.md)
 - Artefactos del Sprint de Diseño: [`docs/diseno/README.md`](docs/diseno/README.md)
+- Interfaz web del agricultor y correspondencia con la API: [`docs/diseno/front-end.md`](docs/diseno/front-end.md)
 - Revisión de Sprint 2: [`docs/sprint-2-review.md`](docs/sprint-2-review.md)
 - Sprint 6 — Inicio de sesión con JWT (HU-11): [`docs/sprint-6-hu11-login-jwt.md`](docs/sprint-6-hu11-login-jwt.md)
 - Sprint 6 — Registro de comerciantes (HU-12): [`docs/sprint-6-hu12-registro-comerciantes.md`](docs/sprint-6-hu12-registro-comerciantes.md)
