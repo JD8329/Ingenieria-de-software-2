@@ -47,3 +47,4 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Implementación de HU-05 y HU-06: [`docs/sprint-3-historias-5-y-6.md`](docs/sprint-3-historias-5-y-6.md)
 - Documentación de HU-07 y HU-08: [`docs/sprint-4-historias-7-y-8.md`](docs/sprint-4-historias-7-y-8.md)
+- Implementación de HU-09 y HU-10: [`docs/sprint-5-historias-9-y-10.md`](docs/sprint-5-historias-9-y-10.md)

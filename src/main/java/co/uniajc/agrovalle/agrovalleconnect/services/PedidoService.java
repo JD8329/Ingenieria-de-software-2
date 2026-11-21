@@ -7,6 +7,7 @@ import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoItemRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoRequest;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.RecursoNoEncontradoException;
+import co.uniajc.agrovalle.agrovalleconnect.events.CambioEstadoPedidoEvent;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.DetallePedido;
 import co.uniajc.agrovalle.agrovalleconnect.models.EstadoPedido;
@@ -26,6 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +39,7 @@ public class PedidoService {
     private final LoteCosechaRepository loteCosechaRepository;
     private final NotificacionRepository notificacionRepository;
     private final AgricultorRepository agricultorRepository;
+    private ApplicationEventPublisher eventPublisher;
 
     public PedidoService(PedidoRepository pedidoRepository,
                          LoteCosechaRepository loteCosechaRepository,
@@ -45,6 +49,16 @@ public class PedidoService {
         this.loteCosechaRepository = loteCosechaRepository;
         this.notificacionRepository = notificacionRepository;
         this.agricultorRepository = agricultorRepository;
+    }
+
+    @Autowired
+    public PedidoService(PedidoRepository pedidoRepository,
+                         LoteCosechaRepository loteCosechaRepository,
+                         NotificacionRepository notificacionRepository,
+                         AgricultorRepository agricultorRepository,
+                         ApplicationEventPublisher eventPublisher) {
+        this(pedidoRepository, loteCosechaRepository, notificacionRepository, agricultorRepository);
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -104,6 +118,7 @@ public class PedidoService {
     @Transactional
     public Pedido programarDespacho(Long pedidoId, DespachoRequest datos, Long agricultorId) {
         Pedido pedido = obtenerPedido(pedidoId);
+        EstadoPedido estadoAnterior = pedido.getEstado();
         if (pedido.getEstado() != EstadoPedido.RESERVADO) {
             throw new IllegalArgumentException("Solo se puede programar despacho para pedidos en estado RESERVADO");
         }
@@ -127,12 +142,15 @@ public class PedidoService {
         pedido.setFechaEstimadaEntrega(datos.fechaEstimadaEntrega());
         pedido.setRuta(String.join(" -> ", datos.ruta()));
         pedido.setObservaciones(datos.observaciones());
-        return pedidoRepository.save(pedido);
+        Pedido guardado = pedidoRepository.save(pedido);
+        notificarCambioEstado(guardado, estadoAnterior, EstadoPedido.EN_TRANSITO);
+        return guardado;
     }
 
     @Transactional
     public Pedido calificarPedido(Long pedidoId, CalificacionRequest datos) {
         Pedido pedido = obtenerPedido(pedidoId);
+        EstadoPedido estadoAnterior = pedido.getEstado();
         if (!pedido.getComercianteId().equals(datos.comercianteId())) {
             throw new IllegalArgumentException("El pedido no corresponde al comerciante que intenta calificarlo");
         }
@@ -146,7 +164,9 @@ public class PedidoService {
         pedido.setComentarioCalificacion(datos.comentario());
         pedido.setFechaEntrega(LocalDateTime.now());
         pedido.setEstado(EstadoPedido.FINALIZADO);
-        return pedidoRepository.save(pedido);
+        Pedido guardado = pedidoRepository.save(pedido);
+        notificarCambioEstado(guardado, estadoAnterior, EstadoPedido.FINALIZADO);
+        return guardado;
     }
 
     @Transactional(readOnly = true)
@@ -213,5 +233,38 @@ public class PedidoService {
         notificacion.setMensaje("Nuevo pedido " + pedidoId + " reservado");
         notificacion.setReferenciaId(pedidoId);
         return notificacion;
+    }
+
+    private void notificarCambioEstado(Pedido pedido,
+                                       EstadoPedido estadoAnterior,
+                                       EstadoPedido estadoNuevo) {
+        if (eventPublisher != null) {
+            eventPublisher.publishEvent(new CambioEstadoPedidoEvent(
+                    pedido, estadoAnterior, estadoNuevo));
+            return;
+        }
+
+        List<Agricultor> agricultores = pedido.getDetalles().stream()
+                .map(detalle -> detalle.getLote().getAgricultor())
+                .collect(java.util.stream.Collectors.toMap(
+                        Agricultor::getId,
+                        agricultor -> agricultor,
+                        (primero, segundo) -> primero,
+                        java.util.LinkedHashMap::new))
+                .values().stream()
+                .toList();
+
+        List<Notificacion> notificaciones = agricultores.stream()
+                .map(agricultor -> {
+                    Notificacion notificacion = new Notificacion();
+                    notificacion.setAgricultor(agricultor);
+                    notificacion.setTipo("CAMBIO_ESTADO");
+                    notificacion.setMensaje("Pedido " + pedido.getId() + " cambió de "
+                            + estadoAnterior.name() + " a " + estadoNuevo.name());
+                    notificacion.setReferenciaId(pedido.getId());
+                    return notificacion;
+                })
+                .toList();
+        notificacionRepository.saveAll(notificaciones);
     }
 }
