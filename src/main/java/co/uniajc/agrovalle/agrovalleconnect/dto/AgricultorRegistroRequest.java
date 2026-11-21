@@ -17,11 +17,14 @@ public record AgricultorRegistroRequest(
         @Email(message = "El correo debe tener un formato valido")
         String correo,
         @NotBlank(message = "La contrasena es obligatoria")
-        @Size(min = 8, message = "La contrasena debe tener minimo 8 caracteres")
+        @Size(min = MINIMUM_PASSWORD_LENGTH,
+                message = "La contrasena debe tener al menos 8 caracteres")
         String contrasena,
         String telefono,
-        @NotBlank(message = "El nombre de la finca es obligatorio")
-        String nombreFinca,
+        @NotBlank(message = "La ubicacion de la finca es obligatoria")
+        String ubicacionFinca,
         @NotNull(message = "El municipio es obligatorio")
         Municipio municipio) {
+
+    private static final int MINIMUM_PASSWORD_LENGTH = 8;
 }

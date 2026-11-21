@@ -1,13 +1,15 @@
 package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
-import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaResponse;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
+import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.services.LoteCosechaService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,21 +30,36 @@ public class LoteCosechaController {
 
     // TEMPORAL: el agricultorId llega por parametro hasta que exista login con JWT (HU-11)
     @PostMapping
-    public ResponseEntity<LoteCosechaResponse> publicar(
-            @RequestParam Long agricultorId,
-            @Valid @RequestBody LoteCosechaRequest datos) {
-        LoteCosecha nuevo = loteCosechaService.publicar(agricultorId, datos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(LoteCosechaResponse.desde(nuevo));
+    public ResponseEntity<LoteCosechaResponse> publicarLote(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody LoteCosecha lote) {
+            LoteCosecha nuevoLote = loteCosechaService.publicarLote(
+                    Long.valueOf(jwt.getSubject()), lote);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(LoteCosechaResponse.desde(nuevoLote));
     }
 
     @GetMapping
-    public List<LoteCosechaResponse> listar() {
-        return loteCosechaService.listarActivos().stream().map(LoteCosechaResponse::desde).toList();
+    public ResponseEntity<List<LoteCosechaResponse>> listarLotes() {
+        return ResponseEntity.ok(loteCosechaService.listarLotesActivos().stream()
+                .map(LoteCosechaResponse::desde)
+                .toList());
     }
 
     @GetMapping("/agricultor/{agricultorId}")
-    public List<LoteCosechaResponse> listarPorAgricultor(@PathVariable Long agricultorId) {
-        return loteCosechaService.listarPorAgricultor(agricultorId).stream()
-                .map(LoteCosechaResponse::desde).toList();
+    public ResponseEntity<List<LoteCosechaResponse>> listarPorAgricultor(
+            @PathVariable Long agricultorId) {
+        return ResponseEntity.ok(loteCosechaService.listarLotesPorAgricultor(agricultorId).stream()
+                .map(LoteCosechaResponse::desde)
+                .toList());
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<LoteCosechaResponse>> buscarLotes(
+            @RequestParam(required = false) Municipio municipio,
+            @RequestParam(required = false) String categoria) {
+        return ResponseEntity.ok(loteCosechaService.buscarLotes(municipio, categoria).stream()
+                .map(LoteCosechaResponse::desde)
+                .toList());
     }
 }

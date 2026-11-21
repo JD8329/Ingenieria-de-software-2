@@ -1,16 +1,16 @@
 package co.uniajc.agrovalle.agrovalleconnect.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+
+import jakarta.validation.constraints.FutureOrPresent;
+
+import jakarta.validation.constraints.NotBlank;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 @Entity
@@ -24,7 +24,15 @@ public class LoteCosecha {
     @Column(nullable = false)
     private String tipoProducto;
 
-    @Enumerated(EnumType.STRING)
+    @Size(max = 50, message = "La categoría no puede superar 50 caracteres")
+    @Pattern(regexp = ".*\\S.*", message = "La categoría no puede estar vacía")
+    @Column(length = 50)
+    private String categoria;
+
+    @NotNull(message = "La cantidad es obligatoria")
+
+    @Positive(message = "La cantidad debe ser mayor a cero")
+
     @Column(nullable = false)
     private CategoriaProducto categoria;
 
@@ -67,9 +75,19 @@ public class LoteCosecha {
         return categoria;
     }
 
-    public void setCategoria(CategoriaProducto categoria) {
-        this.categoria = categoria;
+    public String getCategoria() {
+
+        return categoria;
+
     }
+
+    public void setCategoria(String categoria) {
+
+        this.categoria = categoria;
+
+    }
+
+    public Double getCantidadKg() {
 
     public BigDecimal getCantidadKg() {
         return cantidadKg;
