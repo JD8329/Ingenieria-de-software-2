@@ -1,8 +1,11 @@
 package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
+import co.uniajc.agrovalle.agrovalleconnect.dto.ComercianteRegistroRequest;
+import co.uniajc.agrovalle.agrovalleconnect.dto.ComercianteResponse;
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoginRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.TokenResponse;
 import co.uniajc.agrovalle.agrovalleconnect.services.AuthService;
+import co.uniajc.agrovalle.agrovalleconnect.services.ComercianteService;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -18,8 +21,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
+    private final ComercianteService comercianteService;
+
+    public AuthController(AuthService authService, ComercianteService comercianteService) {
         this.authService = authService;
+        this.comercianteService = comercianteService;
     }
 
     @PostMapping("/login")
@@ -27,5 +33,13 @@ public class AuthController {
         Optional<TokenResponse> token = authService.login(request);
         return token.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ComercianteResponse> registrar(
+            @Valid @RequestBody ComercianteRegistroRequest request) {
+        ComercianteResponse response =
+                ComercianteResponse.desde(comercianteService.registrar(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

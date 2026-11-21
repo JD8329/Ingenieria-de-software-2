@@ -4,6 +4,7 @@ import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.ComercianteRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,19 +15,24 @@ public class AgricultorService {
 
     private final AgricultorRepository agricultorRepository;
 
+    private final ComercianteRepository comercianteRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     public AgricultorService(
             AgricultorRepository agricultorRepository,
+            ComercianteRepository comercianteRepository,
             PasswordEncoder passwordEncoder) {
         this.agricultorRepository = agricultorRepository;
+        this.comercianteRepository = comercianteRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public Agricultor registrarAgricultor(AgricultorRegistroRequest request) {
-        if (agricultorRepository.existsByCorreo(request.correo())) {
-            throw new IllegalArgumentException("Ya existe un agricultor registrado con ese correo");
+        if (agricultorRepository.existsByCorreo(request.correo())
+                || comercianteRepository.existsByCorreo(request.correo())) {
+            throw new IllegalArgumentException("Ya existe una cuenta registrada con ese correo");
         }
 
         if (agricultorRepository.existsByCedula(request.cedula())) {

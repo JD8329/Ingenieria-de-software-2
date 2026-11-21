@@ -6,5 +6,6 @@ public enum Municipio {
     BUGA,
     TULUA,
     CAICEDONIA,
-    JAMUNDI
+    JAMUNDI,
+    CALI
 }

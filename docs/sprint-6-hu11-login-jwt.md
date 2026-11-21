@@ -56,4 +56,6 @@ autorizar la operación.
 .\mvnw.cmd "-Dtest=Sprint1ApiIntegrationTest,LoteCosechaControllerTest" test
 ```
 
-Resultado: 21 pruebas aprobadas, sin fallos ni errores.
+Resultado focalizado: 21 pruebas aprobadas, sin fallos ni errores. La verificación
+completa del incremento HU-11/HU-12 también pasó con `clean install`: 71 pruebas,
+Checkstyle sin violaciones y umbrales JaCoCo satisfechos.

@@ -1,5 +1,5 @@
 package co.uniajc.agrovalle.agrovalleconnect.models;
 
 public enum Rol {
-    AGRICULTOR, PRODUCCION
+    AGRICULTOR, PRODUCCION, COMERCIANTE
 }
