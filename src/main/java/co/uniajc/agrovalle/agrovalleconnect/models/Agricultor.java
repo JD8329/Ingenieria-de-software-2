@@ -1,13 +1,9 @@
 package co.uniajc.agrovalle.agrovalleconnect.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "agricultores")
@@ -42,6 +38,15 @@ public class Agricultor {
     @Column(nullable = false)
     private Rol rol = Rol.AGRICULTOR;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "El municipio es obligatorio")
+    private Municipio municipio;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Rol rol;
+
+    // Constructor vacio (requerido por JPA)
     public Agricultor() {
     }
 
@@ -99,6 +104,22 @@ public class Agricultor {
 
     public void setNombreFinca(String nombreFinca) {
         this.nombreFinca = nombreFinca;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Municipio getMunicipio() {

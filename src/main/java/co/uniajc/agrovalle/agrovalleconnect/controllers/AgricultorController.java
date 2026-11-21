@@ -2,7 +2,6 @@ package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
 import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorResponse;
-import co.uniajc.agrovalle.agrovalleconnect.dto.PerfilAgricultorResponse;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.services.AgricultorService;
 import co.uniajc.agrovalle.agrovalleconnect.services.PedidoService;
@@ -29,14 +28,13 @@ public class AgricultorController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<AgricultorResponse> registrar(@Valid @RequestBody AgricultorRegistroRequest datos) {
-        Agricultor nuevo = agricultorService.registrar(datos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(AgricultorResponse.desde(nuevo));
-    }
-
-    @GetMapping("/{id}/perfil")
-    public ResponseEntity<PerfilAgricultorResponse> perfil(@PathVariable Long id) {
-        PerfilAgricultorResponse perfil = pedidoService.obtenerPerfilAgricultor(id);
-        return ResponseEntity.ok(perfil);
+    public ResponseEntity<?> registrar(@Valid @RequestBody AgricultorRegistroRequest request) {
+        try {
+            Agricultor nuevoAgricultor = agricultorService.registrarAgricultor(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(AgricultorResponse.desde(nuevoAgricultor));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 }

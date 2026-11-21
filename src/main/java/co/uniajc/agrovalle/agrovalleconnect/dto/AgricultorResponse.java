@@ -10,12 +10,19 @@ public record AgricultorResponse(
         String cedula,
         String correo,
         String telefono,
-        String nombreFinca,
+        String ubicacionFinca,
         Municipio municipio,
         Rol rol) {
 
-    public static AgricultorResponse desde(Agricultor a) {
-        return new AgricultorResponse(a.getId(), a.getNombreCompleto(), a.getCedula(),
-                a.getCorreo(), a.getTelefono(), a.getNombreFinca(), a.getMunicipio(), a.getRol());
+    public static AgricultorResponse desde(Agricultor agricultor) {
+        return new AgricultorResponse(
+                agricultor.getId(),
+                agricultor.getNombreCompleto(),
+                agricultor.getCedula(),
+                agricultor.getCorreo(),
+                agricultor.getTelefono(),
+                agricultor.getUbicacionFinca(),
+                agricultor.getMunicipio(),
+                agricultor.getRol());
     }
 }
