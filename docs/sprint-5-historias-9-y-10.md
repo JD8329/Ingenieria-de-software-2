@@ -126,3 +126,30 @@ Ejecutar:
 ```bash
 ./mvnw.cmd test
 ```
+
+## Mapa Mermaid del sprint
+
+```mermaid
+flowchart TD
+    subgraph HU09["HU-09 · Notificaciones de cambios de estado"]
+        A["PedidoService valida y guarda una transición"] --> B{"¿Transición a EN_TRANSITO o FINALIZADO?"}
+        B -- No --> C["No publicar evento"]
+        B -- Sí --> D["Publicar CambioEstadoPedidoEvent"]
+        D --> E["NotificacionCambioEstadoObserver recibe el evento"]
+        E --> F["Obtener agricultores de los detalles del pedido"]
+        F --> G["Eliminar agricultores repetidos"]
+        G --> H["Persistir una notificación CAMBIO_ESTADO por agricultor"]
+        I["Ejecución sin contenedor Spring"] -.-> J["Respaldo en PedidoService persiste las notificaciones"]
+        H --> K["Consultar historial de notificaciones"]
+        J --> K
+    end
+
+    subgraph HU10["HU-10 · Reporte de ventas por municipio"]
+        L["Solicitar GET /reportes/ventas-municipio"] --> M["Leer detalles de pedidos vendidos"]
+        M --> N["Obtener municipio desde el agricultor propietario de cada lote"]
+        N --> O["Agrupar detalles por municipio"]
+        O --> P["Calcular pedidos únicos, kilogramos y ventas en COP"]
+        P --> Q["Ordenar municipios y formatear valores a dos decimales"]
+        Q --> R["Responder 200 con el reporte"]
+    end
+```

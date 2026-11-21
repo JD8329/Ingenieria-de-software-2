@@ -138,3 +138,33 @@ La verificación del sprint debe centrarse en pruebas de integración y validaci
 - cierre y finalización del pedido sin reabrir nuevas operaciones
 
 Se recomienda ejecutar `mvn test` desde la raíz del proyecto para validar el comportamiento de la lógica asociada a pedidos, despachos y reputación.
+
+## Mapa Mermaid del sprint
+
+```mermaid
+flowchart TD
+    subgraph HU07["HU-07 · Despacho y seguimiento"]
+        A["Agricultor solicita programar el despacho"] --> B{"¿Pedido RESERVADO y agricultor responsable?"}
+        B -- No --> C["Rechazar por estado o autorización"]
+        B -- Sí --> D{"¿Fecha estimada válida y futura?"}
+        D -- No --> E["Rechazar la solicitud"]
+        D -- Sí --> F["Guardar transporte, ruta y fecha estimada"]
+        F --> G["Registrar trazabilidad del cambio"]
+        G --> H["Cambiar pedido a EN_TRANSITO"]
+        H --> I["Notificar al comprador"]
+        I --> J["Comprador consulta seguimiento"]
+        J --> K["Mostrar estado, ruta y fecha estimada"]
+    end
+
+    subgraph HU08["HU-08 · Recepción y calificación"]
+        L["Pedido llega a ENTREGADO o etapa de cierre válida"] --> M["Comerciante solicita confirmar recepción y calificar"]
+        M --> N{"¿Pedido pertenece al comerciante y admite cierre?"}
+        N -- No --> O["Rechazar por estado o autorización"]
+        N -- Sí --> P{"¿Calificación entera entre 1 y 5?"}
+        P -- No --> Q["Rechazar la solicitud"]
+        P -- Sí --> R["Guardar calificación y comentario opcional"]
+        R --> S["Actualizar promedio ponderado del agricultor"]
+        S --> T["Marcar pedido como FINALIZADO"]
+        T --> U["Consultar perfil y reputación del agricultor"]
+    end
+```

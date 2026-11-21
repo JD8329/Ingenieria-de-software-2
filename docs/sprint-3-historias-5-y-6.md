@@ -83,3 +83,35 @@ notificaciones se revierten si ocurre un error durante la operación.
 Las pruebas unitarias cubren el guardado y notificación de mensajes, la reserva
 exitosa, el descuento de inventario, el rechazo de existencias insuficientes y
 la detección de lotes repetidos. Ejecutar `mvn test` desde la raíz del proyecto.
+
+## Mapa Mermaid del sprint
+
+```mermaid
+flowchart TD
+    subgraph HU05["HU-05 · Contacto comprador-productor"]
+        A["Comerciante envía POST /mensajes"] --> B{"¿Solicitud válida?"}
+        B -- No --> C["Responder 400"]
+        B -- Sí --> D{"¿Existe el lote?"}
+        D -- No --> E["Responder 404"]
+        D -- Sí --> F["Guardar mensaje"]
+        F --> G["Guardar notificación MENSAJE para el agricultor"]
+        G --> H["Responder 201"]
+        I["Consultar historial por lote y comerciante"] --> J["Devolver mensajes ordenados cronológicamente"]
+        K["Consultar notificaciones del agricultor"] --> L["Devolver notificaciones persistidas"]
+    end
+
+    subgraph HU06["HU-06 · Reserva directa de pedido"]
+        M["Comerciante envía POST /pedidos con lotes y cantidades"] --> N{"¿Pedido no vacío, hasta 100 lotes, cantidades positivas y sin repetidos?"}
+        N -- No --> O["Responder 400"]
+        N -- Sí --> P["Leer y bloquear los lotes"]
+        P --> Q{"¿Existen todos los lotes?"}
+        Q -- No --> R["Responder 404"]
+        Q -- Sí --> S{"¿Están activos y tienen existencias suficientes?"}
+        S -- No --> T["Responder 409"]
+        S -- Sí --> U["Descontar inventario"]
+        U --> V["Guardar pedido RESERVADO y sus detalles"]
+        V --> W["Guardar notificación para cada agricultor"]
+        W --> X["Confirmar transacción y responder 201"]
+        Y["Error durante la operación"] -.-> Z["Revertir inventario, pedido, detalles y notificaciones"]
+    end
+```
