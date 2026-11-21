@@ -17,6 +17,8 @@ import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.NotificacionRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.PedidoRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +50,12 @@ class Sprint1ApiIntegrationTest {
     private LoteCosechaRepository loteCosechaRepository;
 
     @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private NotificacionRepository notificacionRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -58,6 +66,8 @@ class Sprint1ApiIntegrationTest {
 
     @BeforeEach
     void limpiarDatos() {
+        notificacionRepository.deleteAll();
+        pedidoRepository.deleteAll();
         loteCosechaRepository.deleteAll();
         agricultorRepository.deleteAll();
     }

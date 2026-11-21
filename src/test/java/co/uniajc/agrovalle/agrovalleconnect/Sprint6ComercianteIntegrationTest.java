@@ -13,6 +13,8 @@ import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.ComercianteRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.NotificacionRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.PedidoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,12 @@ class Sprint6ComercianteIntegrationTest {
     private LoteCosechaRepository loteCosechaRepository;
 
     @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private NotificacionRepository notificacionRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -54,6 +62,8 @@ class Sprint6ComercianteIntegrationTest {
 
     @BeforeEach
     void limpiarDatos() {
+        notificacionRepository.deleteAll();
+        pedidoRepository.deleteAll();
         loteCosechaRepository.deleteAll();
         comercianteRepository.deleteAll();
         agricultorRepository.deleteAll();

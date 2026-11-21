@@ -10,6 +10,7 @@ import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.PedidoRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -36,10 +37,14 @@ class Hu04FiltroProductosIntegrationTest {
     private LoteCosechaRepository loteCosechaRepository;
 
     @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void limpiarLotes() {
+        pedidoRepository.deleteAll();
         loteCosechaRepository.deleteAll();
     }
 
