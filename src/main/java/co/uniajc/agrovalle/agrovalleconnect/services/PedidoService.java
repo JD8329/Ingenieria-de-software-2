@@ -2,6 +2,7 @@ package co.uniajc.agrovalle.agrovalleconnect.services;
 
 import co.uniajc.agrovalle.agrovalleconnect.dto.CalificacionRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.DespachoRequest;
+import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaResponse;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PerfilAgricultorResponse;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoItemRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoRequest;
@@ -180,45 +181,30 @@ public class PedidoService {
         Agricultor agricultor = agricultorRepository.findById(agricultorId)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Agricultor no encontrado con id " + agricultorId));
 
-        List<Integer> calificaciones = pedidoRepository.findAll().stream()
-                .filter(pedido -> pedido.getCalificacion() != null)
-                .filter(pedido -> pedido.getDetalles().stream()
-                        .map(detalle -> detalle.getLote().getAgricultor().getId())
-                        .anyMatch(agricultorId::equals))
-                .map(Pedido::getCalificacion)
-                .toList();
-
-        BigDecimal promedio = calificaciones.isEmpty()
-                ? BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)
-                : BigDecimal.valueOf(calificaciones.stream()
-                        .mapToInt(Integer::intValue)
-                        .average()
-                        .orElse(0d))
-                        .setScale(2, RoundingMode.HALF_UP);
-
-        long lotesActivos = loteCosechaRepository.findAll().stream()
-                .filter(lote -> Boolean.TRUE.equals(lote.getActivo()))
-                .filter(lote -> lote.getAgricultor() != null && agricultorId.equals(lote.getAgricultor().getId()))
-                .count();
+        List<Integer> calificaciones =
+                pedidoRepository.findCalificacionesByAgricultorId(agricultorId);
+        List<LoteCosecha> lotesActivos =
+                loteCosechaRepository.findByAgricultorIdAndActivoTrue(agricultorId);
 
         return new PerfilAgricultorResponse(
                 agricultor.getId(),
                 agricultor.getNombreCompleto(),
                 agricultor.getNombreFinca(),
-                promedio,
+                agricultor.getMunicipio(),
+                calcularPromedio(calificaciones),
                 (long) calificaciones.size(),
-                lotesActivos);
+                (long) lotesActivos.size(),
+                lotesActivos.stream().map(LoteCosechaResponse::desde).toList());
     }
 
     @Transactional(readOnly = true)
     public BigDecimal obtenerPromedioCalificacionAgricultor(Long agricultorId) {
-        List<Integer> calificaciones = pedidoRepository.findAll().stream()
-                .filter(pedido -> pedido.getCalificacion() != null)
-                .filter(pedido -> pedido.getDetalles().stream()
-                        .map(detalle -> detalle.getLote().getAgricultor().getId())
-                        .anyMatch(agricultorId::equals))
-                .map(Pedido::getCalificacion)
-                .toList();
+        List<Integer> calificaciones =
+                pedidoRepository.findCalificacionesByAgricultorId(agricultorId);
+        return calcularPromedio(calificaciones);
+    }
+
+    private BigDecimal calcularPromedio(List<Integer> calificaciones) {
         if (calificaciones.isEmpty()) {
             return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         }

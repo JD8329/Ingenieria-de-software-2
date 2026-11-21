@@ -155,7 +155,7 @@ Como Agricultor, quiero editar o dar de baja un lote publicado, para mantener ac
 ---
 
 ## HU-14: Perfil Público del Agricultor
-**Prioridad:** Could have | **Story Points:** 3
+**Prioridad:** Could have | **Story Points:** 3 | **Estado:** 🟡 Implementada y verificada en `feature/sprint7-hu14-perfil-agricultor`; pendiente de Pull Request
 
 Como Comerciante, quiero ver el perfil público de un agricultor con su calificación y lotes activos, para decidir con quién negociar.
 
