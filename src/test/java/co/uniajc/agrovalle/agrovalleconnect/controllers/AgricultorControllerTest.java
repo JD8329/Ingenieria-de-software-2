@@ -29,7 +29,7 @@ class AgricultorControllerTest {
               "correo": "maria@correo.com",
               "contrasena": "clave12345",
               "telefono": "3001234567",
-              "nombreFinca": "Finca La Esperanza",
+              "ubicacionFinca": "Finca La Esperanza",
               "municipio": "DAGUA"
             }
             """;
@@ -53,7 +53,8 @@ class AgricultorControllerTest {
         guardado.setContrasena("HASH");
         guardado.setNombreFinca("Finca La Esperanza");
         guardado.setMunicipio(Municipio.DAGUA);
-        when(agricultorService.registrar(any(AgricultorRegistroRequest.class))).thenReturn(guardado);
+        when(agricultorService.registrarAgricultor(any(AgricultorRegistroRequest.class)))
+                .thenReturn(guardado);
 
         mockMvc.perform(post("/api/v1/agricultores/registro")
                         .contentType(MediaType.APPLICATION_JSON)

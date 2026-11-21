@@ -1,5 +1,6 @@
 package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
+import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaResponse;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
@@ -28,15 +29,14 @@ public class LoteCosechaController {
         this.loteCosechaService = loteCosechaService;
     }
 
-    // TEMPORAL: el agricultorId llega por parametro hasta que exista login con JWT (HU-11)
     @PostMapping
     public ResponseEntity<LoteCosechaResponse> publicarLote(
             @AuthenticationPrincipal Jwt jwt,
-            @Valid @RequestBody LoteCosecha lote) {
-            LoteCosecha nuevoLote = loteCosechaService.publicarLote(
-                    Long.valueOf(jwt.getSubject()), lote);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(LoteCosechaResponse.desde(nuevoLote));
+            @Valid @RequestBody LoteCosechaRequest datos) {
+        LoteCosecha nuevoLote = loteCosechaService.publicar(
+                Long.valueOf(jwt.getSubject()), datos);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(LoteCosechaResponse.desde(nuevoLote));
     }
 
     @GetMapping

@@ -105,6 +105,21 @@ class LoteCosechaServiceTest {
     }
 
     @Test
+    void publicarLoteConCategoriaVaciaEsRechazadoSinGuardar() {
+        Long agricultorId = 1L;
+        Agricultor agricultor = new Agricultor();
+        LoteCosecha lote = crearLote("Cafe", LocalDate.now().plusDays(1));
+        lote.setCategoria("   ");
+        when(agricultorRepository.findById(agricultorId)).thenReturn(Optional.of(agricultor));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> loteCosechaService.publicarLote(agricultorId, lote));
+
+        verify(loteCosechaRepository, never()).save(any(LoteCosecha.class));
+        verify(eventPublisher, never()).publishEvent(any());
+    }
+
+    @Test
     void publicarMismoProductoEnFechaDiferente_PermiteGuardar() {
         Long agricultorId = 1L;
         LocalDate fechaExistente = LocalDate.now().plusDays(1);

@@ -1,5 +1,6 @@
 package co.uniajc.agrovalle.agrovalleconnect.services;
 
+import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
 import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
@@ -33,6 +34,17 @@ public class LoteCosechaService {
     }
 
     @Transactional
+    public LoteCosecha publicar(Long agricultorId, LoteCosechaRequest datos) {
+        LoteCosecha lote = new LoteCosecha();
+        lote.setTipoProducto(datos.tipoProducto());
+        lote.setCategoria(datos.categoria().name());
+        lote.setCantidadKg(datos.cantidadKg());
+        lote.setPrecioUnitario(datos.precioUnitario());
+        lote.setFechaCosecha(datos.fechaCosecha());
+        return publicarLote(agricultorId, lote);
+    }
+
+    @Transactional
     public LoteCosecha publicarLote(Long agricultorId, LoteCosecha lote) {
         Agricultor agricultor = agricultorRepository.findById(agricultorId)
                 .orElseThrow(() -> new IllegalArgumentException("Agricultor no encontrado"));
@@ -51,12 +63,6 @@ public class LoteCosechaService {
                     "Ya existe un lote activo para ese producto y fecha de cosecha");
         }
 
-        LoteCosecha lote = new LoteCosecha();
-        lote.setTipoProducto(datos.tipoProducto());
-        lote.setCategoria(datos.categoria());
-        lote.setCantidadKg(datos.cantidadKg());
-        lote.setPrecioUnitario(datos.precioUnitario());
-        lote.setFechaCosecha(datos.fechaCosecha());
         lote.setAgricultor(agricultor);
 
         if (lote.getCategoria() != null) {

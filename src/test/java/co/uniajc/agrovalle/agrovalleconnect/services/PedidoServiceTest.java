@@ -82,6 +82,19 @@ class PedidoServiceTest {
     }
 
     @Test
+    void reservarPedidoConLoteInactivoEsRechazadoSinCrearPedido() {
+        LoteCosecha lote = lote("100", "2500", "1");
+        lote.setActivo(false);
+        when(loteCosechaRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(lote));
+
+        assertThrows(ConflictoException.class, () -> pedidoService.reservar(new PedidoRequest(3L,
+                List.of(new PedidoItemRequest(1L, BigDecimal.ONE)))));
+
+        verify(pedidoRepository, never()).save(any(Pedido.class));
+        verify(notificacionRepository, never()).saveAll(anyList());
+    }
+
+    @Test
     void reservarPedidoConLoteRepetidoEsRechazado() {
         PedidoRequest solicitud = new PedidoRequest(3L, List.of(
                 new PedidoItemRequest(1L, BigDecimal.ONE),
@@ -123,6 +136,34 @@ class PedidoServiceTest {
     }
 
     @Test
+    void programarDespachoDeOtroAgricultorEsRechazado() {
+        Agricultor agricultor = new Agricultor();
+        agricultor.setId(8L);
+        LoteCosecha lote = lote("100", "2500", "1");
+        lote.setAgricultor(agricultor);
+        DetallePedido detalle = new DetallePedido();
+        detalle.setLote(lote);
+        Pedido pedido = new Pedido();
+        pedido.setId(40L);
+        pedido.setEstado(EstadoPedido.RESERVADO);
+        pedido.setDetalles(List.of(detalle));
+        when(pedidoRepository.findById(40L)).thenReturn(Optional.of(pedido));
+
+        assertThrows(IllegalArgumentException.class, () -> pedidoService.programarDespacho(
+                40L,
+                new co.uniajc.agrovalle.agrovalleconnect.dto.DespachoRequest(
+                        "Transportes Valle",
+                        "Luis Perez",
+                        "XYZ-123",
+                        java.time.LocalDateTime.now().plusDays(2),
+                        List.of("Palmira", "Cali"),
+                        "Salida programada"),
+                7L));
+
+        verify(pedidoRepository, never()).save(any(Pedido.class));
+    }
+
+    @Test
     void calificarPedidoFinalizaLaOperacionYActualizaRating() {
         Pedido pedido = new Pedido();
         pedido.setId(40L);
@@ -145,6 +186,22 @@ class PedidoServiceTest {
         assertEquals(EstadoPedido.FINALIZADO, calificado.getEstado());
         assertEquals(5, calificado.getCalificacion());
         assertEquals("Excelente entrega", calificado.getComentarioCalificacion());
+    }
+
+    @Test
+    void calificarPedidoDeOtroComercianteEsRechazado() {
+        Pedido pedido = new Pedido();
+        pedido.setId(40L);
+        pedido.setComercianteId(4L);
+        pedido.setEstado(EstadoPedido.EN_TRANSITO);
+        when(pedidoRepository.findById(40L)).thenReturn(Optional.of(pedido));
+
+        assertThrows(IllegalArgumentException.class, () -> pedidoService.calificarPedido(
+                40L,
+                new co.uniajc.agrovalle.agrovalleconnect.dto.CalificacionRequest(
+                        3L, 5, "Excelente entrega")));
+
+        verify(pedidoRepository, never()).save(any(Pedido.class));
     }
 
     private LoteCosecha lote(String cantidad, String precio, String id) {

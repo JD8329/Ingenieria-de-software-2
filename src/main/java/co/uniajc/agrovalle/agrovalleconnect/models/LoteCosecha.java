@@ -1,16 +1,20 @@
 package co.uniajc.agrovalle.agrovalleconnect.models;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
-
 import jakarta.validation.constraints.NotBlank;
-
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -21,6 +25,7 @@ public class LoteCosecha {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "El tipo de producto es obligatorio")
     @Column(nullable = false)
     private String tipoProducto;
 
@@ -30,18 +35,17 @@ public class LoteCosecha {
     private String categoria;
 
     @NotNull(message = "La cantidad es obligatoria")
-
     @Positive(message = "La cantidad debe ser mayor a cero")
-
-    @Column(nullable = false)
-    private CategoriaProducto categoria;
-
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal cantidadKg;
 
+    @NotNull(message = "El precio unitario es obligatorio")
+    @Positive(message = "El precio debe ser mayor a cero")
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal precioUnitario;
 
+    @NotNull(message = "La fecha de cosecha es obligatoria")
+    @FutureOrPresent(message = "La fecha de cosecha no puede ser anterior al dia actual")
     @Column(nullable = false)
     private LocalDate fechaCosecha;
 
@@ -71,23 +75,13 @@ public class LoteCosecha {
         this.tipoProducto = tipoProducto;
     }
 
-    public CategoriaProducto getCategoria() {
-        return categoria;
-    }
-
     public String getCategoria() {
-
         return categoria;
-
     }
 
     public void setCategoria(String categoria) {
-
         this.categoria = categoria;
-
     }
-
-    public Double getCantidadKg() {
 
     public BigDecimal getCantidadKg() {
         return cantidadKg;

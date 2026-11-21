@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoItemRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.PedidoRequest;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
-import co.uniajc.agrovalle.agrovalleconnect.models.CategoriaProducto;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
@@ -57,7 +56,7 @@ class AgrovalleConnectApplicationTests {
 
 		LoteCosecha lote = new LoteCosecha();
 		lote.setTipoProducto("Mango");
-		lote.setCategoria(CategoriaProducto.FRUTAS);
+		lote.setCategoria("FRUTAS");
 		lote.setCantidadKg(new BigDecimal("30.00"));
 		lote.setPrecioUnitario(new BigDecimal("2500.00"));
 		lote.setFechaCosecha(LocalDate.now().plusDays(2));

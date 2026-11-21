@@ -10,6 +10,7 @@ import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -121,8 +122,8 @@ class Hu04FiltroProductosIntegrationTest {
         LoteCosecha lote = new LoteCosecha();
         lote.setTipoProducto(producto);
         lote.setCategoria(categoria);
-        lote.setCantidadKg(25.0);
-        lote.setPrecioUnitario(4800.0);
+        lote.setCantidadKg(new BigDecimal("25.00"));
+        lote.setPrecioUnitario(new BigDecimal("4800.00"));
         lote.setFechaCosecha(LocalDate.now().plusDays(1));
         lote.setAgricultor(agricultor);
         lote.setActivo(activo);
