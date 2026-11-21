@@ -49,6 +49,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Pre-commit hook: Husky (`.husky/pre-commit`), que ejecuta `./mvnw verify`; ejecutar `npm install` para activar el hook localmente
 - Integración continua: GitHub Actions (`.github/workflows/ci.yml`)
 - JWT: definir `JWT_SECRET` con al menos 32 bytes antes de iniciar la aplicación; usar un secreto aleatorio fuera de pruebas y no guardarlo en el repositorio
+- Recuperación de contraseña: configurar SMTP y `PASSWORD_RESET_URL` mediante variables de entorno; ver la guía de [HU-15](docs/sprint-8-hu15-recuperacion-password.md)
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
 - Documentación integral: normalización, prototipos y arquitectura: [`docs/documentacion-integral-agrovalle.md`](docs/documentacion-integral-agrovalle.md)
 - Artefactos del Sprint de Diseño: [`docs/diseno/README.md`](docs/diseno/README.md)
@@ -63,6 +64,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Especificación HU-01: IEEE 29148 vs. BDD: [`docs/ieee29148-req01.md`](docs/ieee29148-req01.md)
 - Backlog del producto: [`BACKLOG.md`](BACKLOG.md)
 - Sprint 7 — Perfil público del agricultor (HU-14): [`docs/sprint-7-hu14-perfil-agricultor.md`](docs/sprint-7-hu14-perfil-agricultor.md)
+- Sprint 8 — Recuperación de contraseña (HU-15): [`docs/sprint-8-hu15-recuperacion-password.md`](docs/sprint-8-hu15-recuperacion-password.md)
 - Planificación del Sprint 1: [`docs/sprint-1-planning.md`](docs/sprint-1-planning.md)
 - Planificación del Sprint 2: [`docs/sprint-2-planning.md`](docs/sprint-2-planning.md)
 - Bitácora de Daily Scrums: [`docs/bitacora-daily-scrum.md`](docs/bitacora-daily-scrum.md)
