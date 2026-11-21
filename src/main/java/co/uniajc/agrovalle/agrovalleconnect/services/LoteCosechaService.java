@@ -1,34 +1,54 @@
 package co.uniajc.agrovalle.agrovalleconnect.services;
 
-import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
-import co.uniajc.agrovalle.agrovalleconnect.exceptions.RecursoNoEncontradoException;
+import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
+import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
+import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class LoteCosechaService {
 
     private final LoteCosechaRepository loteCosechaRepository;
+
     private final AgricultorRepository agricultorRepository;
 
-    public LoteCosechaService(LoteCosechaRepository loteCosechaRepository,
-                              AgricultorRepository agricultorRepository) {
+    private final ApplicationEventPublisher eventPublisher;
+
+    public LoteCosechaService(
+            LoteCosechaRepository loteCosechaRepository,
+            AgricultorRepository agricultorRepository,
+            ApplicationEventPublisher eventPublisher) {
         this.loteCosechaRepository = loteCosechaRepository;
         this.agricultorRepository = agricultorRepository;
+        this.eventPublisher = eventPublisher;
     }
 
-    public LoteCosecha publicar(Long agricultorId, LoteCosechaRequest datos) {
+    @Transactional
+    public LoteCosecha publicarLote(Long agricultorId, LoteCosecha lote) {
         Agricultor agricultor = agricultorRepository.findById(agricultorId)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "Agricultor no encontrado con id " + agricultorId));
+                .orElseThrow(() -> new IllegalArgumentException("Agricultor no encontrado"));
 
-        if (datos.fechaCosecha().isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha de cosecha no puede ser anterior al dia actual");
+        if (lote.getFechaCosecha().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException(
+                    "La fecha de cosecha no puede ser anterior al dia actual");
+        }
+
+        boolean loteDuplicado = loteCosechaRepository
+                .existsByAgricultorIdAndTipoProductoIgnoreCaseAndFechaCosechaAndActivoTrue(
+                        agricultorId, lote.getTipoProducto(), lote.getFechaCosecha());
+
+        if (loteDuplicado) {
+            throw new ConflictoException(
+                    "Ya existe un lote activo para ese producto y fecha de cosecha");
         }
 
         LoteCosecha lote = new LoteCosecha();
@@ -38,15 +58,40 @@ public class LoteCosechaService {
         lote.setPrecioUnitario(datos.precioUnitario());
         lote.setFechaCosecha(datos.fechaCosecha());
         lote.setAgricultor(agricultor);
+
+        if (lote.getCategoria() != null) {
+            String categoria = lote.getCategoria().trim();
+            if (categoria.isEmpty()) {
+                throw new IllegalArgumentException("La categoría no puede estar vacía");
+            }
+            lote.setCategoria(categoria);
+        }
+
         lote.setActivo(true);
-        return loteCosechaRepository.save(lote);
+
+        LoteCosecha loteGuardado = loteCosechaRepository.save(lote);
+        eventPublisher.publishEvent(new LoteCosechaPublicadoEvent(
+                loteGuardado.getId(), agricultor.getId(), loteGuardado.getTipoProducto()));
+        return loteGuardado;
     }
 
-    public List<LoteCosecha> listarActivos() {
+    public List<LoteCosecha> listarLotesActivos() {
         return loteCosechaRepository.findByActivoTrue();
     }
 
-    public List<LoteCosecha> listarPorAgricultor(Long agricultorId) {
+    public List<LoteCosecha> listarLotesPorAgricultor(Long agricultorId) {
         return loteCosechaRepository.findByAgricultorIdAndActivoTrue(agricultorId);
     }
+
+    public List<LoteCosecha> buscarLotes(Municipio municipio, String categoria) {
+        String categoriaNormalizada = categoria == null ? null : categoria.trim();
+        if (municipio == null && categoriaNormalizada == null) {
+            throw new IllegalArgumentException("Debe indicar el municipio, la categoría o ambos");
+        }
+        if (categoriaNormalizada != null && categoriaNormalizada.isEmpty()) {
+            throw new IllegalArgumentException("La categoría no puede estar vacía");
+        }
+        return loteCosechaRepository.buscarActivos(municipio, categoriaNormalizada);
+    }
+
 }

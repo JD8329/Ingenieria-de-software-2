@@ -8,13 +8,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
-import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,36 +32,54 @@ class AgricultorServiceTest {
     @InjectMocks
     private AgricultorService agricultorService;
 
-    private AgricultorRegistroRequest datosValidos() {
-        return new AgricultorRegistroRequest("Maria Perez", "1130123456", "maria@correo.com",
-                "clave12345", "3001234567", "Finca La Esperanza", Municipio.DAGUA);
+    @Test
+    void registraAgricultorConContrasenaCodificada() {
+        AgricultorRegistroRequest request = solicitud();
+        when(agricultorRepository.existsByCorreo(request.correo())).thenReturn(false);
+        when(agricultorRepository.existsByCedula(request.cedula())).thenReturn(false);
+        when(passwordEncoder.encode(request.contrasena())).thenReturn("hash-seguro");
+
+        agricultorService.registrarAgricultor(request);
+
+        ArgumentCaptor<Agricultor> captor = ArgumentCaptor.forClass(Agricultor.class);
+        verify(agricultorRepository).save(captor.capture());
+        assertEquals("hash-seguro", captor.getValue().getContrasena());
+        assertEquals(Rol.PRODUCCION, captor.getValue().getRol());
+        assertEquals(Municipio.PALMIRA, captor.getValue().getMunicipio());
     }
 
     @Test
-    void registroValidoGuardaAgricultorConContrasenaCifrada() {
-        when(passwordEncoder.encode("clave12345")).thenReturn("HASH");
-        when(agricultorRepository.save(any(Agricultor.class))).thenAnswer(inv -> inv.getArgument(0));
+    void rechazaCorreoDuplicadoSinConsultarCedula() {
+        AgricultorRegistroRequest request = solicitud();
+        when(agricultorRepository.existsByCorreo(request.correo())).thenReturn(true);
 
-        Agricultor resultado = agricultorService.registrar(datosValidos());
+        assertThrows(IllegalArgumentException.class,
+                () -> agricultorService.registrarAgricultor(request));
 
-        assertEquals("HASH", resultado.getContrasena());
-        assertEquals(Rol.AGRICULTOR, resultado.getRol());
-        assertEquals(Municipio.DAGUA, resultado.getMunicipio());
+        verify(agricultorRepository, never()).existsByCedula(request.cedula());
+        verify(agricultorRepository, never()).save(any(Agricultor.class));
     }
 
     @Test
-    void registroConCorreoDuplicadoLanzaConflicto() {
-        when(agricultorRepository.existsByCorreo("maria@correo.com")).thenReturn(true);
+    void rechazaCedulaDuplicada() {
+        AgricultorRegistroRequest request = solicitud();
+        when(agricultorRepository.existsByCorreo(request.correo())).thenReturn(false);
+        when(agricultorRepository.existsByCedula(request.cedula())).thenReturn(true);
 
-        assertThrows(ConflictoException.class, () -> agricultorService.registrar(datosValidos()));
-        verify(agricultorRepository, never()).save(any());
+        assertThrows(IllegalArgumentException.class,
+                () -> agricultorService.registrarAgricultor(request));
+
+        verify(agricultorRepository, never()).save(any(Agricultor.class));
     }
 
-    @Test
-    void registroConCedulaDuplicadaLanzaConflicto() {
-        when(agricultorRepository.existsByCedula("1130123456")).thenReturn(true);
-
-        assertThrows(ConflictoException.class, () -> agricultorService.registrar(datosValidos()));
-        verify(agricultorRepository, never()).save(any());
+    private AgricultorRegistroRequest solicitud() {
+        return new AgricultorRegistroRequest(
+                "Ana Productora",
+                "1234567890",
+                "ana@example.com",
+                "clave-segura",
+                null,
+                "Finca El Valle",
+                Municipio.PALMIRA);
     }
 }

@@ -23,8 +23,19 @@ public class AgricultorController {
     }
 
     @PostMapping("/registro")
+ feature/sprint3-hu05-hu06
     public ResponseEntity<AgricultorResponse> registrar(@Valid @RequestBody AgricultorRegistroRequest datos) {
         Agricultor nuevo = agricultorService.registrar(datos);
         return ResponseEntity.status(HttpStatus.CREATED).body(AgricultorResponse.desde(nuevo));
+
+    public ResponseEntity<?> registrar(@Valid @RequestBody AgricultorRegistroRequest request) {
+        try {
+            Agricultor nuevoAgricultor = agricultorService.registrarAgricultor(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(AgricultorResponse.desde(nuevoAgricultor));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+        main
     }
 }

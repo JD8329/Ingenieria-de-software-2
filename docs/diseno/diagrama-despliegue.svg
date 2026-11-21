@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="520" viewBox="0 0 1120 520">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#245b36"/>
+    </marker>
+    <style>
+      .node { fill: #f5f8f3; stroke: #568263; stroke-width: 2; }
+      .component { fill: #eaf2e8; stroke: #39794a; stroke-width: 2; }
+      .title { fill: #245b36; font: bold 18px Arial, sans-serif; }
+      .label { fill: #18231b; font: bold 16px Arial, sans-serif; }
+      .small { fill: #36453a; font: 14px Arial, sans-serif; }
+      .edge { stroke: #245b36; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="node" x="30" y="70" width="300" height="330" rx="10"/>
+  <text class="title" x="180" y="105" text-anchor="middle">«dispositivo»</text>
+  <text class="label" x="180" y="132" text-anchor="middle">Equipo del usuario</text>
+  <rect class="component" x="65" y="190" width="230" height="100" rx="10"/>
+  <text class="label" x="180" y="229" text-anchor="middle">Cliente REST</text>
+  <text class="small" x="180" y="254" text-anchor="middle">Navegador / Postman / app</text>
+
+  <rect class="node" x="410" y="70" width="330" height="330" rx="10"/>
+  <text class="title" x="575" y="105" text-anchor="middle">«servidor»</text>
+  <text class="label" x="575" y="132" text-anchor="middle">Servidor de aplicaciones</text>
+  <rect class="component" x="450" y="180" width="250" height="75" rx="10"/>
+  <text class="label" x="575" y="211" text-anchor="middle">AgroValle Connect</text>
+  <text class="small" x="575" y="235" text-anchor="middle">Spring Boot / Tomcat :8080</text>
+  <rect class="component" x="450" y="285" width="250" height="65" rx="10"/>
+  <text class="label" x="575" y="314" text-anchor="middle">Java 17 LTS (JVM)</text>
+  <text class="small" x="575" y="335" text-anchor="middle">API REST HTTP / JSON</text>
+
+  <rect class="node" x="820" y="70" width="270" height="330" rx="10"/>
+  <text class="title" x="955" y="105" text-anchor="middle">«servidor»</text>
+  <text class="label" x="955" y="132" text-anchor="middle">Servidor de base de datos</text>
+  <rect class="component" x="855" y="205" width="200" height="105" rx="10"/>
+  <text class="label" x="955" y="247" text-anchor="middle">PostgreSQL</text>
+  <text class="small" x="955" y="273" text-anchor="middle">agrovalle_connect</text>
+  <text class="small" x="955" y="295" text-anchor="middle">Puerto 5432</text>
+
+  <line class="edge" x1="330" y1="240" x2="410" y2="240"/>
+  <text class="small" x="370" y="224" text-anchor="middle">HTTP / JSON</text>
+  <line class="edge" x1="740" y1="240" x2="820" y2="240"/>
+  <text class="small" x="780" y="224" text-anchor="middle">JDBC</text>
+  <text class="small" x="560" y="460" text-anchor="middle">
+    Cliente HTTP → Spring Boot en Tomcat :8080 → PostgreSQL :5432
+  </text>
+</svg>

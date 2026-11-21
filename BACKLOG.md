@@ -6,29 +6,29 @@ Priorización: **MoSCoW** (Must have, Should have, Could have, Won't have)
 ---
 
 ## HU-01: Registro e Identificación de Agricultores
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Completada
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Integrada en `main` (PR #20; CI aprobado; revisión formal no registrada)
 
 Como Agricultor, quiero registrarme en la plataforma ingresando mi cédula, nombre y finca por municipio, para ofrecer mis cosechas directamente a comercios urbanos.
 
-- **Given** que un agricultor no registrado accede al endpoint `/api/v1/auth/register`
+- **Given** que un agricultor no registrado accede al endpoint `/api/v1/agricultores/registro`
   **When** envía un JSON con su nombre completo, cédula válida y ubicación geográfica dentro del Valle del Cauca
   **Then** el sistema retorna 201 Created, persiste la información en PostgreSQL y asigna el rol PRODUCCIÓN
 
 ---
 
 ## HU-02: Publicación de Lotes de Cosecha
-**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Completada
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Integrada en `main` mediante PR #21 (fusionado el 29/09/2026); CI aprobado; sin aprobación formal de revisión registrada en GitHub
 
 Como Agricultor autenticado, quiero publicar lotes de cosechas disponibles detallando cantidad, precio y fecha de recolección, para que los comerciantes puedan visualizarlos y comprarlos.
 
-- **Given** un agricultor autenticado con token JWT válido
-  **When** envía POST a `/api/v1/productos` con tipo, cantidad (kg), precio unitario y fecha_cosecha futura
-  **Then** el sistema valida que la fecha no sea anterior a hoy y retorna 201 Created con el ID único del lote
+- **Given** un agricultor registrado con credenciales válidas
+  **When** inicia sesión en `/api/v1/auth/login` y publica en `/api/v1/productos` con su token JWT, tipo, cantidad (kg), precio unitario y fecha_cosecha no anterior a hoy
+  **Then** el sistema verifica el token, asocia el lote al agricultor autenticado y retorna 201 Created con el ID único del lote
 
 ---
 
 ## HU-03: Visualización y Cálculo de Precios Promedio Regionales
-**Prioridad:** Should have | **Story Points:** 3
+**Prioridad:** Should have | **Story Points:** 3 | **Estado:** ✅ Implementada en `feature/sprint2-hu03-precios-promedio`; pendiente de revisión y merge mediante PR
 
 Como Usuario de la plataforma, quiero consultar el precio promedio regional por producto, para negociar a precios justos y transparentes.
 
@@ -39,7 +39,7 @@ Como Usuario de la plataforma, quiero consultar el precio promedio regional por 
 ---
 
 ## HU-04: Filtro de Productos por Municipio de Origen y Categoría
-**Prioridad:** Must have | **Story Points:** 5
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Implementada en `feature/sprint2-hu04-filtro-productos`; pendiente de revisión y merge mediante PR
 
 Como Comerciante urbano, quiero filtrar el catálogo por municipio (ej. Dagua, Buga, Palmira) y categoría, para abastecerme eficientemente.
 
@@ -116,7 +116,7 @@ Como Administrador/Productor, quiero consultar un panel con métricas de ventas 
 ---
 
 ## HU-11: Inicio de Sesión con JWT
-**Prioridad:** Must have | **Story Points:** 5
+**Prioridad:** Must have | **Story Points:** 5 | **Estado:** ✅ Implementación integrada en `main` como soporte de HU-02 (PR #20; CI aprobado; revisión formal no registrada)
 
 Como Usuario registrado, quiero iniciar sesión con correo y contraseña, para acceder de forma segura a las funciones protegidas.
 
