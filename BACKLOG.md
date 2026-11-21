@@ -50,7 +50,7 @@ Como Comerciante urbano, quiero filtrar el catálogo por municipio (ej. Dagua, B
 ---
 
 ## HU-05: Contacto Directo entre Comprador y Productor
-**Prioridad:** Could have | **Story Points:** 3
+**Prioridad:** Could have | **Story Points:** 3 | **Estado:** 🟡 Implementada; autenticación pendiente de HU-11/HU-12
 
 Como Comerciante, quiero enviar mensajes directos al agricultor de un lote específico, para resolver dudas o acordar despacho.
 
@@ -61,7 +61,7 @@ Como Comerciante, quiero enviar mensajes directos al agricultor de un lote espec
 ---
 
 ## HU-06: Generación y Reserva de Pedido Directo
-**Prioridad:** Must have | **Story Points:** 8
+**Prioridad:** Must have | **Story Points:** 8 | **Estado:** 🟡 Implementada; autenticación pendiente de HU-11/HU-12
 
 Como Comerciante urbano, quiero consolidar un carrito y emitir una orden de compra directa, para asegurar el inventario a un precio acordado sin intermediarios.
 

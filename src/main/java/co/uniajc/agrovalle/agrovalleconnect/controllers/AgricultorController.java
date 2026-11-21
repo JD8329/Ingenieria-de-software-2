@@ -4,18 +4,26 @@ import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorRegistroRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.AgricultorResponse;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.services.AgricultorService;
+import co.uniajc.agrovalle.agrovalleconnect.services.PedidoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/agricultores")
 public class AgricultorController {
 
-    @Autowired
-    private AgricultorService agricultorService;
+    private final AgricultorService agricultorService;
+    private final PedidoService pedidoService;
+
+    public AgricultorController(AgricultorService agricultorService, PedidoService pedidoService) {
+        this.agricultorService = agricultorService;
+        this.pedidoService = pedidoService;
+    }
 
     @PostMapping("/registro")
     public ResponseEntity<?> registrar(@Valid @RequestBody AgricultorRegistroRequest request) {

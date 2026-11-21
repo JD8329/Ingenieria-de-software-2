@@ -1,6 +1,7 @@
 package co.uniajc.agrovalle.agrovalleconnect.dto;
 
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record LoteCosechaResponse(
@@ -8,8 +9,8 @@ public record LoteCosechaResponse(
         String tipoProducto,
         String categoria,
         String municipio,
-        Double cantidadKg,
-        Double precioUnitario,
+        BigDecimal cantidadKg,
+        BigDecimal precioUnitario,
         LocalDate fechaCosecha,
         Boolean activo,
         Long agricultorId) {

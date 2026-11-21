@@ -1,5 +1,6 @@
 package co.uniajc.agrovalle.agrovalleconnect.services;
 
+import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
 import co.uniajc.agrovalle.agrovalleconnect.events.LoteCosechaPublicadoEvent;
 import co.uniajc.agrovalle.agrovalleconnect.exceptions.ConflictoException;
 import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
@@ -30,6 +31,17 @@ public class LoteCosechaService {
         this.loteCosechaRepository = loteCosechaRepository;
         this.agricultorRepository = agricultorRepository;
         this.eventPublisher = eventPublisher;
+    }
+
+    @Transactional
+    public LoteCosecha publicar(Long agricultorId, LoteCosechaRequest datos) {
+        LoteCosecha lote = new LoteCosecha();
+        lote.setTipoProducto(datos.tipoProducto());
+        lote.setCategoria(datos.categoria().name());
+        lote.setCantidadKg(datos.cantidadKg());
+        lote.setPrecioUnitario(datos.precioUnitario());
+        lote.setFechaCosecha(datos.fechaCosecha());
+        return publicarLote(agricultorId, lote);
     }
 
     @Transactional

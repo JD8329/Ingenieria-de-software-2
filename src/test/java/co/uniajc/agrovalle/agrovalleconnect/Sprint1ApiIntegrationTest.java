@@ -17,6 +17,7 @@ import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.LoteCosechaRepository;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -186,6 +187,7 @@ class Sprint1ApiIntegrationTest {
         String loteJson = """
                 {
                   "tipoProducto": "Cafe",
+                  "categoria": "CAFE",
                   "cantidadKg": 500,
                   "precioUnitario": 15000,
                   "fechaCosecha": "%s"
@@ -371,8 +373,8 @@ class Sprint1ApiIntegrationTest {
     private LoteCosecha crearLote(Agricultor agricultor, LocalDate fechaCosecha) {
         LoteCosecha lote = new LoteCosecha();
         lote.setTipoProducto("Cafe");
-        lote.setCantidadKg(500.0);
-        lote.setPrecioUnitario(15000.0);
+        lote.setCantidadKg(new BigDecimal("500.00"));
+        lote.setPrecioUnitario(new BigDecimal("15000.00"));
         lote.setFechaCosecha(fechaCosecha);
         lote.setAgricultor(agricultor);
         lote.setActivo(true);
@@ -383,6 +385,7 @@ class Sprint1ApiIntegrationTest {
         return """
                 {
                   "tipoProducto": "Cafe",
+                  "categoria": "CAFE",
                   "cantidadKg": 500,
                   "precioUnitario": 15000,
                   "fechaCosecha": "%s"
