@@ -474,10 +474,11 @@ Correspondencia entre las pantallas y el modelo conceptual:
 | Registrar lote | `lotes`, `productos`, `categorias` | Inserta lote; consulta productos y categorías. |
 | Catálogo de ofertas | `lotes`, `productos`, `agricultores`, `municipios` | Consulta ofertas con filtros y paginación. |
 
-El modelo conceptual reserva `comerciantes`, `carrito_items`, `pedidos`,
+El modelo conceptual incluye `comerciantes`, `carrito_items`, `pedidos`,
 `detalle_pedido`, `historial_estado_pedido`, `despachos`, `calificaciones`,
-`mensajes`, `notificaciones` y `password_reset_tokens` para funcionalidades que
-se prototiparán en iteraciones posteriores.
+`mensajes`, `notificaciones` y `password_reset_tokens`. El registro de
+comerciantes se implementó en Sprint 6; las demás funciones se incorporan según
+el alcance de cada iteración.
 
 ### 3.11 Conclusiones del prototipado
 
@@ -499,10 +500,8 @@ El backend implementa una API REST con Java 17, Spring Boot 4.1.1, Spring MVC,
 Spring Security, OAuth2 Resource Server, Spring Data JPA, Bean Validation y
 PostgreSQL. H2 se utiliza para las pruebas.
 
-El código actual cubre registro de agricultores, login con JWT, publicación de
-lotes y consulta de lotes activos. No incluye una interfaz web, registro de
-comerciantes, pedidos, carrito, transacciones, mensajería, despacho,
-calificaciones, reportes ni notificaciones.
+El backend incluye registro de agricultores y comerciantes, login con JWT y las
+funciones API implementadas en los sprints previos. No incluye una interfaz web.
 
 ### 4.2 Capas y responsabilidades
 
@@ -538,19 +537,24 @@ src/main/java/co/uniajc/agrovalle/agrovalleconnect/
 │   └── LoteCosechaController
 ├── services
 │   ├── AgricultorService
+│   ├── ComercianteService
 │   ├── AuthService
 │   └── LoteCosechaService
 ├── repositories
 │   ├── AgricultorRepository
+│   ├── ComercianteRepository
 │   └── LoteCosechaRepository
 ├── models
 │   ├── Agricultor
+│   ├── Comerciante
 │   ├── LoteCosecha
 │   ├── Municipio
 │   └── Rol
 ├── dto
 │   ├── AgricultorRegistroRequest
 │   ├── AgricultorResponse
+│   ├── ComercianteRegistroRequest
+│   ├── ComercianteResponse
 │   ├── LoginRequest
 │   ├── TokenResponse
 │   └── LoteCosechaResponse
@@ -634,7 +638,8 @@ migraciones de esquema versionadas.
 | Componente | Clases | Función |
 |---|---|---|
 | Registro | `AgricultorController`, `AgricultorService`, `AgricultorRepository` | Valida el registro, comprueba duplicados, codifica la contraseña y persiste el agricultor. |
-| Autenticación | `AuthController`, `AuthService`, `SeguridadConfig` | Comprueba las credenciales, emite JWT y valida tokens Bearer. |
+| Registro comercial | `AuthController`, `ComercianteService`, `ComercianteRepository` | Valida y persiste el registro comercial, comprueba duplicados y codifica la contraseña. |
+| Autenticación | `AuthController`, `AuthService`, `SeguridadConfig` | Comprueba credenciales de agricultores y comerciantes, emite JWT con rol y valida tokens Bearer. |
 | Lotes | `LoteCosechaController`, `LoteCosechaService`, `LoteCosechaRepository` | Publica lotes autenticados y consulta lotes activos. |
 | Contratos | Records del paquete `dto` | Expone datos específicos sin serializar las entidades de lotes directamente. |
 | Errores | `GlobalExceptionHandler` y excepciones de dominio | Devuelve errores HTTP estructurados para validación, JSON, recursos y conflictos. |
@@ -725,24 +730,28 @@ devuelve texto plano, por lo que ese error no sigue el mismo formato.
 
 - Spring Security usa sesiones sin estado (`STATELESS`) y CSRF está desactivado
   para esta API.
-- Registro y login son públicos. `POST /api/v1/productos` requiere JWT.
+- Registro de agricultores, registro de comerciantes y login son públicos.
+  Publicar lotes y registrar transacciones de precio requieren un JWT con rol
+  `PRODUCCION`.
 - Las demás rutas no declaradas explícitamente quedan permitidas por la regla
   actual `anyRequest().permitAll()`; las nuevas rutas deben definir sus permisos.
 - Las contraseñas se almacenan con BCrypt y no se incluyen en respuestas DTO.
 - `JWT_SECRET` se lee de la configuración externa y debe contener al menos 32
   bytes. No hay secreto predeterminado para producción.
 - El decodificador valida firma, expiración y emisor.
-- No hay autorización por roles ni claim de rol en el JWT. Solo está definido el
-  rol `PRODUCCION`.
+- El JWT incluye el rol de la cuenta y Spring Security lo usa para autorizar las
+  operaciones de producción. Los comerciantes pueden iniciar sesión con rol
+  `COMERCIANTE`, sin permiso para publicar lotes ni registrar precios.
 - No se configura TLS/HTTPS, CORS ni infraestructura de producción en el
   repositorio. Los despliegues externos deben usar HTTPS y gestionar secretos
   fuera del código.
 
 ### 4.10 Patrones y decisiones de diseño
 
-**Repository.** Las interfaces `AgricultorRepository` y
-`LoteCosechaRepository` extienden `JpaRepository`. Spring Data JPA genera las
-implementaciones y permite definir consultas mediante firmas de métodos:
+**Repository.** Las interfaces `AgricultorRepository`,
+`ComercianteRepository` y `LoteCosechaRepository` extienden `JpaRepository`.
+Spring Data JPA genera las implementaciones y permite definir consultas
+mediante firmas de métodos:
 
 ```java
 public interface LoteCosechaRepository
@@ -835,8 +844,8 @@ main
 | HU-08 | Confirmación y calificación | Pendiente: no hay pedidos ni calificaciones. |
 | HU-09 | Notificación de cambios de estado | Pendiente: no hay pedidos, eventos ni notificaciones. |
 | HU-10 | Reportes de ventas por municipio | Pendiente: no hay ventas ni reportes. |
-| HU-11 | Inicio de sesión con JWT | Implementado para agricultores y publicación de lotes; sin roles autorizables. |
-| HU-12 | Registro de comerciantes | Pendiente: no hay modelo o endpoint de comerciantes. |
+| HU-11 | Inicio de sesión con JWT | Implementado para agricultores y comerciantes; el JWT incluye rol y las operaciones de producción exigen `PRODUCCION`. |
+| HU-12 | Registro de comerciantes | Implementado en Sprint 6: entidad y tabla `Comerciante`, registro en `/api/v1/auth/register`, contraseña BCrypt e inicio de sesión. |
 | HU-13 | Edición y baja de lotes | Pendiente: no hay endpoints HTTP de actualización o baja. |
 | HU-14 | Perfil público del agricultor | Pendiente: no hay endpoint de perfil ni reputación. |
 | HU-15 | Recuperación de contraseña | Pendiente: no hay flujo ni integración de correo. |
@@ -852,9 +861,9 @@ señalan las diferencias frente al código actual.
 
 | Tema | Normalización / prototipo | Backend actual | Alineación necesaria |
 |---|---|---|---|
-| Entidades | Modelo normalizado con municipio, agricultor, producto, cosecha y oferta; el ER del prototipo amplía a 17 tablas y dos vistas. | Entidades JPA `Agricultor` y `LoteCosecha`. | Definir si el modelo de cinco entidades es una etapa intermedia o si el modelo de 17 tablas será el objetivo consolidado. |
+| Entidades | Modelo normalizado con municipio, agricultor, producto, cosecha y oferta; el ER del prototipo amplía a 17 tablas y dos vistas. | Entidades JPA `Agricultor`, `Comerciante` y `LoteCosecha`. | Definir si el modelo de cinco entidades es una etapa intermedia o si el modelo de 17 tablas será el objetivo consolidado. |
 | Cosecha y oferta | Normalización separa ambas entidades; el formulario de prototipo las reúne en `lotes`. | `LoteCosecha` almacena cosecha y publicación en una entidad. | Acordar si se mantendrá la relación cosecha-oferta 1:N o el modelo combinado. |
-| Usuario y agricultor | El prototipo usa `usuarios`, `roles` y `agricultores`. | El backend almacena credenciales y datos del agricultor juntos en `Agricultor`; no hay entidad `Usuario`. | Definir si se requiere una entidad de cuenta común antes de implementar comerciantes y roles. |
+| Cuentas y roles | El prototipo usa `usuarios`, `roles`, `agricultores` y `comerciantes`. | `Agricultor` y `Comerciante` almacenan sus credenciales en entidades separadas; el correo se valida de forma cruzada en los servicios y el JWT lleva el rol. | HU-12 adopta entidades separadas; evaluar una cuenta común solo si el modelo futuro requiere identidad compartida en base de datos. |
 | Producto y categoría | El prototipo propone catálogos `productos` y `categorias`. | El lote conserva `tipoProducto` como texto libre y agrega una categoría textual opcional para filtrar sin romper HU-02; aún no existen catálogos normalizados. | Evaluar catálogos de productos y categorías si se requieren reglas y valores controlados. |
 | Campos de finca | El prototipo separa `nombre_finca` y municipio. | El backend registra `ubicacionFinca` y municipio. | Confirmar si se necesita nombre y ubicación como campos distintos. |
 | Cédula | El prototipo permite hasta 15 dígitos. | El DTO actual valida entre 6 y 10 dígitos. | Confirmar el rango requerido por el negocio. |

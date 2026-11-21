@@ -37,3 +37,18 @@ aprobación no registrada.
 | HU-11 (soporte de HU-02) | Login JWT integrado en `main` mediante PR #20 | CI histórico aprobado | Login JWT y autorización de publicación probados como soporte de HU-02. |
 
 Evidencia de CI de HU-02: [ejecución del PR #21](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/36589475210).
+
+## Estado verificable del Sprint 6
+
+La verificación completa se ejecutó en la rama HU-12, que contiene el commit de
+HU-11 como dependencia. La revisión por pares todavía requiere Pull Request. El
+hook Husky tampoco está activado en este clon (`core.hooksPath` no está
+configurado); los mismos controles automatizados se ejecutaron manualmente.
+
+| Historia | Rama de trabajo | Build, pruebas, Checkstyle y cobertura | BDD y documentación | Revisión por pares | Husky local |
+|---|---|---|---|---|---|
+| HU-11 | `feature/sprint6-hu11-login-jwt` | `clean install`: 71 pruebas aprobadas; Checkstyle limpio; umbrales JaCoCo satisfechos en la rama dependiente HU-12. | Login correcto/incorrecto, claim `rol` y autorización de `PRODUCCION` verificados; documentación en español. | Pendiente de Pull Request y aprobación. | Pendiente de activar el hook en este clon. |
+| HU-12 | `feature/sprint6-hu12-registro-comerciantes` | `clean install`: 71 pruebas aprobadas; Checkstyle limpio; umbrales JaCoCo satisfechos. | Registro, persistencia, BCrypt, unicidad de correo/NIT, login y rol verificados; endpoint en ejecución respondió 201/200/403 según el caso. Documentación en español. | Pendiente de Pull Request y aprobación. | Pendiente de activar el hook en este clon. |
+
+El DoD completo queda sujeto a la revisión formal por Pull Request y a la
+activación local de Husky; no se marcan esos criterios como terminados.

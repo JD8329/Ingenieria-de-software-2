@@ -12,6 +12,7 @@ import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.ComercianteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -25,6 +26,9 @@ class AgricultorServiceTest {
 
     @Mock
     private AgricultorRepository agricultorRepository;
+
+    @Mock
+    private ComercianteRepository comercianteRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;

@@ -130,7 +130,7 @@ Como Usuario registrado, quiero iniciar sesión con correo y contraseña, para a
 ---
 
 ## HU-12: Registro de Comerciantes
-**Prioridad:** Must have | **Story Points:** 3
+**Prioridad:** Must have | **Story Points:** 3 | **Estado:** ✅ Implementada en `feature/sprint6-hu12-registro-comerciantes`; pendiente de revisión y merge mediante PR
 
 Como Comerciante urbano, quiero registrarme con mis datos de negocio, para explorar el catálogo y realizar pedidos.
 

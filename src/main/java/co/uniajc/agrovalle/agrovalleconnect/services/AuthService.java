@@ -2,8 +2,9 @@ package co.uniajc.agrovalle.agrovalleconnect.services;
 
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoginRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.TokenResponse;
-import co.uniajc.agrovalle.agrovalleconnect.models.Agricultor;
+import co.uniajc.agrovalle.agrovalleconnect.models.Rol;
 import co.uniajc.agrovalle.agrovalleconnect.repositories.AgricultorRepository;
+import co.uniajc.agrovalle.agrovalleconnect.repositories.ComercianteRepository;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -25,6 +26,8 @@ public class AuthService {
 
     private final AgricultorRepository agricultorRepository;
 
+    private final ComercianteRepository comercianteRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final JwtEncoder jwtEncoder;
@@ -33,10 +36,12 @@ public class AuthService {
 
     public AuthService(
             AgricultorRepository agricultorRepository,
+            ComercianteRepository comercianteRepository,
             PasswordEncoder passwordEncoder,
             JwtEncoder jwtEncoder,
             @Value("${app.security.jwt.issuer}") String issuer) {
         this.agricultorRepository = agricultorRepository;
+        this.comercianteRepository = comercianteRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtEncoder = jwtEncoder;
         this.issuer = issuer;
@@ -46,18 +51,24 @@ public class AuthService {
         return agricultorRepository.findByCorreo(request.correo())
                 .filter(agricultor -> passwordEncoder.matches(
                         request.contrasena(), agricultor.getContrasena()))
-                .map(this::crearToken);
+                .map(agricultor -> crearToken(
+                        agricultor.getId(), agricultor.getRol()))
+                .or(() -> comercianteRepository.findByCorreo(request.correo())
+                        .filter(comerciante -> passwordEncoder.matches(
+                                request.contrasena(), comerciante.getContrasena()))
+                        .map(comerciante -> crearToken(
+                                comerciante.getId(), Rol.COMERCIANTE)));
     }
 
-    private TokenResponse crearToken(Agricultor agricultor) {
+    private TokenResponse crearToken(Long id, Rol rol) {
         Instant ahora = Instant.now();
         Instant expiracion = ahora.plus(TOKEN_LIFETIME_SECONDS, ChronoUnit.SECONDS);
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer(issuer)
                 .issuedAt(ahora)
                 .expiresAt(expiracion)
-                .subject(agricultor.getId().toString())
-                .claim("rol", agricultor.getRol().name())
+                .subject(id.toString())
+                .claim("rol", rol.name())
                 .build();
         String token = jwtEncoder.encode(JwtEncoderParameters.from(
                 JwsHeader.with(MacAlgorithm.HS256).build(), claims)).getTokenValue();
