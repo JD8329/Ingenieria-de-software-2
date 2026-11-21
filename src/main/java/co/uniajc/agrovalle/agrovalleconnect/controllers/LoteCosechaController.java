@@ -2,6 +2,7 @@ package co.uniajc.agrovalle.agrovalleconnect.controllers;
 
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaRequest;
 import co.uniajc.agrovalle.agrovalleconnect.dto.LoteCosechaResponse;
+import co.uniajc.agrovalle.agrovalleconnect.dto.ActualizacionLoteRequest;
 import co.uniajc.agrovalle.agrovalleconnect.models.LoteCosecha;
 import co.uniajc.agrovalle.agrovalleconnect.models.Municipio;
 import co.uniajc.agrovalle.agrovalleconnect.services.LoteCosechaService;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +40,25 @@ public class LoteCosechaController {
                 Long.valueOf(jwt.getSubject()), datos);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(LoteCosechaResponse.desde(nuevoLote));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<LoteCosechaResponse> actualizarLote(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody ActualizacionLoteRequest datos) {
+        LoteCosecha lote = loteCosechaService.actualizarLote(
+                id, Long.valueOf(jwt.getSubject()), datos);
+        return ResponseEntity.ok(LoteCosechaResponse.desde(lote));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<LoteCosechaResponse> desactivarLote(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt) {
+        LoteCosecha lote = loteCosechaService.desactivarLote(
+                id, Long.valueOf(jwt.getSubject()));
+        return ResponseEntity.ok(LoteCosechaResponse.desde(lote));
     }
 
     @GetMapping
