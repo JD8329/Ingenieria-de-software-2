@@ -1,8 +1,13 @@
-# Bitácora de Daily Scrums — Sprint 1
+# Bitácora de reuniones de seguimiento — Sprints 1 y 2
 
 ## Cadencia y equipo
 
-El equipo informa sesiones de trabajo de aproximadamente una hora los martes, y sesiones de clase de dos horas los jueves, además de sesiones extra ocasionales entre semana. Esta cadencia describe las reuniones reportadas por el equipo; no se presupone que se hayan realizado reuniones en fechas no registradas.
+El equipo informa que se reunía semanalmente durante aproximadamente una hora.
+En el Sprint 1 también hay sesiones de clase y sesiones extra con fechas
+concretas; se conservan como fueron registradas y no se extrapolan a semanas
+sin evidencia. Una reunión semanal de una hora es una sesión de seguimiento,
+no necesariamente un Daily Scrum formal; se usa este archivo como bitácora del
+equipo sin reclasificar las sesiones como ceremonias que no fueron confirmadas.
 
 | Integrante | Rol |
 |---|---|
@@ -11,7 +16,7 @@ El equipo informa sesiones de trabajo de aproximadamente una hora los martes, y 
 | Andres Felipe Lopez | Developer |
 | Nestor Javier Hernandez | Developer |
 
-## Registro de sesiones
+## Registro de sesiones del Sprint 1
 
 Completar una fila después de cada reunión real. No registrar acuerdos, bloqueos, asistencia ni duración exacta sin confirmarlos con el equipo. La columna "Referencia técnica" enlaza la sesión con la rama, PR o commit en el que se trabajó ese día (dejar en blanco si no aplica).
 
@@ -26,11 +31,14 @@ Completar una fila después de cada reunión real. No registrar acuerdos, bloque
 
 ## Registro del Sprint 2
 
-No se han añadido reuniones del Sprint 2 porque no hay fechas ni resultados
-confirmados por sus participantes en el repositorio. Registrar cada sesión real
-en tercera persona y completar todos los campos; no reutilizar las entradas del
-Sprint 1 como evidencia de este sprint.
+El equipo recuerda que, durante las dos semanas previas al 5 de noviembre de
+2026, se reunió semanalmente durante aproximadamente una hora para trabajar en
+los puntos del Sprint 2 y los artefactos de diseño. Las entradas siguientes son
+una reconstrucción posterior basada en ese recuerdo, no actas contemporáneas.
+Las fechas exactas, la asistencia, los avances específicos de cada encuentro y
+los impedimentos quedan pendientes de confirmar con los participantes.
 
 | Fecha | Tipo de sesión | Duración | Asistentes | Avance desde la sesión anterior | Plan hasta la siguiente sesión | Impedimentos / acciones | Referencia técnica |
 |---|---|---|---|---|---|---|---|
-| Pendiente de registrar | — | — | — | — | — | — | — |
+| Semana del 22 al 28 de octubre de 2026 (fecha exacta por confirmar) | Reunión semanal | Aproximadamente 1 hora | Pendiente de confirmar | Trabajo en los puntos del Sprint 2 y de diseño (detalle por confirmar) | Continuar con los puntos pendientes del Sprint 2 y diseño | Pendiente de confirmar | Artefactos de Sprint 2 y `docs/diseno/` |
+| Semana del 29 de octubre al 4 de noviembre de 2026 (fecha exacta por confirmar) | Reunión semanal | Aproximadamente 1 hora | Pendiente de confirmar | Continuación del trabajo en los puntos del Sprint 2 y de diseño (detalle por confirmar) | Pendiente de confirmar | Pendiente de confirmar | Artefactos de Sprint 2 y `docs/diseno/` |

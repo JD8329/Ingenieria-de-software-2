@@ -24,28 +24,29 @@ ramas y líneas.
 
 ## Simulación de fallo y corrección
 
-La simulación se hace en la rama aislada `taller/sesion10-ci`, nunca en `main`
-ni en la rama del PR #27. En `LoteCosechaServiceTest`, el test
-`publicaLoteYEmiteEventoDeDominio` contiene temporalmente una aserción invertida:
-espera que el lote quede inactivo, aunque la publicación válida lo deja activo.
-El paso JUnit debe fallar y GitHub Actions debe marcar el check del PR en rojo.
+La simulación se realizó en la rama aislada `taller/sesion10-ci`. En
+`LoteCosechaServiceTest`, el test `publicaLoteYEmiteEventoDeDominio` se cambió
+temporalmente para esperar que el lote quedara inactivo, aunque la publicación
+válida lo deja activo. JUnit falló por esa aserción deliberada; no era un fallo
+de producción.
 
-Después de observar el fallo, se corrige la aserción a
-`assertTrue(resultado.getActivo())`, se vuelven a ejecutar los controles y se
-actualiza la misma rama. Los checks deben quedar verdes antes de solicitar la
-aprobación por pares.
+Después se restauró la expectativa correcta,
+`assertTrue(resultado.getActivo())`, y se repitieron los checks. El PR #30 fue
+aprobado y fusionado en `main` el 30/10/2026.
 
-La protección de `main` no se puede demostrar mientras no exista una regla
-remota configurada. Sin ella, GitHub puede permitir fusionar un PR con checks
-fallidos; por seguridad, el equipo no debe fusionar el PR de la simulación
-mientras esté rojo. Un administrador debe exigir Pull Request, aprobación de
-pares y el status check `build-and-test` en la rama `main`.
+| Evidencia | Resultado |
+|---|---|
+| [CI rojo del push inicial](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/40921751574) | JUnit: 41 pruebas, 1 fallo deliberado; Checkstyle pasó; JaCoCo se omitió al fallar JUnit. |
+| [CI rojo en el PR](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/41065445196) | Reproduce el fallo deliberado en la verificación del Pull Request. |
+| [CI verde después de corregir](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/41068381092) | Los checks del Pull Request finalizaron exitosamente. |
+| [PR #30](https://github.com/JD8329/Ingenieria-de-software-2/pull/30) | Aprobado y fusionado; la versión final conserva la aserción correcta. |
+
+La práctica muestra el ciclo de detección y corrección dentro del CI; no debe
+dejarse la aserción invertida en la versión integrada.
 
 ## Estado de la práctica
 
-La simulación se considera completada cuando se observan y guardan evidencias
-de ambos resultados en el PR: una ejecución fallida por la prueba deliberada y
-una ejecución exitosa después de corregirla. La rama solo se fusiona cuando la
-versión final contiene la aserción correcta y todos los checks están verdes. Si
-se conserva el historial de commits, este puede mostrar tanto el fallo
-controlado como su corrección.
+La simulación está completada y tiene evidencia del resultado fallido inicial,
+del resultado exitoso tras la corrección y de la integración del PR #30. El
+workflow no despliega a staging; la preparación de ese entorno se describe en
+[Base de datos staging / preproducción](staging-preproduccion.md).

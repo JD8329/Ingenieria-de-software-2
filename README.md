@@ -13,30 +13,17 @@ Para los **productores agrícolas del Valle del Cauca** (Dagua, Palmira, Buga, T
 
 ## Estrategia de ramas
 
-Durante el Sprint 1, el equipo integra ramas cortas `feature/*` a `develop` mediante Pull Requests y revisión de pares; los cambios aprobados se promueven a `main`. El flujo se documenta como ramas de trabajo hacia una rama de integración, no como fusión directa de cada historia a `main`.
+El historial muestra dos etapas: al inicio, las ramas `feature/*` se integraron
+en `develop` mediante Pull Requests; en los sprints posteriores, las ramas de
+historias se integraron directamente en `main` mediante Pull Requests. El
+workflow ejecuta CI para ambos flujos. El diagrama resume ese historial; no
+define una política de ramas protegidas.
 
 ```mermaid
-gitGraph
-   commit id: "chore: init proyecto Maven"
-   branch develop
-   checkout develop
-   branch feature/HU01-registro-agricultores
-   checkout feature/HU01-registro-agricultores
-   commit id: "feat(api): registro de agricultores"
-   checkout develop
-   merge feature/HU01-registro-agricultores id: "PR HU-01 aprobado"
-   branch feature/HU02-publicacion-lotes
-   checkout feature/HU02-publicacion-lotes
-   commit id: "feat(productos): publicacion de lotes"
-   checkout develop
-   merge feature/HU02-publicacion-lotes id: "PR HU-02 aprobado"
-   branch docs/documentacion-sprint0
-   checkout docs/documentacion-sprint0
-   commit id: "docs: backlog, dod, checkstyle, husky"
-   checkout develop
-   merge docs/documentacion-sprint0 id: "PR de documentacion"
-   checkout main
-   merge develop id: "promocion de release revisada"
+flowchart LR
+    feature1["feature/* · Sprint 1"] -->|"Pull Request + revisión"| develop["develop"]
+    develop -->|"Pull Request de promoción"| main["main"]
+    featureN["feature/* · sprints posteriores"] -->|"Pull Request + CI + revisión"| main
 ```
 
 ## Stack técnico
@@ -51,6 +38,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - JWT: definir `JWT_SECRET` con al menos 32 bytes antes de iniciar la aplicación; usar un secreto aleatorio fuera de pruebas y no guardarlo en el repositorio
 - Recuperación de contraseña: configurar SMTP y `PASSWORD_RESET_URL` mediante variables de entorno; ver la guía de [HU-15](docs/sprint-8-hu15-recuperacion-password.md)
 - Definition of Done: [`docs/dod.md`](docs/dod.md)
+- Guía de ejecución y mapa de documentos: [`docs/README.md`](docs/README.md)
 - Documentación integral: normalización, prototipos y arquitectura: [`docs/documentacion-integral-agrovalle.md`](docs/documentacion-integral-agrovalle.md)
 - Artefactos del Sprint de Diseño: [`docs/diseno/README.md`](docs/diseno/README.md)
 - Revisión de Sprint 2: [`docs/sprint-2-review.md`](docs/sprint-2-review.md)

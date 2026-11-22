@@ -921,7 +921,7 @@ su comparación con BDD está en [`docs/ieee29148-req01.md`](ieee29148-req01.md)
 
 - [README del repositorio](../README.md)
 - [Product Backlog](../BACKLOG.md)
-- [Historias de Usuario del Taller Integrador](../Historias%20de%20Usuario%20AgroValle%20Connect%20-%20Taller%20Integrador.docx)
+- Historias de Usuario del Taller Integrador: el archivo fuente no está incluido en este repositorio; consultar el Product Backlog versionado.
 - [Definition of Done](dod.md)
 - [Planificación del Sprint 1](sprint-1-planning.md)
 - [Planificación del Sprint 2](sprint-2-planning.md)

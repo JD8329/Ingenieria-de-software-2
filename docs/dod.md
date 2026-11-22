@@ -1,16 +1,41 @@
 # Definition of Done (DoD) — AgroValle Connect
 
-Una Historia de Usuario se considera **Terminada (Done)** cuando cumple TODOS los siguientes criterios:
+Una historia de usuario se considera **Done** cuando cumple los criterios que
+aplican a su alcance. Este checklist define la regla del equipo; no sustituye
+la evidencia de pruebas, revisión o aceptación que debe enlazarse en el Pull
+Request.
 
-- [ ] El código compila sin errores (`mvn clean install`)
-- [ ] Checkstyle pasa sin violaciones (`mvn checkstyle:check`)
-- [ ] 100% de las pruebas unitarias e integradas pasan (`mvn test`)
-- [ ] Cobertura mínima del 60% en instrucciones, ramas y líneas (JaCoCo, verificada en `mvn verify`)
-- [ ] Código revisado y aprobado por al menos un compañero (Pull Request)
-- [ ] Commits bajo el estándar Conventional Commits
-- [ ] README.md y /docs actualizados si el cambio lo requiere
-- [ ] Husky (`.husky/pre-commit`) ejecuta `./mvnw verify` y bloquea commits si falla
-- [ ] Criterios de aceptación BDD (Given-When-Then) de la HU cumplidos y verificados
+## Criterios de terminado
+
+- [ ] Se cumplen los criterios de aceptación de la historia y sus escenarios
+  BDD están verificados.
+- [ ] El proyecto compila y la suite completa de pruebas automatizadas pasa con
+  el Maven Wrapper: `./mvnw --batch-mode --no-transfer-progress clean verify`
+  (Windows PowerShell: `.\mvnw.cmd --batch-mode --no-transfer-progress clean verify`).
+- [ ] Checkstyle no reporta violaciones.
+- [ ] JaCoCo aprueba el mínimo configurado de **60 % en instrucciones, ramas y
+  líneas**. El reporte HTML se genera en `target/site/jacoco/index.html`.
+- [ ] El Pull Request tiene al menos una aprobación de otro integrante y todos
+  los checks requeridos están verdes antes de integrarlo.
+- [ ] Los commits siguen Conventional Commits y la documentación relacionada se
+  actualiza cuando cambian contratos, reglas, configuración o decisiones.
+- [ ] La configuración sensible se obtiene de variables de entorno o secretos;
+  no se agregan contraseñas, tokens ni URLs de conexión con credenciales al
+  repositorio.
+- [ ] Si el cambio modifica el esquema de datos, incluye y documenta la
+  migración o actualización necesaria para los entornos afectados.
+
+La verificación local no sustituye al CI remoto. El workflow actual ejecuta
+Checkstyle, JUnit y JaCoCo como pasos separados; una ejecución local de
+`clean verify` sirve como verificación integral antes de abrir o actualizar el
+Pull Request.
+
+## Herramientas locales
+
+El hook de Husky en `.husky/pre-commit` ejecuta `./mvnw verify` cuando Husky
+está instalado y habilitado en el clon. Es una ayuda local; el CI del Pull
+Request es la evidencia compartida y verificable. Si el hook no está activo, se
+deben ejecutar manualmente las verificaciones del Maven Wrapper.
 
 ## Firmas del equipo
 

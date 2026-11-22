@@ -2,33 +2,73 @@
 
 ## Estado del registro
 
-No hay acta ni registro confirmado de una reunión de retrospectiva del Sprint 2
-en el repositorio. Este documento conserva los campos requeridos para completar
-después de la reunión; no presenta propuestas como acuerdos del equipo.
+Este documento organiza la retrospectiva a partir de evidencia técnica del
+repositorio. No hay un acta confirmada de la reunión; por eso, los puntos de
+análisis y las acciones de abajo son propuestas para discutir, no acuerdos
+atribuidos al equipo.
 
 | Campo | Registro |
 |---|---|
-| Fecha y hora | Pendiente de confirmar |
-| Participantes | Pendiente de confirmar |
-| Evidencia o acta | Pendiente de adjuntar |
-| Acuerdos aprobados | Pendiente de registrar por el equipo |
+| Fecha y hora de la retrospectiva | Pendiente de confirmar |
+| Participantes y facilitador | Pendiente de confirmar |
+| Evidencia o acta de la reunión | Pendiente de adjuntar |
+| Acuerdos aprobados por el equipo | Pendiente de registrar |
 
-## Observaciones para discutir
+## Contexto verificable del sprint
 
-Estas observaciones se derivan del estado verificable del repositorio y deben
-ser discutidas y validadas por el equipo:
+- HU-03 incorpora el registro autenticado de precios y la consulta del promedio
+  regional para las últimas 24 horas, con un mínimo de 50 transacciones.
+- HU-04 incorpora filtros del catálogo por municipio y categoría, de forma
+  individual o combinada, manteniendo compatibilidad con lotes sin categoría.
+- Las dos historias cuentan con pruebas de integración documentadas en sus
+  respectivos archivos: [`sprint-2-hu03.md`](sprint-2-hu03.md) y
+  [`sprint-2-hu04.md`](sprint-2-hu04.md).
+- El repositorio también documenta la arquitectura, los artefactos de diseño y
+  la implementación del patrón Observer. La revisión técnica del sprint registra
+  resultados locales de pruebas, Checkstyle y JaCoCo; véase
+  [`sprint-2-review.md`](sprint-2-review.md).
+- La documentación aclara que la revisión técnica no reemplaza el registro de
+  la reunión, la demo del equipo ni la aceptación de la docente/Product Owner.
 
-- La suite ya incluye pruebas REST con MockMvc; conviene conservar esa
-  verificación de extremo a extremo junto con pruebas unitarias aisladas con
-  Mockito.
-- El CI está versionado, pero la protección de `main` y el tablero Scrumban son
-  configuraciones remotas cuya evidencia todavía debe incorporarse.
-- Las entradas de bitácora y los artefactos de review/retrospectiva deben
-  completarse después de reuniones reales, sin reconstruir asistencia o
-  acuerdos de memoria.
+## Temas para la conversación del equipo
 
-## Acciones de mejora
+### Qué conviene conservar
 
-| Acción | Responsable | Fecha objetivo | Evidencia | Estado |
+- Separar responsabilidades entre controladores, servicios y repositorios, y
+  respaldar los flujos principales con pruebas automatizadas.
+- Validar las historias mediante criterios observables: periodo y umbral de
+  HU-03, y filtros y compatibilidad de HU-04.
+- Mantener documentación que distinga lo implementado de los modelos y
+  funcionalidades que siguen siendo de referencia o futuras.
+
+### Qué conviene revisar
+
+- Confirmar si el trabajo comprometido para HU-03 y HU-04 fue realista para la
+  capacidad del equipo y qué dependencias generaron esperas.
+- Revisar si las pruebas cubren también casos límite y errores de entrada, y si
+  sus resultados son fáciles de entender cuando algo falla.
+- Verificar que la documentación, el tablero y el estado de los Pull Requests
+  reflejen lo que efectivamente se terminó y se demostró.
+- Identificar qué hizo falta para registrar la demo, los comentarios y la
+  aceptación de las historias, sin completar esos datos retrospectivamente.
+
+## Acciones propuestas para validar
+
+Las siguientes acciones no se consideran comprometidas hasta que el equipo las
+apruebe y asigne responsables y fechas en la reunión.
+
+| Acción propuesta | Resultado esperado | Responsable | Fecha objetivo | Estado |
 |---|---|---|---|---|
-| Completar después de acordarse en la retrospectiva real. | Pendiente | Pendiente | Pendiente | No acordada |
+| Registrar la demo y los resultados de aceptación de cada historia. | Evidencia verificable de lo presentado y de los comentarios recibidos. | Por asignar | Por acordar | Propuesta |
+| Mantener criterios de aceptación y casos de prueba vinculados a cada historia. | Menos ambigüedad al implementar y revisar HU-03/HU-04. | Por asignar | Por acordar | Propuesta |
+| Actualizar el tablero y la documentación al cerrar cada historia. | Estado coherente entre backlog, Pull Request, pruebas y documentación. | Por asignar | Por acordar | Propuesta |
+| Revisar con un administrador los requisitos remotos de protección de `main` y dejar evidencia de su configuración. | Confirmar qué controles se exigen antes de integrar cambios. | Por asignar | Por acordar | Propuesta |
+
+## Cierre de la retrospectiva
+
+Completar esta sección después de la reunión real:
+
+- **Acuerdos aceptados:** pendiente.
+- **Acciones priorizadas y responsables:** pendiente.
+- **Fecha de seguimiento:** pendiente.
+- **Observaciones adicionales del equipo:** pendiente.
