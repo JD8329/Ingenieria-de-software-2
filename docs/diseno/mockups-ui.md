@@ -8,11 +8,15 @@ describen los campos y criterios de cada pantalla en la
 
 | Pantalla / flujo | Historia | API o DTO relacionado | Correspondencia con el backend |
 |---|---|---|---|
-| Login | HU-11, soporte para HU-02 | `POST /api/v1/auth/login`; `LoginRequest`, `TokenResponse` | Implementado. |
-| Registro de agricultor | HU-01 | `POST /api/v1/agricultores/registro`; `AgricultorRegistroRequest`, `AgricultorResponse` | Implementado. El backend exige cédula de 6–10 dígitos y municipio del enum; la respuesta incluye cédula y correo, pero no contraseña. |
-| Panel principal | HU-02 | `GET /api/v1/productos`; `LoteCosechaResponse` | Consulta implementada para lotes activos; el panel visual sigue siendo un prototipo. |
-| Registrar lote | HU-02 | `POST /api/v1/productos`; DTO de solicitud de lote y `LoteCosechaResponse` | Publicación implementada con JWT; el mockup no constituye una interfaz web desplegada. |
-| Catálogo de ofertas | Evolución del producto | `GET /api/v1/productos`; `LoteCosechaResponse` | Existe consulta de lotes activos, no filtros por categoría ni una interfaz de catálogo implementada. |
+| Login | HU-11, soporte para HU-02 | `POST /api/v1/auth/login`; `LoginRequest`, `TokenResponse` | Interfaz web conectada; solo rol `PRODUCCION` accede al panel agricultor. |
+| Registro de agricultor | HU-01 | `POST /api/v1/agricultores/registro`; `AgricultorRegistroRequest`, `AgricultorResponse` | Interfaz web conectada. El backend exige cédula de 6–10 dígitos y municipio del enum; la respuesta no incluye contraseña. |
+| Panel principal | HU-02 | `GET /api/v1/agricultores/{id}/perfil`; `GET /api/v1/productos/agricultor/{id}` | Interfaz muestra perfil y hasta cinco lotes activos del agricultor autenticado. |
+| Registrar lote | HU-02 | `POST /api/v1/productos`; solicitud y `LoteCosechaResponse` | Interfaz conectada con JWT. El backend acepta fecha de hoy o futura y cantidad disponible igual a la cantidad cosechada. |
+| Catálogo de ofertas | Evolución del producto | `GET /api/v1/productos`; `LoteCosechaResponse` | Interfaz con filtros por producto, municipio y categoría, más paginación local; solo consulta lotes activos. |
+
+La implementación y sus diferencias respecto de los wireframes se describen en
+[Interfaz web](front-end.md). La guía para ejecutar el proyecto está en
+[Inicio fácil](../inicio-facil.md).
 
 ## Flujo de navegación
 

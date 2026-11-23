@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183c2b">
+  <meta name="description" content="AgroValle Connect conecta agricultores con comercios del Valle del Cauca.">
+  <title>AgroValle Connect</title>
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="AgroValle Connect, inicio">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-copy"><strong>AgroValle</strong><small>CONNECT</small></span>
+      </a>
+      <div class="header-note"><span class="status-dot"></span> Conectando el campo con nuevas oportunidades</div>
+      <div id="header-user" class="header-user" hidden>
+        <span id="header-user-name"></span>
+        <button id="logout-button" class="button button-quiet button-small" type="button">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+      <section id="login-screen" class="screen auth-layout" aria-labelledby="login-title">
+        <div class="auth-story">
+          <span class="eyebrow"><span class="eyebrow-line"></span> DEL CAMPO AL MERCADO</span>
+          <h1>Tu cosecha merece<br>llegar <span>más lejos.</span></h1>
+          <p>Publica lo que cultivas y encuentra nuevas oportunidades comerciales en el Valle del Cauca.</p>
+          <div class="story-stat">
+            <span class="stat-icon" aria-hidden="true">✳</span>
+            <span><strong>Una conexión más directa</strong><small>Productores y compradores, en un mismo lugar.</small></span>
+          </div>
+          <div class="field-illustration" aria-hidden="true">
+            <span class="sun"></span><span class="hill hill-back"></span><span class="hill hill-front"></span>
+            <span class="field-row row-one"></span><span class="field-row row-two"></span><span class="field-row row-three"></span>
+            <span class="plant plant-one">✦</span><span class="plant plant-two">✦</span><span class="plant plant-three">✦</span>
+          </div>
+        </div>
+        <div class="auth-card">
+          <div class="card-heading">
+            <span class="eyebrow">QUÉ BUENO TENERTE AQUÍ</span>
+            <h2 id="login-title">Inicia sesión</h2>
+            <p>Ingresa a tu cuenta para administrar tus cosechas.</p>
+          </div>
+          <form id="login-form" class="form-stack">
+            <label class="field-label" for="login-email">Correo electrónico
+              <input id="login-email" name="correo" type="email" autocomplete="email" placeholder="tunombre@ejemplo.com" maxlength="120" required>
+            </label>
+            <label class="field-label" for="login-password">Contraseña
+              <input id="login-password" name="contrasena" type="password" autocomplete="current-password" placeholder="Ingresa tu contraseña" minlength="8" required>
+            </label>
+            <button class="button button-primary button-wide" type="submit">Entrar a mi cuenta <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="auth-switch">¿Aún no tienes cuenta? <button class="text-button" type="button" data-screen="register-screen">Regístrate aquí</button></p>
+          <div class="secure-note"><span aria-hidden="true">◈</span> Tus datos se mantienen protegidos.</div>
+        </div>
+      </section>
+
+      <section id="register-screen" class="screen auth-layout" aria-labelledby="register-title" hidden>
+        <div class="auth-story">
+          <span class="eyebrow"><span class="eyebrow-line"></span> CULTIVEMOS OPORTUNIDADES</span>
+          <h1>El primer paso<br>para <span>crecer juntos.</span></h1>
+          <p>Crea tu cuenta de agricultor y empieza a compartir tus productos con compradores de la región.</p>
+          <div class="story-stat">
+            <span class="stat-icon" aria-hidden="true">✳</span>
+            <span><strong>Tu trabajo, a la vista</strong><small>Registra tu finca y presenta tus cosechas.</small></span>
+          </div>
+          <div class="field-illustration" aria-hidden="true">
+            <span class="sun"></span><span class="hill hill-back"></span><span class="hill hill-front"></span>
+            <span class="field-row row-one"></span><span class="field-row row-two"></span><span class="field-row row-three"></span>
+            <span class="plant plant-one">✦</span><span class="plant plant-two">✦</span><span class="plant plant-three">✦</span>
+          </div>
+        </div>
+        <div class="auth-card register-card">
+          <div class="card-heading">
+            <span class="eyebrow">COMIENZA EN UN MOMENTO</span>
+            <h2 id="register-title">Crea tu cuenta</h2>
+            <p>Cuéntanos un poco sobre ti y tu finca.</p>
+          </div>
+          <form id="register-form" class="form-stack form-grid">
+            <label class="field-label field-span" for="register-name">Nombre completo
+              <input id="register-name" name="nombreCompleto" type="text" autocomplete="name" maxlength="100" placeholder="Ej. María Gómez" required>
+            </label>
+            <label class="field-label" for="register-id">Cédula
+              <input id="register-id" name="cedula" type="text" inputmode="numeric" pattern="[0-9]{6,10}" minlength="6" maxlength="10" placeholder="Solo números" required>
+              <small class="field-hint">Entre 6 y 10 dígitos.</small>
+            </label>
+            <label class="field-label" for="register-phone">Teléfono <span class="optional">(opcional)</span>
+              <input id="register-phone" name="telefono" type="tel" autocomplete="tel" maxlength="30" placeholder="Tu número de contacto">
+            </label>
+            <label class="field-label field-span" for="register-farm">Nombre o ubicación de la finca
+              <input id="register-farm" name="ubicacionFinca" type="text" maxlength="120" placeholder="Ej. Finca La Esperanza" required>
+            </label>
+            <label class="field-label" for="register-municipality">Municipio
+              <select id="register-municipality" name="municipio" required>
+                <option value="" selected disabled>Selecciona tu municipio</option>
+                <option value="DAGUA">Dagua</option>
+                <option value="PALMIRA">Palmira</option>
+                <option value="BUGA">Buga</option>
+                <option value="TULUA">Tuluá</option>
+                <option value="CAICEDONIA">Caicedonia</option>
+                <option value="JAMUNDI">Jamundí</option>
+                <option value="CALI">Cali</option>
+              </select>
+            </label>
+            <label class="field-label" for="register-email">Correo electrónico
+              <input id="register-email" name="correo" type="email" autocomplete="email" maxlength="120" placeholder="tunombre@ejemplo.com" required>
+            </label>
+            <label class="field-label field-span" for="register-password">Contraseña
+              <input id="register-password" name="contrasena" type="password" autocomplete="new-password" minlength="8" placeholder="Al menos 8 caracteres" required>
+            </label>
+            <label class="field-label field-span" for="register-confirm">Confirma tu contraseña
+              <input id="register-confirm" name="confirmarContrasena" type="password" autocomplete="new-password" minlength="8" placeholder="Escribe de nuevo tu contraseña" required>
+            </label>
+            <div class="form-actions field-span">
+              <button class="button button-secondary" type="button" data-screen="login-screen">Volver</button>
+              <button class="button button-primary" type="submit">Crear mi cuenta <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+          <p class="auth-switch">¿Ya tienes una cuenta? <button class="text-button" type="button" data-screen="login-screen">Inicia sesión</button></p>
+        </div>
+      </section>
+
+      <section id="app-screen" class="screen app-layout" aria-label="Espacio de agricultor" hidden>
+        <nav class="app-nav" aria-label="Navegación principal">
+          <div class="nav-links">
+            <button class="nav-link active" type="button" data-view="dashboard-view"><span aria-hidden="true">⌂</span> Mi panel</button>
+            <button class="nav-link" type="button" data-view="catalog-view"><span aria-hidden="true">◫</span> Ofertas</button>
+            <button class="nav-link" type="button" data-view="publish-view"><span aria-hidden="true">＋</span> Publicar cosecha</button>
+          </div>
+          <span class="nav-caption">VALLE DEL CAUCA, COLOMBIA</span>
+        </nav>
+
+        <section id="dashboard-view" class="app-view" aria-labelledby="dashboard-title">
+          <div class="welcome-row">
+            <div>
+              <span class="eyebrow"><span class="eyebrow-line"></span> TU ESPACIO DE TRABAJO</span>
+              <h1 id="dashboard-title">Hola, <span id="farmer-name">agricultor</span> <span class="wave" aria-hidden="true">✳</span></h1>
+              <p>Este es el estado de tus cosechas y oportunidades.</p>
+            </div>
+            <button class="button button-primary" type="button" data-view="publish-view">Publicar cosecha <span aria-hidden="true">→</span></button>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-icon icon-green" aria-hidden="true">▧</span>
+              <span class="summary-label">Lotes activos</span>
+              <strong id="active-lots-count">—</strong>
+              <small>Disponibles en tu catálogo</small>
+            </article>
+            <article class="summary-card">
+              <span class="summary-icon icon-gold" aria-hidden="true">⌖</span>
+              <span class="summary-label">Tu municipio</span>
+              <strong id="farmer-municipality">—</strong>
+              <small>Tu comunidad agrícola</small>
+            </article>
+            <article class="summary-card summary-callout">
+              <span class="summary-icon icon-light" aria-hidden="true">✳</span>
+              <span class="summary-label">Una nueva oportunidad</span>
+              <strong>Tu próxima cosecha<br>puede ser la primera.</strong>
+              <button class="text-button" type="button" data-view="publish-view">Publicar un lote <span aria-hidden="true">→</span></button>
+            </article>
+          </div>
+
+          <section class="content-panel" aria-labelledby="my-lots-title">
+            <div class="panel-heading">
+              <div><h2 id="my-lots-title">Mis cosechas</h2><p>Un vistazo a tus lotes publicados.</p></div>
+              <button class="button button-secondary button-small" type="button" data-view="catalog-view">Ver catálogo <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Producto</th><th>Categoría</th><th>Cantidad</th><th>Precio / kg</th><th>Fecha de cosecha</th><th>Estado</th></tr></thead>
+                <tbody id="my-lots-body"><tr><td class="table-empty" colspan="6">Cargando tus cosechas…</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section id="catalog-view" class="app-view" aria-labelledby="catalog-title" hidden>
+          <div class="welcome-row">
+            <div>
+              <span class="eyebrow"><span class="eyebrow-line"></span> COSECHAS DE LA REGIÓN</span>
+              <h1 id="catalog-title">Catálogo de <span>ofertas.</span></h1>
+              <p>Explora los productos activos publicados en AgroValle.</p>
+            </div>
+          </div>
+          <section class="content-panel">
+            <form id="catalog-filter" class="filter-row">
+              <label class="field-label" for="filter-product">Producto
+                <select id="filter-product" name="producto"><option value="">Todos los productos</option></select>
+              </label>
+              <label class="field-label" for="filter-municipality">Municipio
+                <select id="filter-municipality" name="municipio">
+                  <option value="">Todos los municipios</option>
+                  <option value="DAGUA">Dagua</option><option value="PALMIRA">Palmira</option>
+                  <option value="BUGA">Buga</option><option value="TULUA">Tuluá</option>
+                  <option value="CAICEDONIA">Caicedonia</option><option value="JAMUNDI">Jamundí</option>
+                  <option value="CALI">Cali</option>
+                </select>
+              </label>
+              <label class="field-label" for="filter-category">Categoría
+                <select id="filter-category" name="categoria">
+                  <option value="">Todas las categorías</option>
+                  <option value="FRUTAS">Frutas</option><option value="VERDURAS">Verduras</option>
+                  <option value="TUBERCULOS">Tubérculos</option><option value="GRANOS">Granos</option>
+                  <option value="CAFE">Café</option><option value="OTROS">Otros</option>
+                </select>
+              </label>
+              <button class="button button-primary filter-button" type="submit">Aplicar filtros</button>
+            </form>
+            <div class="catalog-heading"><h2>Productos disponibles</h2><span id="catalog-count" class="result-count"></span></div>
+            <div id="catalog-grid" class="catalog-grid" aria-live="polite"></div>
+            <div class="pagination">
+              <span id="page-label" class="pagination-label"></span>
+              <div><button id="previous-page" class="button button-secondary button-small" type="button">← Anterior</button>
+                <button id="next-page" class="button button-secondary button-small" type="button">Siguiente →</button></div>
+            </div>
+          </section>
+        </section>
+
+        <section id="publish-view" class="app-view" aria-labelledby="publish-title" hidden>
+          <div class="welcome-row">
+            <div>
+              <span class="eyebrow"><span class="eyebrow-line"></span> NUEVA OPORTUNIDAD</span>
+              <h1 id="publish-title">Publica tu <span>cosecha.</span></h1>
+              <p>Comparte los detalles de tu producto para que pueda aparecer en el catálogo.</p>
+            </div>
+          </div>
+          <section class="content-panel publish-panel">
+            <form id="publish-form" class="form-stack form-grid">
+              <label class="field-label field-span" for="lot-product">Nombre del producto
+                <input id="lot-product" name="tipoProducto" type="text" maxlength="100" placeholder="Ej. Tomate chonto" required>
+              </label>
+              <label class="field-label" for="lot-category">Categoría
+                <select id="lot-category" name="categoria" required>
+                  <option value="" selected disabled>Selecciona una categoría</option>
+                  <option value="FRUTAS">Frutas</option><option value="VERDURAS">Verduras</option>
+                  <option value="TUBERCULOS">Tubérculos</option><option value="GRANOS">Granos</option>
+                  <option value="CAFE">Café</option><option value="OTROS">Otros</option>
+                </select>
+              </label>
+              <label class="field-label" for="lot-date">Fecha de cosecha
+                <input id="lot-date" name="fechaCosecha" type="date" required>
+                <small class="field-hint">Puede ser hoy o una fecha futura.</small>
+              </label>
+              <label class="field-label" for="lot-quantity">Cantidad (kg)
+                <input id="lot-quantity" name="cantidadKg" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 120" required>
+              </label>
+              <label class="field-label" for="lot-price">Precio por kilogramo (COP)
+                <input id="lot-price" name="precioUnitario" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 3500" required>
+              </label>
+              <div class="form-note field-span"><span aria-hidden="true">i</span> El lote se publicará con la cantidad cosechada como cantidad disponible.</div>
+              <div class="form-actions field-span">
+                <button class="button button-secondary" type="button" data-view="dashboard-view">Cancelar</button>
+                <button class="button button-primary" type="submit">Publicar lote <span aria-hidden="true">→</span></button>
+              </div>
+            </form>
+          </section>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer"><span>© AgroValle Connect</span><span>Hecho para crecer en comunidad <span class="footer-leaf">✳</span></span></footer>
+  </div>
+</body>
+</html>
