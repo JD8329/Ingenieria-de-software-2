@@ -31,9 +31,15 @@ tenían cuando se redactaron.
 ## Diseño
 
 - [Índice de artefactos de diseño](diseno/README.md)
+- [Diagramas UML de arquitectura — Sesión 13](architecture/diagramas-uml.md): secuencias, colaboraciones, componentes y despliegue, contrastados con el código actual.
+- [ADR-001 de staging](architecture-decisions/ADR-001-despliegue-staging-paas.md): propuesta pendiente de decisión; no afirma un proveedor configurado.
 - [Resumen y cambios del Sprint de Diseño](resumen-y-cambios-del-sprint-diseno.md)
 - [Documentación integral: normalización, prototipos y arquitectura](documentacion-integral-agrovalle.md)
 - [Requisito HU-01: IEEE 29148 y BDD](ieee29148-req01.md)
+
+## Métricas ágiles
+
+- [Métricas de Sprints 1 a 3 — Sesión 14](metrics/sprint-metrics-corte3.md): puntos estimados, estado de evidencia y datos que el equipo debe completar; no atribuye cifras no verificadas.
 
 ## Pruebas, TDD y CI
 
