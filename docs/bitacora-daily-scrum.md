@@ -1,4 +1,4 @@
-# Bitácora de reuniones de seguimiento — Sprints 1 y 2
+# Bitácora de reuniones de seguimiento — Sprints 
 
 ## Cadencia y equipo
 
