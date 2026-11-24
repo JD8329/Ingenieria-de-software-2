@@ -28,7 +28,7 @@ en GitHub.
 
 El workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) se ejecuta
 en Pull Requests y en los pushes a `main` y `develop`. El job compila, ejecuta
-pruebas, Checkstyle y JaCoCo mediante `./mvnw clean verify`.
+Checkstyle, JUnit y JaCoCo con Maven.
 
 La protección de ramas es una configuración remota y no se puede activar
 mediante un archivo del worktree. La consulta de la regla de protección de
@@ -53,6 +53,13 @@ El job de CI actualmente se identifica como `CI / build-and-test`; ejecuta
 Checkstyle, JUnit y `jacoco:check@check-coverage`. JaCoCo exige al menos 60 % en
 instrucciones, ramas y líneas.
 
+El workflow también contiene `deploy-staging`: depende de `build-and-test` y
+solo puede correr en un push a `main` cuando la variable de repositorio
+`STAGING_DEPLOY_ENABLED` vale `true`. El job llama el deploy hook de Render,
+guardado como `RENDER_DEPLOY_HOOK_URL`. Los Pull Requests y los pushes a otras
+ramas no despliegan. La variable debe habilitarse después de crear el servicio y
+configurar sus secretos en Render.
+
 ## Evidencia para la entrega
 
 Antes de entregar, el equipo debe guardar capturas que muestren:
@@ -67,5 +74,5 @@ su ausencia en el repositorio no se reemplaza por afirmaciones documentales.
 
 La configuración de base de datos de staging se documenta en
 [Base de datos staging / preproducción](staging-preproduccion.md). El secreto
-`STAGING_DB_URL` no activa por sí solo un despliegue ni una prueba: el workflow
-debe referenciarlo explícitamente para utilizarlo.
+`STAGING_DB_URL` no se copia automáticamente a Render y no lo consume el deploy
+job; el runtime se conecta con las variables privadas configuradas en Render.

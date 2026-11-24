@@ -1,7 +1,8 @@
 # Diagramas UML de AgroValle Connect
 
-**Estado:** diagramas basados en el código del repositorio al 22/11/2026.
-El despliegue en staging es una propuesta, no una infraestructura existente.
+**Estado:** diagramas basados en el código del repositorio al 23/11/2026.
+La configuración del despliegue a staging está versionada; la infraestructura
+externa y el primer deploy aún están pendientes.
 
 Este documento consolida los entregables de la Sesión 13: tres diagramas de
 secuencia, dos de comunicación (colaboración), uno de componentes y uno de
@@ -254,13 +255,15 @@ flowchart LR
     Errors -.-> Controllers
 ```
 
-Los componentes representan las clases y paquetes del backend. La base PostgreSQL
-es configurable; el esquema staging no está configurado por este diagrama.
+Los componentes representan las clases y paquetes del backend. La base
+PostgreSQL es configurable; staging se conecta a Neon mediante variables
+privadas del servicio Render.
 
-## 7. Despliegue: estado actual y staging propuesto
+## 7. Despliegue: CI y staging en preparación
 
-La línea continua representa configuración o flujo existente. La conexión
-punteada es una posibilidad futura, no un despliegue realizado.
+El workflow y el Blueprint están versionados. Las flechas hacia Render y Neon
+representan la topología prevista; el servicio externo y un deploy exitoso aún
+no se han verificado.
 
 ```mermaid
 flowchart LR
@@ -272,28 +275,30 @@ flowchart LR
         App -->|"JDBC y variables externas"| LocalDB
     end
 
-    subgraph GitHub["GitHub · configurado"]
+    subgraph GitHub["GitHub · configuración versionada"]
         Repo["Repositorio AgroValle Connect"]
         Workflow[".github/workflows/ci.yml<br/>Checkstyle · JUnit · JaCoCo"]
         Runner["GitHub Actions<br/>Ubuntu · Java 17"]
+        DeployJob["deploy-staging<br/>push a main + CI exitoso<br/>STAGING_DEPLOY_ENABLED=true"]
         Repo -->|"Pull Request / push"| Workflow
         Workflow --> Runner
+        Runner -->|"needs: build-and-test"| DeployJob
     end
 
-    subgraph Future["Staging · propuesto, no configurado"]
-        Deploy["Servicio de aplicación PaaS<br/>Proveedor por decidir"]
-        StageDB[("PostgreSQL staging<br/>agrovalle_staging")]
-        Deploy -->|"JDBC SSL · STAGING_DB_URL"| StageDB
+    subgraph Staging["Staging · configuración externa pendiente"]
+        Render["Render Web Service<br/>Docker · Java 17"]
+        StageDB[("Neon PostgreSQL<br/>agrovalle_staging")]
+        Render -->|"JDBC TLS · variables privadas de Render"| StageDB
     end
 
-    Runner -.->|"Requeriría workflow de despliegue y aprobación"| Deploy
+    DeployJob -->|"POST a RENDER_DEPLOY_HOOK_URL"| Render
 ```
 
-**Estado verificado:** el workflow actual solo ejecuta Checkstyle, JUnit y
-JaCoCo; no hay `cd.yml`, despliegue a PaaS, perfil `application-staging.yml`,
-ejecución de `schema.sql` en staging ni uso de `STAGING_DB_URL`. La decisión de
-proveedor y topología está pendiente; véase el
-[ADR-001 propuesto](../architecture-decisions/ADR-001-despliegue-staging-paas.md)
+`STAGING_DB_URL` no se copia automáticamente desde GitHub a Render ni es
+consumido por el deploy job: el runtime obtiene conexión desde las variables
+privadas configuradas en Render. `render.yaml` desactiva los despliegues por
+commit para que el hook sea el disparador del CD. El estado y los pasos
+pendientes están en el [ADR-001](../architecture-decisions/ADR-001-despliegue-staging-paas.md)
 y la [guía de staging](../staging-preproduccion.md).
 
 ## Referencias de implementación

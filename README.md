@@ -36,6 +36,7 @@ Java 17, Spring Boot, Maven, PostgreSQL.
 - Linter: Checkstyle (`checkstyle.xml`)
 - Pre-commit hook: Husky (`.husky/pre-commit`), que ejecuta `./mvnw verify`; ejecutar `npm install` para activar el hook localmente
 - Integración continua: GitHub Actions (`.github/workflows/ci.yml`)
+- Staging en Render + Neon y pasos para habilitar el deploy condicionado: [`docs/staging-preproduccion.md`](docs/staging-preproduccion.md)
 - JWT: definir `JWT_SECRET` con al menos 32 bytes antes de iniciar la aplicación; usar un secreto aleatorio fuera de pruebas y no guardarlo en el repositorio
 - Recuperación de contraseña: configurar SMTP y `PASSWORD_RESET_URL` mediante variables de entorno; ver la guía de [HU-15](docs/sprint-8-hu15-recuperacion-password.md)
 - Definition of Done: [`docs/dod.md`](docs/dod.md)

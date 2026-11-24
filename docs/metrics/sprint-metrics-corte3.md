@@ -77,7 +77,7 @@ Lead Time hasta staging definido en la guía no puede medirse todavía.
 
 | Métrica | Inicio | Fin | Situación actual |
 |---|---|---|---|
-| Lead Time | Creación de la historia en el backlog | Despliegue verificable en staging | No calculable: faltan marcas de tiempo consistentes y no hay despliegue de staging configurado. |
+| Lead Time | Creación de la historia en el backlog | Despliegue verificable en staging | No calculable: faltan marcas de tiempo consistentes y el primer despliegue aún no se ha verificado. |
 | Cycle Time | Entrada de la historia a In Progress | Revisión aprobada y CI exitoso | No calculable como promedio del equipo: no hay exportación histórica de transiciones/timestamps asociada a todas las historias. |
 
 Para obtener promedios, conservar por historia el ID, fecha/hora de inicio y
@@ -92,7 +92,7 @@ casos oculten la variabilidad.
 | JaCoCo | El workflow ejecuta `jacoco:check@check-coverage`; el DoD exige al menos 60 % en instrucciones, ramas y líneas. La revisión técnica del Segundo Corte registra 95,4 % de instrucciones, 80,6 % de ramas y 95,8 % de líneas para un commit histórico específico. | Son umbrales y una captura histórica, no la cobertura final del commit actual. Ejecutar el workflow sobre el commit a entregar y guardar el reporte. |
 | Checkstyle | `.github/workflows/ci.yml` ejecuta `checkstyle:check`. | El repositorio no consolida una tasa histórica de errores por sprint; informar el resultado del run concreto. |
 | CI | El workflow contiene un job `build-and-test` con Checkstyle, JUnit y JaCoCo. La consulta de checks de PR #20, #21 y #35 informó éxito; para #24 y #25 informó fallos. | No hay un denominador de todas las ejecuciones en este documento, así que no se afirma una tasa de éxito del 100 %. Revisar los runs antes de presentar. |
-| CD / staging | No se encontró un `cd.yml`; el workflow actual no consume `STAGING_DB_URL` ni despliega. | No afirmar despliegue continuo ni disponibilidad de staging hasta implementar y verificar ese flujo. |
+| CD / staging | `.github/workflows/ci.yml` incluye `deploy-staging`, condicionado a CI exitoso en `main` y a `STAGING_DEPLOY_ENABLED=true`; el job usa `RENDER_DEPLOY_HOOK_URL`. | La configuración externa de Render, su hook y el primer deploy aún no están verificados. `STAGING_DB_URL` no se inyecta en el runtime. |
 
 ## 6. Evidencia pendiente para cerrar el informe
 
@@ -101,7 +101,7 @@ casos oculten la variabilidad.
 - Revisar los runs fallidos de PR #24 y #25 y adjuntar la evidencia pertinente.
 - Obtener de GitHub Projects las transiciones o snapshots diarios de trabajo
   para construir burndown y CFD; no reconstruir fechas faltantes.
-- Medir Lead Time cuando exista staging y Cycle Time con un historial
+- Medir Lead Time después del primer deploy verificable y Cycle Time con un historial
   consistente de movimientos, revisión y CI.
 - Ejecutar JaCoCo sobre el commit final y adjuntar la captura correspondiente.
 

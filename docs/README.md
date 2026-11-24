@@ -32,7 +32,7 @@ tenían cuando se redactaron.
 
 - [Índice de artefactos de diseño](diseno/README.md)
 - [Diagramas UML de arquitectura — Sesión 13](architecture/diagramas-uml.md): secuencias, colaboraciones, componentes y despliegue, contrastados con el código actual.
-- [ADR-001 de staging](architecture-decisions/ADR-001-despliegue-staging-paas.md): propuesta pendiente de decisión; no afirma un proveedor configurado.
+- [ADR-001 de staging](architecture-decisions/ADR-001-despliegue-staging-paas.md): decisión Render + Neon, con el servicio externo aún pendiente de configuración.
 - [Resumen y cambios del Sprint de Diseño](resumen-y-cambios-del-sprint-diseno.md)
 - [Documentación integral: normalización, prototipos y arquitectura](documentacion-integral-agrovalle.md)
 - [Requisito HU-01: IEEE 29148 y BDD](ieee29148-req01.md)
