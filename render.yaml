@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: agrovalle-staging
+    runtime: docker
+    plan: free
+    region: ohio
+    branch: main
+    autoDeployTrigger: off
+    healthCheckPath: /api/v1/productos
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: SPRING_JPA_SHOW_SQL
+        value: "false"

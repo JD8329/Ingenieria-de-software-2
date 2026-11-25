@@ -16,7 +16,7 @@ institucional solicitado ni la retrospectiva del equipo.
 
 | Criterio | Evidencia verificable | Estado / alcance |
 |---|---|---|
-| IEEE 29148 y reformulación normativa de HU-01 | [`ieee29148-req01.md`](ieee29148-req01.md) | Documentado con comparación frente a BDD y trazabilidad de pruebas. |
+| IEEE 29148 y reformulación normativa de HU-01 | [`ieee29148-req01.md`](requirements/ieee29148-req01.md) | Documentado con comparación frente a BDD y trazabilidad de pruebas. |
 | Modelo ER, DER normalizado en 3FN y esquema PostgreSQL | [`diseno/modelo-datos-der.md`](diseno/modelo-datos-der.md), [`diseno/diagrama-er-chen.md`](diseno/diagrama-er-chen.md), [`diseno/modelo-datos-der.png`](diseno/modelo-datos-der.png), [`diseno/schema.sql`](diseno/schema.sql) | Modelo de referencia de cinco tablas; el documento identifica explícitamente que no equivale al esquema JPA actual. El DDL no se afirma como desplegado. |
 | MVC de cuatro capas, UML de despliegue, componentes y secuencias | [`diseno/arquitectura-mvc-gof.md`](diseno/arquitectura-mvc-gof.md), [`diseno/diagrama-despliegue.svg`](diseno/diagrama-despliegue.svg), [`diseno/diagrama-componentes.svg`](diseno/diagrama-componentes.svg), [secuencia HU-02 con activaciones](diseno/diagrama-secuencia-hu02-publicacion.md) | Artefactos de diseño documentados; el diagrama Mermaid de publicación es fuente renderizable/editable y no una captura exportada. |
 | Mockups de interfaz | [`diseno/mockups-ui.md`](diseno/mockups-ui.md) y [`figuras/prototipado/`](figuras/prototipado/) | Prototipos documentados; no se presentan como una interfaz web implementada. |
@@ -24,7 +24,7 @@ institucional solicitado ni la retrospectiva del equipo.
 | Pruebas, TDD, CI y cobertura | [Workflow CI](../.github/workflows/ci.yml), [evidencia TDD de sesión 8](evidencias/tdd-sesion-8.md), [PR #23](https://github.com/JD8329/Ingenieria-de-software-2/pull/23) y [CI de PR #23](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/39514340093) | RED reproducido ahora contra el servicio anterior en worktree aislado; GREEN verificado en unit e integración. No existe registro histórico de commits por fase; JaCoCo es evidencia separada. |
 | Tablero y límites WIP | [GitHub Project](https://github.com/users/JD8329/projects/1), [`scrumban.md`](scrumban.md) | Las opciones de estado incluyen `In progress (wip:3)` y `Code Review / Testing (wip:2)`; la revisión no acredita aplicación automática de los límites. |
 | Bitácora Daily Scrum | [`bitacora-daily-scrum.md`](bitacora-daily-scrum.md) | Artefacto existente; el equipo debe validar que entradas y fechas correspondan a reuniones realmente realizadas. |
-| Sprint Review y retrospectiva | [`sprint-2-review.md`](sprint-2-review.md), [`sprint-2-retrospective.md`](sprint-2-retrospective.md) | La revisión técnica se documenta; los datos de la reunión real están pendientes. La retrospectiva se difiere y no se edita en esta tarea. |
+| Sprint Review y retrospectiva | [`sprint-2-review.md`](sprints/sprint-02/sprint-2-review.md), [`sprint-2-retrospective.md`](sprints/sprint-02/sprint-2-retrospective.md) | La revisión técnica se documenta; los datos de la reunión real están pendientes. La retrospectiva se difiere y no se edita en esta tarea. |
 | Protección de `main` | [`scrumban.md`](scrumban.md) | Pendiente: la API respondió 404 y el equipo no tiene permisos de administrador. No se afirma que la protección esté activa. |
 
 ## Resumen técnico para el PDF

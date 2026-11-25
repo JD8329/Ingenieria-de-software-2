@@ -28,6 +28,8 @@ persiste dos entidades y no se presenta como implementación de los dos modelos.
 - [Diagrama de secuencia HU-02/HU-11: login y publicación](diagrama-secuencia.png)
 - [Diagrama de secuencia HU-02: publicación con activaciones y duplicados](diagrama-secuencia-hu02-publicacion.md)
 - [Diagrama de despliegue con puertos](diagrama-despliegue.svg)
+- [Diagramas UML editables de las Sesiones 13](../architecture/diagramas-uml.md): siete diagramas Mermaid contrastados con el código actual y con el despliegue de staging en preparación.
+- [Métricas ágiles de las Sesiones 14](../metrics/sprint-metrics-corte3.md): comparación de estimaciones y estado de los datos disponibles.
 
 ## Estado frente a la guía
 
@@ -35,10 +37,12 @@ persiste dos entidades y no se presenta como implementación de los dos modelos.
 |---|---|---|
 | Modelo relacional y DER en 3FN | Modelo de referencia de cinco tablas documentado en [`modelo-datos-der.md`](modelo-datos-der.md), con [`schema.sql`](schema.sql), DER relacional y diagrama Chen coherentes. | El mapeo a JPA identifica las entidades ejecutables y las diferencias con el esquema relacional; no afirma que las cinco tablas estén desplegadas. |
 | Arquitectura de cuatro capas, SOLID y GoF | [`arquitectura-mvc-gof.md`](arquitectura-mvc-gof.md) documenta responsabilidades y SOLID; [`implementacion-observer.md`](implementacion-observer.md) detalla el patrón Observer. | El evento se registra después del commit; otros observadores pueden suscribirse sin modificar el servicio. |
+| Diagramación UML avanzada | [`../architecture/diagramas-uml.md`](../architecture/diagramas-uml.md) reúne secuencias, colaboraciones, componentes y despliegue en Mermaid. | La topología Render + Neon está decidida; la configuración externa y la primera verificación siguen pendientes. |
+| Métricas ágiles | [`../metrics/sprint-metrics-corte3.md`](../metrics/sprint-metrics-corte3.md) contrasta puntos estimados con la evidencia consultada. | Burndown, CFD, velocidades aceptadas y tiempos promedio requieren historial que no está versionado; no se inventan. |
 | Diagramas, wireframes e interfaz web | UML exportado a PNG, cinco mockups en [`mockups-ui.md`](mockups-ui.md) e interfaz funcional en [`front-end.md`](front-end.md). | La interfaz de agricultor consume la API del backend; el catálogo filtra y pagina los lotes activos en el navegador. |
-| IEEE 29148 frente a BDD | [`ieee29148-req01.md`](../ieee29148-req01.md) formaliza HU-01 y compara ambas técnicas. | Los casos de validación y duplicidad de HU-01 tienen pruebas de integración automatizadas. |
+| IEEE 29148 frente a BDD | [`ieee29148-req01.md`](../requirements/ieee29148-req01.md) formaliza HU-01 y compara ambas técnicas. | Los casos de validación y duplicidad de HU-01 tienen pruebas de integración automatizadas. |
 | Pruebas, CI y Scrumban | Suite JUnit 5 con pruebas MockMvc y Mockito; CI en `.github/workflows/ci.yml`; tablero público y límites WIP en [`scrumban.md`](../scrumban.md). | La protección de ramas requiere un administrador; las capturas de Actions/cobertura y los datos de reuniones deben incluirse o confirmarse para el PDF. |
-| Cierre de sprint | [`sprint-1-review.md`](../sprint-1-review.md), [`sprint-2-review.md`](../sprint-2-review.md), [`sprint-2-retrospective.md`](../sprint-2-retrospective.md) y [`dod.md`](../dod.md). | La revisión técnica enlaza CI; los datos de reuniones y la retrospectiva se completan con el equipo y evidencia real. |
+| Cierre de sprint | [`sprint-1-review.md`](../sprints/sprint-01/sprint-1-review.md), [`sprint-2-review.md`](../sprints/sprint-02/sprint-2-review.md), [`sprint-2-retrospective.md`](../sprints/sprint-02/sprint-2-retrospective.md) y [`dod.md`](../dod.md). | La revisión técnica enlaza CI; los datos de reuniones y la retrospectiva se completan con el equipo y evidencia real. |
 
 ## Prototipos de interfaz
 
@@ -49,17 +53,17 @@ persiste dos entidades y no se presenta como implementación de los dos modelos.
 
 ## Requisitos y ejecución del sprint
 
-- [Requisito HU-01: IEEE 29148 y comparación con BDD](../ieee29148-req01.md)
-- [Planificación del Sprint 1](../sprint-1-planning.md)
-- [Planificación del Sprint 2](../sprint-2-planning.md)
-- [Revisión y evidencia técnica](../sprint-1-review.md)
-- [Revisión del Sprint 2](../sprint-2-review.md)
-- [Retrospectiva del Sprint 2](../sprint-2-retrospective.md)
+- [Requisito HU-01: IEEE 29148 y comparación con BDD](../requirements/ieee29148-req01.md)
+- [Planificación del Sprint 1](../sprints/sprint-01/sprint-1-planning.md)
+- [Planificación del Sprint 2](../sprints/sprint-02/sprint-2-planning.md)
+- [Revisión y evidencia técnica](../sprints/sprint-01/sprint-1-review.md)
+- [Revisión del Sprint 2](../sprints/sprint-02/sprint-2-review.md)
+- [Retrospectiva del Sprint 2](../sprints/sprint-02/sprint-2-retrospective.md)
 - [Definition of Done](../dod.md)
 
 ## Observación sobre alcance
 
 La planificación documenta HU-01 y HU-02 para el Sprint 1; durante el Sprint 2
 se implementaron también HU-03 y HU-04, documentadas en
-[`sprint-2-hu03.md`](../sprint-2-hu03.md) y
-[`sprint-2-hu04.md`](../sprint-2-hu04.md). No se declara implementada HU-07.
+[`sprint-2-hu03.md`](../sprints/sprint-02/sprint-2-hu03.md) y
+[`sprint-2-hu04.md`](../sprints/sprint-02/sprint-2-hu04.md). No se declara implementada HU-07.

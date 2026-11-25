@@ -20,11 +20,15 @@ tablero; esta revisión no confirma que GitHub bloquee automáticamente el
 movimiento de tarjetas cuando se exceden. El equipo debe respetar y vigilar los
 conteos.
 
+Las referencias de estado en el tablero y el backlog son snapshots; antes de
+presentar un sprint, confirmar el estado actual de sus historias y Pull Requests
+en GitHub.
+
 ## Protección de `main`
 
 El workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) se ejecuta
 en Pull Requests y en los pushes a `main` y `develop`. El job compila, ejecuta
-pruebas, Checkstyle y JaCoCo mediante `./mvnw clean verify`.
+Checkstyle, JUnit y JaCoCo con Maven.
 
 La protección de ramas es una configuración remota y no se puede activar
 mediante un archivo del worktree. La consulta de la regla de protección de
@@ -38,12 +42,23 @@ protection rule**) y aplicar a `main` estos requisitos:
   integrar, para impedir pushes directos fuera de los bypass autorizados.
 - Exigir al menos una aprobación de otro integrante y descartar aprobaciones
   obsoletas al cambiar el commit del Pull Request.
-- Exigir el status check **Tests, Checkstyle y cobertura** antes de integrar.
+- Exigir el status check `CI / build-and-test` antes de integrar.
 - Guardar la regla y confirmar que esté activa para `main`.
 
 **Estado verificable:** el workflow existe y su ejecución en `main` está
-documentada en [la revisión del Sprint 2](sprint-2-review.md). La regla remota
+documentada en [la revisión del Sprint 2](sprints/sprint-02/sprint-2-review.md). La regla remota
 queda pendiente de acción y verificación por una persona administradora.
+
+El job de CI actualmente se identifica como `CI / build-and-test`; ejecuta
+Checkstyle, JUnit y `jacoco:check@check-coverage`. JaCoCo exige al menos 60 % en
+instrucciones, ramas y líneas.
+
+El workflow también contiene `deploy-staging`: depende de `build-and-test` y
+solo puede correr en un push a `main` cuando la variable de repositorio
+`STAGING_DEPLOY_ENABLED` vale `true`. El job llama el deploy hook de Render,
+guardado como `RENDER_DEPLOY_HOOK_URL`. Los Pull Requests y los pushes a otras
+ramas no despliegan. La variable debe habilitarse después de crear el servicio y
+configurar sus secretos en Render.
 
 ## Evidencia para la entrega
 
@@ -56,3 +71,8 @@ Antes de entregar, el equipo debe guardar capturas que muestren:
 
 Las capturas y la URL del tablero se deben agregar al PDF de entrega institucional;
 su ausencia en el repositorio no se reemplaza por afirmaciones documentales.
+
+La configuración de base de datos de staging se documenta en
+[Base de datos staging / preproducción](staging-preproduccion.md). El secreto
+`STAGING_DB_URL` no se copia automáticamente a Render y no lo consume el deploy
+job; el runtime se conecta con las variables privadas configuradas en Render.

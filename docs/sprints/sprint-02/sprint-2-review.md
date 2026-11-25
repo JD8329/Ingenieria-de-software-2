@@ -20,7 +20,7 @@ equipo.
 ## Verificación técnica del repositorio
 
 El workflow de GitHub Actions está definido en
-[`.github/workflows/ci.yml`](../.github/workflows/ci.yml). El 28 de octubre de
+[`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml). El 28 de octubre de
 2026 se ejecutó `.\mvnw.cmd --batch-mode --no-transfer-progress clean verify`
 localmente sobre `09885244d334d93ddd1eeb190799ac78766b208a`, el mismo commit de
 `main` para el que se registra la
@@ -31,14 +31,14 @@ localmente sobre `09885244d334d93ddd1eeb190799ac78766b208a`, el mismo commit de
 | Compilación y pruebas JUnit 5 | `BUILD SUCCESS`; 41 pruebas aprobadas, 0 fallos y 0 errores |
 | Pruebas REST con MockMvc | Integración para los flujos de registro, autenticación, publicación, HU-03 y HU-04 |
 | Pruebas unitarias aisladas con Mockito | 10 pruebas en `AgricultorServiceTest` y `LoteCosechaServiceTest` |
-| Evidencia TDD para publicación duplicada | [Pruebas, reproducción RED aislada y GREEN verificado](evidencias/tdd-sesion-8.md); [PR #23](https://github.com/JD8329/Ingenieria-de-software-2/pull/23) y [su CI exitosa](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/39514340093) |
+| Evidencia TDD para publicación duplicada | [Pruebas, reproducción RED aislada y GREEN verificado](../../evidencias/tdd-sesion-8.md); [PR #23](https://github.com/JD8329/Ingenieria-de-software-2/pull/23) y [su CI exitosa](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/39514340093) |
 | Checkstyle | 0 violaciones |
 | JaCoCo — instrucciones | 95,4% |
 | JaCoCo — ramas | 80,6% |
 | JaCoCo — líneas | 95,8% |
 | Reporte JaCoCo local | `target/site/jacoco/index.html`, generado por `clean verify` |
 | GitHub Actions en `main` | Éxito para el commit `09885244d334d93ddd1eeb190799ac78766b208a`; [run 40323762565](https://github.com/JD8329/Ingenieria-de-software-2/actions/runs/40323762565) |
-| Protección de `main` | No acreditada: GitHub respondió 404 al consultar la regla. Requiere configuración y confirmación de un administrador; ver [`scrumban.md`](scrumban.md) |
+| Protección de `main` | No acreditada: GitHub respondió 404 al consultar la regla. Requiere configuración y confirmación de un administrador; ver [`scrumban.md`](../../scrumban.md) |
 | Tablero Scrumban | [GitHub Project público](https://github.com/users/JD8329/projects/1); sus opciones incluyen `In progress (wip:3)` y `Code Review / Testing (wip:2)` |
 
 El CI remoto prueba que el workflow terminó correctamente para `main`; las
@@ -49,7 +49,7 @@ La salida local no sustituye las capturas requeridas en el PDF institucional.
 
 - HU-03 y HU-04 tienen documentación y pruebas de integración; los criterios,
   artefactos y estado del código se relacionan en
-  [`entrega-segundo-corte.md`](entrega-segundo-corte.md).
+  [`entrega-segundo-corte.md`](../../entrega-segundo-corte.md).
 - El tablero público contiene 22 elementos; HU-03 y HU-04 aparecen como
   `Done`. Los límites aparecen en los nombres de las opciones de estado; no se
   presenta como evidencia de un bloqueo automático al excederlos.
@@ -60,6 +60,6 @@ La salida local no sustituye las capturas requeridas en el PDF institucional.
 - La fecha, participantes, historias aceptadas, comentarios de la docente y
   evidencia de una reunión real siguen pendientes de confirmar por el equipo.
 - La protección de `main` requiere que un administrador aplique las opciones
-  descritas en [`scrumban.md`](scrumban.md).
+  descritas en [`scrumban.md`](../../scrumban.md).
 - La retrospectiva se difiere explícitamente; no se debe inferir ni completar
   información de la reunión a partir de este registro técnico.

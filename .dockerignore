@@ -1,0 +1,7 @@
+.git
+.github
+.husky
+docs
+node_modules
+target
+*.md

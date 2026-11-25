@@ -101,4 +101,4 @@ JaCoCo mide cobertura y verifica umbrales, pero no registra el orden temporal
 de escritura de una prueba, fallo esperado, implementación y refactor. Por eso
 sus porcentajes no se presentan como evidencia del ciclo TDD. La cobertura
 general de la verificación completa se reporta por separado en
-[`../sprint-2-review.md`](../sprint-2-review.md).
+[`../sprint-2-review.md`](../sprints/sprint-02/sprint-2-review.md).

@@ -91,11 +91,11 @@ no estén confirmados.
 
 ## Referencias de alcance
 
-- [Product Backlog](../BACKLOG.md), que define prioridad, estimación y criterios
+- [Product Backlog](../../../BACKLOG.md), que define prioridad, estimación y criterios
   BDD de HU-03 y HU-04.
 - [HU-03: precios promedio regionales](sprint-2-hu03.md), que detalla contrato
   REST, ventana temporal, umbral y persistencia.
 - [HU-04: filtro por municipio y categoría](sprint-2-hu04.md), que detalla
   filtros, compatibilidad y validaciones.
-- [Definition of Done](dod.md), que define los criterios generales de calidad
+- [Definition of Done](../../dod.md), que define los criterios generales de calidad
   del equipo.
