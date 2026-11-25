@@ -24,7 +24,7 @@
 
 > **Artefactos organizados según la guía:** consulte el índice
 > [`docs/diseno/README.md`](diseno/README.md), la especificación formal de
-> [`HU-01 / IEEE 29148 vs. BDD`](ieee29148-req01.md) y la matriz de
+> [`HU-01 / IEEE 29148 vs. BDD`](requirements/ieee29148-req01.md) y la matriz de
 > [correspondencia del modelo 3FN con JPA](diseno/modelo-datos-der.md).
 
 ## 1. Objetivo y visión del producto
@@ -820,7 +820,7 @@ pruebas usan H2 en memoria y recrean el esquema.
   como hook local de pre-commit cuando se instalan las dependencias de Node.
 
 La evidencia de CI, la demo técnica y el estado del Definition of Done se
-registran en `docs/sprint-1-review.md` y `docs/dod.md`. CI exitoso no sustituye
+registran en `docs/sprints/sprint-01/sprint-1-review.md` y `docs/dod.md`. CI exitoso no sustituye
 la revisión por pares ni la aceptación del Product Owner.
 
 ### 4.13 Trazabilidad del backlog
@@ -832,11 +832,11 @@ El Product Backlog contiene 15 historias, estimadas en 69 Story Points.
 | HU-01 | Registro e identificación de agricultores | Implementada: registro, validación, unicidad y persistencia. |
 | HU-02 | Publicación de lotes de cosecha | Implementada: publicación autenticada y consulta de lotes activos. |
  feature/sprint2-hu03-precios-promedio
-| HU-03 | Precios promedio regionales | Implementada en el Sprint 2: registro autenticado de transacciones de precio y promedio aritmético de las últimas 24 horas, con mínimo de 50 registros. Véase [`sprint-2-hu03.md`](sprint-2-hu03.md). |
+| HU-03 | Precios promedio regionales | Implementada en el Sprint 2: registro autenticado de transacciones de precio y promedio aritmético de las últimas 24 horas, con mínimo de 50 registros. Véase [`sprint-2-hu03.md`](sprints/sprint-02/sprint-2-hu03.md). |
 | HU-04 | Filtros por municipio y categoría | Pendiente: no hay endpoint de búsqueda ni categoría en el modelo actual. |
 
 | HU-03 | Precios promedio regionales | Pendiente: no hay transacciones ni endpoint de promedios. |
-| HU-04 | Filtros por municipio y categoría | Implementada en el Sprint 2: búsqueda pública de lotes activos por municipio, categoría o ambos. La categoría es opcional para conservar compatibilidad con HU-02. Véase [`sprint-2-hu04.md`](sprint-2-hu04.md). |
+| HU-04 | Filtros por municipio y categoría | Implementada en el Sprint 2: búsqueda pública de lotes activos por municipio, categoría o ambos. La categoría es opcional para conservar compatibilidad con HU-02. Véase [`sprint-2-hu04.md`](sprints/sprint-02/sprint-2-hu04.md). |
 main
 | HU-05 | Contacto comprador-productor | Pendiente: no hay comerciantes ni mensajería. |
 | HU-06 | Carrito y reserva de pedidos | Pendiente: no hay carrito, pedido ni reserva de inventario por compra. |
@@ -915,7 +915,7 @@ conceptual como esquema definitivo.
 
 Para localizar los entregables en la estructura solicitada por la guía, usar
 [`docs/diseno/README.md`](diseno/README.md). La especificación formal de HU-01 y
-su comparación con BDD está en [`docs/ieee29148-req01.md`](ieee29148-req01.md).
+su comparación con BDD está en [`docs/requirements/ieee29148-req01.md`](requirements/ieee29148-req01.md).
 
 ## Referencias del proyecto
 
@@ -923,8 +923,8 @@ su comparación con BDD está en [`docs/ieee29148-req01.md`](ieee29148-req01.md)
 - [Product Backlog](../BACKLOG.md)
 - Historias de Usuario del Taller Integrador: el archivo fuente no está incluido en este repositorio; consultar el Product Backlog versionado.
 - [Definition of Done](dod.md)
-- [Planificación del Sprint 1](sprint-1-planning.md)
-- [Planificación del Sprint 2](sprint-2-planning.md)
+- [Planificación del Sprint 1](sprints/sprint-01/sprint-1-planning.md)
+- [Planificación del Sprint 2](sprints/sprint-02/sprint-2-planning.md)
 - [Bitácora de Daily Scrum](bitacora-daily-scrum.md)
-- [Revisión del Sprint 1](sprint-1-review.md)
-- [Retrospectiva del Sprint 1](sprint-1-retrospective.md)
+- [Revisión del Sprint 1](sprints/sprint-01/sprint-1-review.md)
+- [Retrospectiva del Sprint 1](sprints/sprint-01/sprint-1-retrospective.md)

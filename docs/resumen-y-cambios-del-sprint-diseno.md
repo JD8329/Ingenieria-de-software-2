@@ -112,4 +112,4 @@ verificables y trazables.
 - [Wireframes de baja fidelidad](diseno/mockups-ui.md)
 - [Arquitectura MVC en cuatro capas y patrones](diseno/arquitectura-mvc-gof.md)
 - [Implementación documentada del patrón Observer](diseno/implementacion-observer.md)
-- [Especificación HU-01 — Registro de agricultores](ieee29148-req01.md)
+- [Especificación HU-01 — Registro de agricultores](requirements/ieee29148-req01.md)

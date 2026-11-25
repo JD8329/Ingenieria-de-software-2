@@ -46,7 +46,7 @@ protection rule**) y aplicar a `main` estos requisitos:
 - Guardar la regla y confirmar que esté activa para `main`.
 
 **Estado verificable:** el workflow existe y su ejecución en `main` está
-documentada en [la revisión del Sprint 2](sprint-2-review.md). La regla remota
+documentada en [la revisión del Sprint 2](sprints/sprint-02/sprint-2-review.md). La regla remota
 queda pendiente de acción y verificación por una persona administradora.
 
 El job de CI actualmente se identifica como `CI / build-and-test`; ejecuta

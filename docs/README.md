@@ -3,6 +3,7 @@
 Índice de planificación, diseño, implementación y evidencias del proyecto.
 Los documentos distinguen entre funcionalidades implementadas, propuestas de
 diseño y datos de reuniones que deben confirmarse con el equipo.
+Los documentos de cada sprint están agrupados en `sprints/sprint-XX/`.
 
 ## Producto y calidad
 
@@ -15,14 +16,14 @@ diseño y datos de reuniones que deben confirmarse con el equipo.
 
 | Sprint | Alcance | Plan o especificaciones | Revisión / retrospectiva |
 |---|---|---|---|
-| 1 | Registro de agricultor y publicación de lote (HU-01, HU-02) | [Planificación](sprint-1-planning.md) | [Review y demo](sprint-1-review.md) · [Retrospectiva](sprint-1-retrospective.md) |
-| 2 | Precios promedio y filtros del catálogo (HU-03, HU-04) | [Planificación](sprint-2-planning.md) · [HU-03](sprint-2-hu03.md) · [HU-04](sprint-2-hu04.md) | [Review técnica](sprint-2-review.md) · [Retrospectiva](sprint-2-retrospective.md) |
-| 3 | Contacto directo y reserva de pedidos (HU-05, HU-06) | [Especificación](sprint-3-historias-5-y-6.md) | No hay acta de review/retrospectiva enlazada |
-| 4 | Despacho y calificación (HU-07, HU-08) | [Especificación](sprint-4-historias-7-y-8.md) | No hay acta de review/retrospectiva enlazada |
-| 5 | Notificaciones y reportes (HU-09, HU-10) | [Especificación](sprint-5-historias-9-y-10.md) | No hay acta de review/retrospectiva enlazada |
-| 6 | Autenticación por rol y registro de comerciantes (HU-11, HU-12) | [HU-11](sprint-6-hu11-login-jwt.md) · [HU-12](sprint-6-hu12-registro-comerciantes.md) | No hay acta de review/retrospectiva enlazada |
-| 7 | Edición de lotes y perfil público (HU-13, HU-14) | [HU-13](sprint-7-hu13-edicion-lotes.md) · [HU-14](sprint-7-hu14-perfil-agricultor.md) | No hay acta de review/retrospectiva enlazada |
-| 8 | Recuperación de contraseña (HU-15) | [Especificación](sprint-8-hu15-recuperacion-password.md) | No hay acta de review/retrospectiva enlazada |
+| 1 | Registro de agricultor y publicación de lote (HU-01, HU-02) | [Planificación](sprints/sprint-01/sprint-1-planning.md) | [Review y demo](sprints/sprint-01/sprint-1-review.md) · [Retrospectiva](sprints/sprint-01/sprint-1-retrospective.md) |
+| 2 | Precios promedio y filtros del catálogo (HU-03, HU-04) | [Planificación](sprints/sprint-02/sprint-2-planning.md) · [HU-03](sprints/sprint-02/sprint-2-hu03.md) · [HU-04](sprints/sprint-02/sprint-2-hu04.md) | [Review técnica](sprints/sprint-02/sprint-2-review.md) · [Retrospectiva](sprints/sprint-02/sprint-2-retrospective.md) |
+| 3 | Contacto directo y reserva de pedidos (HU-05, HU-06) | [Especificación](sprints/sprint-03/sprint-3-historias-5-y-6.md) | No hay acta de review/retrospectiva enlazada |
+| 4 | Despacho y calificación (HU-07, HU-08) | [Especificación](sprints/sprint-04/sprint-4-historias-7-y-8.md) | No hay acta de review/retrospectiva enlazada |
+| 5 | Notificaciones y reportes (HU-09, HU-10) | [Especificación](sprints/sprint-05/sprint-5-historias-9-y-10.md) | No hay acta de review/retrospectiva enlazada |
+| 6 | Autenticación por rol y registro de comerciantes (HU-11, HU-12) | [HU-11](sprints/sprint-06/sprint-6-hu11-login-jwt.md) · [HU-12](sprints/sprint-06/sprint-6-hu12-registro-comerciantes.md) | No hay acta de review/retrospectiva enlazada |
+| 7 | Edición de lotes y perfil público (HU-13, HU-14) | [HU-13](sprints/sprint-07/sprint-7-hu13-edicion-lotes.md) · [HU-14](sprints/sprint-07/sprint-7-hu14-perfil-agricultor.md) | No hay acta de review/retrospectiva enlazada |
+| 8 | Recuperación de contraseña (HU-15) | [Especificación](sprints/sprint-08/sprint-8-hu15-recuperacion-password.md) | No hay acta de review/retrospectiva enlazada |
 
 Las referencias de estado del backlog y los Pull Requests deben leerse junto con
 el estado actual de GitHub; los registros históricos conservan el estado que
@@ -35,7 +36,7 @@ tenían cuando se redactaron.
 - [ADR-001 de staging](architecture-decisions/ADR-001-despliegue-staging-paas.md): decisión Render + Neon, con el servicio externo aún pendiente de configuración.
 - [Resumen y cambios del Sprint de Diseño](resumen-y-cambios-del-sprint-diseno.md)
 - [Documentación integral: normalización, prototipos y arquitectura](documentacion-integral-agrovalle.md)
-- [Requisito HU-01: IEEE 29148 y BDD](ieee29148-req01.md)
+- [Requisito HU-01: IEEE 29148 y BDD](requirements/ieee29148-req01.md)
 
 ## Métricas ágiles
 

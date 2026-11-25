@@ -10,10 +10,10 @@ El 30 de septiembre de 2026 se realizó una demo técnica individual, ejecutada 
 | Participante y presentador | Néstor Javier Hernández Vallecilla |
 | Tipo | Demo técnica individual |
 | Historias comprobadas | HU-01 (cuenta registrada e inicio de sesión) y HU-02 (publicación y consulta de lote) |
-| Evidencia | [Captura de la demo técnica individual](evidencias/demo-tecnica-individual.png) |
+| Evidencia | [Captura de la demo técnica individual](../../evidencias/demo-tecnica-individual.png) |
 | Aceptación de la docente/Product Owner | No registrada |
 
-![Demo técnica individual: login HTTP 200, publicación HTTP 201 y consulta HTTP 200](evidencias/demo-tecnica-individual.png)
+![Demo técnica individual: login HTTP 200, publicación HTTP 201 y consulta HTTP 200](../../evidencias/demo-tecnica-individual.png)
 
 ## Evidencia técnica automatizada
 
@@ -45,9 +45,9 @@ El PR #21 fue fusionado en `main` el 29 de septiembre de 2026. GitHub no registr
 |---|---|---|---|
 | Registro de agricultor | El reintento informó que ya existía un agricultor con ese correo. El código HTTP del primer intento no quedó registrado. | Salida de PowerShell | No registrados |
 | Login JWT | HTTP 200; tipo de token `Bearer` | Salida de PowerShell | No registrados |
-| Publicación autenticada | HTTP 201; lote creado con ID 1 | [Captura de la demo técnica individual](evidencias/demo-tecnica-individual.png) | No registrados |
-| Consulta de lotes | HTTP 200; se recuperó el lote creado | [Captura de la demo técnica individual](evidencias/demo-tecnica-individual.png) | No registrados |
-| Protección de datos de la respuesta del lote | La respuesta mostró los campos del lote y `agricultorId`, sin correo, cédula ni contraseña | [Captura de la demo técnica individual](evidencias/demo-tecnica-individual.png) | No registrados |
+| Publicación autenticada | HTTP 201; lote creado con ID 1 | [Captura de la demo técnica individual](../../evidencias/demo-tecnica-individual.png) | No registrados |
+| Consulta de lotes | HTTP 200; se recuperó el lote creado | [Captura de la demo técnica individual](../../evidencias/demo-tecnica-individual.png) | No registrados |
+| Protección de datos de la respuesta del lote | La respuesta mostró los campos del lote y `agricultorId`, sin correo, cédula ni contraseña | [Captura de la demo técnica individual](../../evidencias/demo-tecnica-individual.png) | No registrados |
 
 No se registran aquí resultados de publicación sin token ni de validaciones con datos inválidos: esos escenarios constan en las pruebas automatizadas, pero no se ejecutaron durante esta demo manual.
 

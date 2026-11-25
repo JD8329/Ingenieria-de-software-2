@@ -107,11 +107,11 @@ casos oculten la variabilidad.
 
 ## Fuentes
 
-- [Planificación del Sprint 1](../sprint-1-planning.md)
-- [Planificación del Sprint 2](../sprint-2-planning.md)
-- [Especificación de HU-05 y HU-06](../sprint-3-historias-5-y-6.md)
+- [Planificación del Sprint 1](../sprints/sprint-01/sprint-1-planning.md)
+- [Planificación del Sprint 2](../sprints/sprint-02/sprint-2-planning.md)
+- [Especificación de HU-05 y HU-06](../sprints/sprint-03/sprint-3-historias-5-y-6.md)
 - [Product Backlog](../../BACKLOG.md)
 - [DoD](../dod.md)
-- [Revisión técnica del Sprint 2](../sprint-2-review.md)
+- [Revisión técnica del Sprint 2](../sprints/sprint-02/sprint-2-review.md)
 - [Scrumban y CI](../scrumban.md)
 - [Guía de staging](../staging-preproduccion.md)
